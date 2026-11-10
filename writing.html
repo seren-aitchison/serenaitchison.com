@@ -25,8 +25,8 @@
     <section class="page-hero">
       <span class="eyebrow">Method notes</span>
       <h1>Notes on methods <span class="grad serif">and how they mislead.</span></h1>
-      <p class="lede">Short pieces on computational methods I use, each focused on the same question: what is this actually measuring, and what will it let me believe that I shouldn't? Written to think things through, not to teach.</p>
-      <div class="meta-strip"><span><b>4</b> notes</span><span><b>Method</b> focused</span><span><b>Independent</b> writing, not peer reviewed</span></div>
+      <p class="lede">Longer pieces on methods I use, each focused on the same question: what is this actually measuring, and what will it let me believe that I shouldn't? Written to think things through rather than to teach. The <a class="text-link" href="methods.html">methods library</a> is the quick reference; these are the arguments.</p>
+      <div class="meta-strip"><span><b>6</b> notes</span><span><b>Method</b> focused</span><span><b>Independent</b> writing, not peer reviewed</span></div>
     </section>
 
     <section class="section" aria-labelledby="notes-t">
@@ -127,6 +127,56 @@
             <h4>How I would use it anyway</h4>
             <p>As a debugging tool first: if the top features are technical covariates or known confounds, the model has learned the wrong thing and the explanation has just saved you from publishing it. As a hypothesis generator second, where a high-attribution feature with a plausible mechanism is worth following up experimentally. Never as a finding in its own right.</p>
             <div class="callout warn"><b>The honest summary.</b> "The model relies on gene X" and "gene X matters biologically" are different statements. Interpretability methods establish the first. Only an experiment establishes the second.</div>
+          </div>
+        </details>
+
+
+        <!-- Note 5 -->
+        <details class="prop glass" id="reference" style="--c:#2fa7a0">
+          <summary>
+            <span class="letter">05</span>
+            <span>
+              <h3>The reference genome is a sample, not a truth</h3>
+              <p>Sequencing · why variant calling works less well the further you are from the reference</p>
+            </span>
+            <span class="plus" data-ico="plus"></span>
+          </summary>
+          <div class="inner">
+            <p>Every short-read workflow starts by mapping reads to a linear reference, and almost every downstream statement inherits whatever that reference happens to contain. GRCh38 is a mosaic assembled from a small number of donors, so it is one particular arrangement of human sequence rather than a neutral coordinate system — and the consequences are systematic rather than random.</p>
+            <h4>How the bias actually arises</h4>
+            <p>A read carrying the alternate allele has at least one mismatch against the reference, so it aligns slightly worse than a read carrying the reference allele. At a heterozygous site that produces an allele balance tilted towards reference. Usually it is a nudge. At a divergent locus — several variants within one read length, or an indel — it can be enough that the alternate reads fail to map at all, and the site is called homozygous reference with apparent confidence.</p>
+            <h4>Why it is an equity problem, not just a technical one</h4>
+            <ul>
+              <li><strong>The cost is not evenly distributed.</strong> Divergence from GRCh38 is greatest for populations least represented in it, so under-calling falls hardest on exactly the groups already under-served by genomic medicine.</li>
+              <li><strong>It compounds with imputation.</strong> Reference panels have the same skew, so a variant poorly captured at the mapping stage is also poorly imputed.</li>
+              <li><strong>It is invisible in the output.</strong> A missed heterozygote looks identical to a true homozygous reference call. Nothing in the VCF marks it.</li>
+            </ul>
+            <h4>What helps</h4>
+            <p>Graph and pangenome references replace the single linear path with the known alternatives, so a read carrying a common alternate allele has somewhere to map that fits it. They are more work and the tooling is younger, but for pharmacogenes sitting in segmental duplications — CYP2D6 being the obvious case — the linear reference is not merely suboptimal, it is the reason the locus is hard.</p>
+            <div class="callout"><b>The practical version.</b> Allele balance at heterozygous sites is worth plotting. A distribution centred below 0.5 is telling you about your reference and your mapping, not about your samples.</div>
+          </div>
+        </details>
+
+        <!-- Note 6 -->
+        <details class="prop glass" id="gene-lists" style="--c:#3f9be0">
+          <summary>
+            <span class="letter">06</span>
+            <span>
+              <h3>What a gene list is actually for</h3>
+              <p>Enrichment · the background set decides your answer before the statistics start</p>
+            </span>
+            <span class="plus" data-ico="plus"></span>
+          </summary>
+          <div class="inner">
+            <p>A differential expression analysis ends with a list, and the list immediately goes into an enrichment test, and the enrichment test produces pathways, and the pathways become the story. Each step is reasonable. The combination routinely produces conclusions that would not survive being asked one question: compared to what?</p>
+            <h4>The background set is the analysis</h4>
+            <p>Over-representation testing asks whether a pathway appears in your list more often than chance. "Chance" is defined by the background — the set of genes that could have been selected. Test against the whole genome when only expressed genes could ever have appeared in your list, and every pathway enriched in expressed genes looks enriched in your result. In tissue-specific data that is most of the interesting ones.</p>
+            <h4>Annotation bias is not noise</h4>
+            <p>Gene sets are built from published work, and publication is not uniform. Well-studied genes carry more annotations, so pathways full of well-studied genes enrich more readily than pathways of equal biological relevance that nobody has got round to characterising. An enrichment result is partly a map of what the field has already found interesting.</p>
+            <h4>Redundancy inflates the apparent findings</h4>
+            <p>Gene sets overlap heavily. Forty significant terms can be four biological statements wearing different names, and a screenshot of forty rows reads as four times more evidence than it is. Clustering terms by member overlap before reporting is the minimum.</p>
+            <div class="callout warn"><b>What enrichment does not establish.</b> That a pathway is active, that it is causal, or that it is a mechanism. It establishes that genes which happen to carry a shared annotation moved together — which is a reason to look, not a result.</div>
+            <div class="callout" style="margin-top:14px"><b>How I would report one.</b> State the background and why it is that background; state the annotation source and its version; correct for multiple testing across every set tested; collapse redundant terms; and lead with effect size rather than with the smallest p-value.</div>
           </div>
         </details>
 

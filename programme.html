@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pharmacogenomics programme · Seren Aitchison</title>
+<meta name="description" content="How four separate pharmacogenomics analyses build into one argument about evidence grading, and what is still missing from it.">
+<link rel="canonical" href="https://serenaitchison.com/programme.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/programme.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero">
+      <span class="eyebrow">Research programme · in development</span>
+      <h1>Four analyses, <span class="grad serif">one argument.</span></h1>
+      <p class="lede">Individually, the pharmacogenomics projects are small. Together they make a single point that I think is worth making properly: the distance between a variant identifier and a defensible statement about drug response is made of distinct evidence layers, and most of the ways this work goes wrong involve silently collapsing them.</p>
+      <div class="actions">
+        <a class="btn btn-gem lg" href="lab.html#pgx"><span class="gem" aria-hidden="true"></span><span>Use the tools</span></a>
+        <a class="btn btn-ghost lg" href="methods.html#pgx-phen"><span>The method</span></a>
+      </div>
+      <div class="meta-strip">
+        <span><b>4</b> published analyses</span>
+        <span><b>2</b> live tools</span>
+        <span><b>8</b> pharmacogenes</span>
+        <span><b>In development</b> as one platform</span>
+      </div>
+    </section>
+
+    <!-- The layers -->
+    <section class="section" aria-labelledby="ly-t">
+      <div class="sec-head left">
+        <span class="eyebrow">The structure of the claim</span>
+        <h2 id="ly-t">Five layers, and the gaps between them.</h2>
+        <p>Each layer answers a different question and rests on different evidence. A statement is only as strong as the weakest transition it crosses, and the transitions are where the interesting failures live.</p>
+      </div>
+      <div id="layers"></div>
+    </section>
+
+    <!-- What each project contributes -->
+    <section class="section" aria-labelledby="pc-t">
+      <div class="sec-head left">
+        <span class="eyebrow">How the pieces fit</span>
+        <h2 id="pc-t">What each analysis contributed.</h2>
+      </div>
+      <div class="timeline" id="pieces"></div>
+    </section>
+
+    <!-- The synthesis -->
+    <section class="section" aria-labelledby="sy-t">
+      <div class="sec-head left">
+        <span class="eyebrow">The synthesis</span>
+        <h2 id="sy-t">What the four together establish.</h2>
+      </div>
+      <div class="paper">
+        <nav class="toc" aria-label="On this page">
+          <a href="#s-1">01 · The core claim</a>
+          <a href="#s-2">02 · Evidence that supports it</a>
+          <a href="#s-3">03 · What is missing</a>
+          <a href="#s-4">04 · Where it goes next</a>
+        </nav>
+        <article class="prose">
+          <section id="s-1">
+            <h2><span class="n">01</span> The core claim</h2>
+            <p>A pharmacogenomic statement is a chain of inferences, not a lookup. Genomic annotation establishes what a variant does to transcripts. Allele function establishes what a haplotype does to a protein's activity. Phenotype assignment combines two alleles under a published framework. Clinical guidance translates that phenotype into a prescribing recommendation for one drug. And outcome depends on everything else about the patient.</p>
+            <p>Each step loses information, and each is supported by a different kind of evidence — computational prediction, functional study, consensus framework, clinical trial. <strong>A tool that presents the output of the first step in the language of the fourth is not a shortcut. It is a category error</strong>, and it is the most common failure in this area.</p>
+          </section>
+
+          <section id="s-2">
+            <h2><span class="n">02</span> Evidence that supports it</h2>
+            <p>Two of the four analyses produced concrete cases where a layer boundary matters, which is why I think the claim is worth more than an assertion.</p>
+            <div class="callout">
+              <b>CYP2C19*2 is annotated synonymous.</b> The most frequent VEP consequence term for rs4244285 is <code>synonymous_variant</code>, which would ordinarily suggest no effect on the protein. The allele's loss of function is a splicing defect. A pipeline reading the transcript annotation and stopping there would classify a well-established no-function allele as benign.
+            </div>
+            <div class="callout" style="margin-top:14px">
+              <b>SIFT calls APOE C112R tolerated.</b> One of the best-characterised coding variants in human genetics is scored as tolerated by a conservation-based predictor. The predictor is not malfunctioning — it scores substitution tolerance, not phenotypic consequence. But a workflow that treats in-silico prediction as functional evidence inherits that answer.
+            </div>
+            <p style="margin-top:18px">Both cases point the same way: the annotation layer cannot be read as the function layer, and the failure is silent in each direction. Nothing errors. The output simply means something narrower than it appears to.</p>
+          </section>
+
+          <section id="s-3">
+            <h2><span class="n">03</span> What is missing</h2>
+            <p>I would rather set this out plainly than let the programme look more complete than it is.</p>
+            <ul>
+              <li><strong>No real genotype data.</strong> Everything works from reference records and curated tables. The programme has never been run against a VCF, which is how the problem actually presents.</li>
+              <li><strong>No systematic evidence grading.</strong> CPIC levels and PharmGKB clinical annotation levels are referenced, but not yet parsed from source into a structured field with provenance per claim.</li>
+              <li><strong>Star-allele calling is not implemented.</strong> The tools work one allele or one diplotype at a time. Going from variant calls to a diplotype requires phase, and for CYP2D6 copy number — which is the part that genuinely matters and the part I have not built.</li>
+              <li><strong>No validation set.</strong> There is no collection of known genotype–phenotype pairs against which the assignment logic is checked. That is the single most useful next piece of work, and its absence is why I describe the programme as in development rather than published.</li>
+            </ul>
+          </section>
+
+          <section id="s-4">
+            <h2><span class="n">04</span> Where it goes next</h2>
+            <p>In the order I would actually do it, each step chosen because it closes a specific gap above.</p>
+            <div class="pipeline">
+              <div class="step"><small>First</small><b>Validation set</b></div>
+              <div class="step"><small>Then</small><b>Parse CPIC tables</b></div>
+              <div class="step"><small>Then</small><b>VCF → diplotype</b></div>
+              <div class="step"><small>Then</small><b>Copy number</b></div>
+              <div class="step"><small>Finally</small><b>Evidence provenance</b></div>
+            </div>
+            <ol style="margin-top:18px">
+              <li><strong>Build the validation set first.</strong> Known diplotype–phenotype pairs from CPIC's own supplementary tables, so the assignment logic can be tested rather than trusted. Doing this before adding features is the whole point.</li>
+              <li><strong>Parse the allele definition and function tables from source</strong> rather than curating by hand, with the file version recorded so a result can be traced to the table that produced it.</li>
+              <li><strong>Accept a VCF</strong> and call star alleles from genotypes, which forces the phase problem into the open instead of assuming it away.</li>
+              <li><strong>Handle CYP2D6 structural variation</strong>, or state clearly that the tool cannot and should not be used for that gene — which may well be the honest outcome.</li>
+              <li><strong>Attach provenance to every claim</strong>: which table, which version, which guideline, so a reader can audit any statement the tool makes.</li>
+            </ol>
+            <div class="callout warn">
+              <b>Why this is labelled in development.</b> Four published analyses and two working tools do not add up to a platform. They add up to a well-understood problem, a defensible structure for the answer, and a list of the things I have not built yet. Calling that finished would be the exact overclaim the programme is about.
+            </div>
+            <div class="actions">
+              <a class="btn btn-primary lg" href="lab.html#pgx"><span>Use the explorer</span> <span aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost lg" href="contact.html"><span>Tell me what I've missed</span></a>
+            </div>
+          </section>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

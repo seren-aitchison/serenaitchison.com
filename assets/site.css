@@ -322,7 +322,8 @@ h1 { margin: 0; font-size: clamp(40px, 6vw, 76px); line-height: 1.03; letter-spa
 .card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
 .card .tags span { font: 11.5px var(--mono); color: var(--faint); padding: 2px 8px; border-radius: 6px; background: rgba(255, 255, 255, .04); border: 1px solid var(--line); }
 .card.featured { grid-column: 1 / -1; }
-.study-link { display: inline-flex; align-items: center; gap: 2px; font-size: 13px; color: var(--mute); text-decoration: none; }
+.study-link { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--mute); text-decoration: none; }
+.study-link svg, .chip svg, .t-item .study-link svg { width: 14px; height: 14px; flex: none; }
 .study-link:hover { color: var(--fg); }
 .empty { padding: 40px; text-align: center; color: var(--faint); }
 

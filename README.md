@@ -11,6 +11,7 @@ index.html              homepage: hero, workbench, pathways, capabilities, featu
 projects.html           searchable project directory, filterable by theme
 project.html?p=<id>     project detail, laid out as a short paper
 research.html           five research themes and seven independent proposals
+programme.html          the pharmacogenomics synthesis: evidence layers, and what is missing
 lab.html                the Computational Lab: six interactive tools
 skills.html             capability matrix, every entry linked to evidence
 methods.html            reference library: 19 methods, with assumptions and failure modes

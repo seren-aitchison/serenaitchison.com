@@ -100,7 +100,7 @@ export function mountChrome(current = "") {
           <p class="avail" style="margin-top:14px"><i aria-hidden="true"></i> Open to doctoral research and computational biology positions</p>
         </div>
         <nav aria-label="Research"><b>Research</b>
-          <a href="research.html">Interests</a><a href="research.html#proposals">Proposals</a><a href="projects.html">Projects</a><a href="methods.html">Methods library</a><a href="writing.html">Writing</a><a href="reproducibility.html">Reproducibility</a>
+          <a href="research.html">Interests</a><a href="research.html#proposals">Proposals</a><a href="projects.html">Projects</a><a href="programme.html">PGx programme</a><a href="methods.html">Methods library</a><a href="writing.html">Writing</a><a href="reproducibility.html">Reproducibility</a>
         </nav>
         <nav aria-label="Pathways"><b>Pathways</b>
           <a href="phd.html">PhD supervisors</a><a href="phd.html#ucl">UCL</a><a href="phd.html#sydney">Sydney</a><a href="industry.html">Industry</a><a href="lab.html">Computational Lab</a>

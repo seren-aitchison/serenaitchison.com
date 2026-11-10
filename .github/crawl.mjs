@@ -6,7 +6,7 @@ import { chromium } from "playwright";
 const BASE = "http://localhost:8080";
 const PAGES = [
   "/", "/projects.html", "/research.html", "/lab.html", "/methods.html", "/skills.html",
-  "/writing.html", "/about.html", "/phd.html", "/industry.html", "/cv.html", "/contact.html",
+  "/writing.html", "/programme.html", "/about.html", "/phd.html", "/industry.html", "/cv.html", "/contact.html",
   "/reproducibility.html", "/404.html",
   "/project.html?p=pgx-cyp2c19", "/project.html?p=gradify", "/project.html?p=does-not-exist",
 ];

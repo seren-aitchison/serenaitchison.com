@@ -12,7 +12,7 @@ projects.html           searchable project directory, filterable by theme
 project.html?p=<id>     project detail, laid out as a short paper
 research.html           five research themes and thirteen independent proposals
 programme.html          the pharmacogenomics synthesis: evidence layers, and what is missing
-lab.html                the Computational Lab: nine interactive tools
+lab.html                the Computational Lab: ten interactive tools
 skills.html             capability matrix, every entry linked to evidence
 methods.html            reference library: 28 methods, with assumptions and failure modes
 writing.html            longer method notes
@@ -37,6 +37,7 @@ assets/
   lab-protein.js        variant → protein residue, with reference verification
   lab-vcf.js            VCF normalisation: split, trim, left-align, check REF
   lab-fastq.js          FASTQ parsing and read-level QC
+  lab-coverage.js       pharmacogene panel coverage by population
   methods-data.js       the methods library
   *.js                  one small entry module per page
 ```
@@ -53,7 +54,7 @@ Then open http://localhost:8080.
 
 ## The Lab
 
-Nine tools; five query public APIs directly from the visitor's browser:
+Ten tools; most run on real data fetched from public APIs:
 
 | Tool | Source | Notes |
 |---|---|---|
@@ -62,6 +63,7 @@ Nine tools; five query public APIs directly from the visitor's browser:
 | Variant to protein | Ensembl REST + VEP | Maps a variant to its residue and verifies the reference against the fetched translation |
 | VCF normalisation | Ensembl REST | Splits multi-allelic records, trims, and left-aligns indels against GRCh38 |
 | Read quality control | — | FASTQ parsing, Phred decoding, per-cycle quality, duplication and adapter content |
+| Coverage audit | gnomAD snapshot + live refresh | Per-population rate of diplotypes carrying an unassayed reduced-function allele |
 | Population frequencies | Ensembl REST (gnomAD) | The `pops=1` query is slow — up to a minute |
 | Molecular explorer | PubChem PUG REST | 3D structures rendered with 3Dmol.js |
 | Interaction networks | STRING | Falls back to a bundled example set if unreachable |

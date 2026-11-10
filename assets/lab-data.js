@@ -320,3 +320,112 @@ export const DIPLO = {
     },
   },
 };
+
+// ---------------------------------------------------------------------------
+// Coverage audit: which pharmacogene alleles a panel assays, and what it misses.
+//
+// Star alleles are defined by haplotypes, not single variants. This table uses one
+// key defining variant per allele, which is how most targeted panels call them and
+// is a stated simplification of the tool. Allele functions follow CPIC.
+// ---------------------------------------------------------------------------
+
+export const COVERAGE = {
+  CYP2D6: {
+    drugs: "Codeine, tramadol, tamoxifen, tricyclics",
+    note: "*4 is an intronic splice variant and has no gnomAD exome frequency, so the most important no-function allele in European populations cannot be scored here at all — the figures below understate the real gap. Separately, even a panel testing every allele listed still misses gene deletions, duplications and CYP2D7 hybrids, which change the activity score outright. This is an upper bound on what SNP genotyping can achieve.",
+    alleles: [
+      { a: "*4", rs: "rs3892097", fn: "No function", core: true },
+      { a: "*3", rs: "rs35742686", fn: "No function", core: true },
+      { a: "*6", rs: "rs5030655", fn: "No function", core: true },
+      { a: "*10", rs: "rs1065852", fn: "Decreased function", core: false },
+      { a: "*17", rs: "rs28371706", fn: "Decreased function", core: false },
+      { a: "*41", rs: "rs28371725", fn: "Decreased function", core: false },
+    ],
+  },
+  CYP2C19: {
+    drugs: "Clopidogrel, voriconazole, SSRIs, PPIs",
+    note: "*17 is a promoter variant, so exome-based datasets do not cover it. An absent frequency here is a property of the data source, not of the allele.",
+    alleles: [
+      { a: "*2", rs: "rs4244285", fn: "No function", core: true },
+      { a: "*3", rs: "rs4986893", fn: "No function", core: true },
+      { a: "*17", rs: "rs12248560", fn: "Increased function", core: false },
+    ],
+  },
+  TPMT: {
+    drugs: "Azathioprine, mercaptopurine, thioguanine",
+    note: "TPMT testing alone is the standard illustration of this problem: it misses NUDT15, which carries much of the thiopurine toxicity risk in East Asian populations.",
+    alleles: [
+      { a: "*3C", rs: "rs1142345", fn: "No function", core: true },
+      { a: "*3B", rs: "rs1800460", fn: "No function", core: true },
+      { a: "*2", rs: "rs1800462", fn: "No function", core: false },
+    ],
+  },
+  NUDT15: {
+    drugs: "Azathioprine, mercaptopurine, thioguanine",
+    note: "Add this gene to a TPMT-only panel and compare the two populations' numbers. The difference is the point.",
+    alleles: [{ a: "*3", rs: "rs116855232", fn: "No function", core: true }],
+  },
+  DPYD: {
+    drugs: "5-Fluorouracil, capecitabine",
+    note: "A toxicity gene: an uncaptured no-function allele means a standard dose given to someone who cannot clear it.",
+    alleles: [
+      { a: "*2A", rs: "rs3918290", fn: "No function", core: true },
+      { a: "*13", rs: "rs55886062", fn: "No function", core: false },
+      { a: "c.2846A>T", rs: "rs67376798", fn: "Decreased function", core: false },
+    ],
+  },
+  CYP2C9: {
+    drugs: "Warfarin, phenytoin, NSAIDs",
+    alleles: [
+      { a: "*2", rs: "rs1799853", fn: "Decreased function", core: true },
+      { a: "*3", rs: "rs1057910", fn: "No function", core: true },
+    ],
+  },
+  SLCO1B1: {
+    drugs: "Simvastatin, atorvastatin",
+    alleles: [{ a: "*5 / *15", rs: "rs4149056", fn: "Decreased function", core: true }],
+  },
+};
+
+// Weight used when estimating phenotype impact: a no-function allele contributes fully,
+// a decreased-function allele partially. Stated in the tool, not hidden.
+export const FUNCTION_WEIGHT = {
+  "No function": 1,
+  "Decreased function": 0.5,
+  "Increased function": 0,
+};
+
+// ---------------------------------------------------------------------------
+// gnomAD exome alternate-allele frequencies, retrieved from the Ensembl variation
+// endpoint on 2026-11-10. Bundled rather than fetched live because the pops=1 query
+// takes roughly half a minute per variant, which is unusable in a page. The tool
+// can re-fetch any variant live to check the snapshot against current Ensembl.
+//
+// `alt` is the alternate allele that actually carries frequency data at that site;
+// at multi-allelic sites the first listed alternate is often not the one meant.
+// A null frequency means gnomAD exomes do not cover the variant — true of promoter
+// and deep intronic variants, which is informative rather than a gap in the data.
+// ---------------------------------------------------------------------------
+
+export const FREQ_RETRIEVED = "2026-11-10";
+export const FREQ_SNAPSHOT = {
+  rs4244285: { ref: "G", alt: "A", freq: { afr: 0.1805, amr: 0.1039, asj: 0.1325, eas: 0.3023, fin: 0.1726, mid: 0.1102, nfe: 0.1461, remaining: 0.1645, sas: 0.3194 } },
+  rs4986893: { ref: "G", alt: "A", freq: { afr: 0.000538, amr: 0.000179, eas: 0.09231, fin: 0.000131, mid: 0.001388, nfe: 0.000101, remaining: 0.004207, sas: 0.003397 } },
+  rs12248560: { ref: "C", alt: null, freq: null },
+  rs3892097: { ref: "C", alt: null, freq: null },
+  rs35742686: { ref: "T", alt: "-", freq: { afr: 0.002311, amr: 0.004927, asj: 0.004707, fin: 0.03383, mid: 0.003647, nfe: 0.01753, remaining: 0.0114, sas: 0.001778 } },
+  rs5030655: { ref: "A", alt: "-", freq: { afr: 0.001951, amr: 0.004402, asj: 0.0107, eas: 2.5e-05, fin: 0.01908, mid: 0.005051, nfe: 0.01246, remaining: 0.00861, sas: 0.002083 } },
+  rs1065852: { ref: "G", alt: "A", freq: { afr: 0.1206, amr: 0.1258, asj: 0.2448, eas: 0.4809, fin: 0.119, mid: 0.1393, nfe: 0.2201, remaining: 0.2113, sas: 0.157 } },
+  rs28371706: { ref: "G", alt: "A", freq: { afr: 0.196, amr: 0.0092, asj: 0.0167, fin: 0.000192, mid: 0.02255, nfe: 0.000599, remaining: 0.01244, sas: 0.00115 } },
+  rs28371725: { ref: "C", alt: "T", freq: { afr: 0.02624, amr: 0.04438, asj: 0.1791, eas: 0.02135, fin: 0.03228, mid: 0.151, nfe: 0.09748, remaining: 0.103, sas: 0.1359 } },
+  rs1142345: { ref: "T", alt: "C", freq: { afr: 0.05531, amr: 0.04849, asj: 0.01571, eas: 0.01297, fin: 0.0302, mid: 0.01041, nfe: 0.04701, remaining: 0.03592, sas: 0.01673 } },
+  rs1800460: { ref: "C", alt: "T", freq: { afr: 0.005825, amr: 0.04296, asj: 0.01524, eas: 7.6e-05, fin: 0.02707, mid: 0.005548, nfe: 0.04179, remaining: 0.02798, sas: 0.006506 } },
+  rs1800462: { ref: "C", alt: "G", freq: { afr: 0.000568, amr: 0.003757, asj: 0.00199, fin: 0.000112, mid: 0.000347, nfe: 0.00249, remaining: 0.002087 } },
+  rs116855232: { ref: "C", alt: "T", freq: { afr: 0.001319, amr: 0.05633, asj: 0.003064, eas: 0.1035, fin: 0.02064, mid: 0.01197, nfe: 0.002527, remaining: 0.01335, sas: 0.0644 } },
+  rs3918290: { ref: "C", alt: "T", freq: { afr: 0.000359, amr: 0.001141, asj: 0.005399, fin: 0.02314, mid: 0.002949, nfe: 0.004822, remaining: 0.005052, sas: 0.004058 } },
+  rs55886062: { ref: "A", alt: "C", freq: { afr: 9e-05, fin: 0.000112, nfe: 0.000853, remaining: 0.000663 } },
+  rs67376798: { ref: "T", alt: "A", freq: { afr: 0.001046, amr: 0.002348, asj: 0.000268, eas: 2.5e-05, fin: 0.000487, mid: 0.000347, nfe: 0.006452, remaining: 0.004091, sas: 0.000522 } },
+  rs1799853: { ref: "C", alt: "T", freq: { afr: 0.01949, amr: 0.0722, asj: 0.1378, eas: 0.000227, fin: 0.1135, mid: 0.1202, nfe: 0.1322, remaining: 0.1059, sas: 0.04904 } },
+  rs1057910: { ref: "A", alt: "C", freq: { afr: 0.0127, amr: 0.03956, asj: 0.0833, eas: 0.03013, fin: 0.0627, mid: 0.07321, nfe: 0.06487, remaining: 0.06429, sas: 0.1099 } },
+  rs4149056: { ref: "T", alt: "C", freq: { afr: 0.03046, amr: 0.1204, asj: 0.1845, eas: 0.1385, fin: 0.2066, mid: 0.2051, nfe: 0.1524, remaining: 0.1482, sas: 0.047 } },
+};

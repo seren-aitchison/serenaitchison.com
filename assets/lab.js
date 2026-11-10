@@ -7,6 +7,7 @@ import { mountDiplotype } from "./lab-diplotype.js";
 import { mountProtein } from "./lab-protein.js";
 import { mountVcf } from "./lab-vcf.js";
 import { mountFastq } from "./lab-fastq.js";
+import { mountCoverage } from "./lab-coverage.js";
 
 mountChrome("lab.html");
 document.querySelectorAll("[data-ico]").forEach((el) => { el.innerHTML = icon(el.dataset.ico); });
@@ -141,7 +142,10 @@ mountVcf(document.getElementById("vcf"));
 /* ======================= 05 · Read quality control ======================= */
 mountFastq(document.getElementById("fastq"));
 
-/* ======================= 06 · Population frequencies ======================= */
+/* ======================= 06 · Coverage audit ======================= */
+mountCoverage(document.getElementById("coverage"));
+
+/* ======================= 07 · Population frequencies ======================= */
 (function freqTool() {
   const sel = $("#freq-variant"), dsSel = $("#freq-dataset"), out = $("#freq-out"), status = $("#freq-status");
   if (!sel) return;
@@ -202,7 +206,7 @@ mountFastq(document.getElementById("fastq"));
   render();
 })();
 
-/* ======================= 07 · Molecular explorer ======================= */
+/* ======================= 08 · Molecular explorer ======================= */
 (function molTool() {
   const pick = $("#mol-pick"), styleSel = $("#mol-style"), out = $("#mol-out"), status = $("#mol-status");
   if (!pick) return;
@@ -309,7 +313,7 @@ mountFastq(document.getElementById("fastq"));
   shell(`<div class="empty">Press <b>Load structure</b> to fetch from PubChem.</div>`);
 })();
 
-/* ======================= 08 · Interaction network ======================= */
+/* ======================= 09 · Interaction network ======================= */
 (function netTool() {
   const geneIn = $("#net-gene"), sizeSel = $("#net-size"), conf = $("#net-conf"), confV = $("#net-conf-v");
   const out = $("#net-out"), info = $("#net-info"), status = $("#net-status");
@@ -386,7 +390,7 @@ mountFastq(document.getElementById("fastq"));
   load();
 })();
 
-/* ======================= 09 · Statistics studio ======================= */
+/* ======================= 10 · Statistics studio ======================= */
 (function statsTool() {
   const modes = $("#stat-mode"), controls = $("#stat-controls"), out = $("#stat-out");
   if (!modes) return;

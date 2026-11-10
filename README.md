@@ -12,9 +12,9 @@ projects.html           searchable project directory, filterable by theme
 project.html?p=<id>     project detail, laid out as a short paper
 research.html           five research themes and seven independent proposals
 programme.html          the pharmacogenomics synthesis: evidence layers, and what is missing
-lab.html                the Computational Lab: six interactive tools
+lab.html                the Computational Lab: seven interactive tools
 skills.html             capability matrix, every entry linked to evidence
-methods.html            reference library: 19 methods, with assumptions and failure modes
+methods.html            reference library: 28 methods, with assumptions and failure modes
 writing.html            longer method notes
 about.html              background and the dissertation case study
 phd.html                pathway for doctoral supervisors (incl. UCL and Sydney sections)
@@ -34,6 +34,7 @@ assets/
   lab.js                the Lab tools
   lab-stats.js          Manhattan, QQ and expression plots
   lab-diplotype.js      CPIC diplotype → phenotype assignment
+  lab-protein.js        variant → protein residue, with reference verification
   methods-data.js       the methods library
   *.js                  one small entry module per page
 ```
@@ -50,12 +51,13 @@ Then open http://localhost:8080.
 
 ## The Lab
 
-Six tools; three query public APIs directly from the visitor's browser:
+Seven tools; four query public APIs directly from the visitor's browser:
 
 | Tool | Source | Notes |
 |---|---|---|
 | Pharmacogenomics explorer | Ensembl REST + VEP | Allele function and gene–drug pairs curated from CPIC |
 | Diplotype to phenotype | — | CPIC activity scores and function rules for 7 genes, computed in the page |
+| Variant to protein | Ensembl REST + VEP | Maps a variant to its residue and verifies the reference against the fetched translation |
 | Population frequencies | Ensembl REST (gnomAD) | The `pops=1` query is slow — up to a minute |
 | Molecular explorer | PubChem PUG REST | 3D structures rendered with 3Dmol.js |
 | Interaction networks | STRING | Falls back to a bundled example set if unreachable |

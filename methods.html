@@ -25,10 +25,10 @@
     <section class="page-hero">
       <span class="eyebrow">Methods library</span>
       <h1>Methods, and <span class="grad serif">how they fail.</span></h1>
-      <p class="lede">A working reference for the methods I use. Each entry covers the problem it solves, the idea behind it, the assumptions it makes, the ways it breaks, and how to read its output honestly. The failure modes are the part I find most worth writing down — they are what separates using a method from understanding it.</p>
+      <p class="lede">A working reference for the methods I use, from read quality and alignment through to survival models and docking. Each entry covers the problem it solves, the idea behind it, the assumptions it makes, the ways it breaks, and how to read its output honestly. The failure modes are the part I find most worth writing down — they are what separates using a method from understanding it.</p>
       <div class="meta-strip">
         <span><b id="m-count">·</b> methods</span>
-        <span><b>7</b> areas</span>
+        <span><b id="m-areas">·</b> areas</span>
         <span><b>Assumptions</b> and failure modes for each</span>
       </div>
     </section>
@@ -47,7 +47,7 @@
     <section class="banner">
       <span class="gem-chip"><span class="gem" aria-hidden="true"></span><span>Why this exists</span></span>
       <h2>Knowing when not to trust a method.</h2>
-      <p>Any of these can be run from a library call in one line. The part that takes time to learn is recognising the situation where the output will be confidently wrong — a UMAP distance read as a measurement, a hazard ratio from crossing survival curves, a lead SNP treated as causal. That is what this library is for.</p>
+      <p>Any of these can be run from a library call in one line. The part that takes time to learn is recognising the situation where the output will be confidently wrong — an un-normalised indel silently failing to match a database, a fold change computed from TPM, batch confounded with the biological variable, a UMAP distance read as a measurement, a lead SNP treated as causal. That is what this library is for.</p>
       <div class="actions" style="justify-content:center">
         <a class="btn btn-primary lg" href="lab.html"><span>See them running</span> <span aria-hidden="true">→</span></a>
         <a class="btn btn-ghost lg" href="writing.html"><span>Longer method notes</span></a>

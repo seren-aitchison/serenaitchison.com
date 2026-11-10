@@ -4,6 +4,7 @@ import { mountChrome, icon, esc } from "./ui.js";
 import { PGX, PGX_NOTE, FREQ_VARIANTS, POPS, COMPOUNDS, RULES, NET_FALLBACK } from "./lab-data.js";
 import { drawManhattan, drawQQ, drawExpression, STAT_CONTROLS } from "./lab-stats.js";
 import { mountDiplotype } from "./lab-diplotype.js";
+import { mountProtein } from "./lab-protein.js";
 
 mountChrome("lab.html");
 document.querySelectorAll("[data-ico]").forEach((el) => { el.innerHTML = icon(el.dataset.ico); });
@@ -125,7 +126,14 @@ const errorBox = (e, what) => `<div class="callout warn"><b>Could not reach ${es
 /* ======================= 02 · Diplotype to phenotype ======================= */
 mountDiplotype(document.getElementById("diplo"));
 
-/* ======================= 03 · Population frequencies ======================= */
+/* ======================= 03 · Variant to protein ======================= */
+mountProtein(document.getElementById("protein"));
+{
+  const w = $("#pr-window"), v = $("#pr-window-v");
+  if (w && v) w.addEventListener("input", () => { v.textContent = w.value; });
+}
+
+/* ======================= 04 · Population frequencies ======================= */
 (function freqTool() {
   const sel = $("#freq-variant"), dsSel = $("#freq-dataset"), out = $("#freq-out"), status = $("#freq-status");
   if (!sel) return;
@@ -186,7 +194,7 @@ mountDiplotype(document.getElementById("diplo"));
   render();
 })();
 
-/* ======================= 04 · Molecular explorer ======================= */
+/* ======================= 05 · Molecular explorer ======================= */
 (function molTool() {
   const pick = $("#mol-pick"), styleSel = $("#mol-style"), out = $("#mol-out"), status = $("#mol-status");
   if (!pick) return;
@@ -293,7 +301,7 @@ mountDiplotype(document.getElementById("diplo"));
   shell(`<div class="empty">Press <b>Load structure</b> to fetch from PubChem.</div>`);
 })();
 
-/* ======================= 05 · Interaction network ======================= */
+/* ======================= 06 · Interaction network ======================= */
 (function netTool() {
   const geneIn = $("#net-gene"), sizeSel = $("#net-size"), conf = $("#net-conf"), confV = $("#net-conf-v");
   const out = $("#net-out"), info = $("#net-info"), status = $("#net-status");
@@ -370,7 +378,7 @@ mountDiplotype(document.getElementById("diplo"));
   load();
 })();
 
-/* ======================= 06 · Statistics studio ======================= */
+/* ======================= 07 · Statistics studio ======================= */
 (function statsTool() {
   const modes = $("#stat-mode"), controls = $("#stat-controls"), out = $("#stat-out");
   if (!modes) return;

@@ -4,10 +4,11 @@ import { mountChrome, icon, esc } from "./ui.js";
 
 mountChrome("methods.html");
 document.getElementById("m-count").textContent = METHODS.length;
+document.getElementById("m-areas").textContent = CATEGORIES.length - 1;
 document.getElementById("mq-btn").innerHTML = icon("search");
 
-const COLOURS = { struct: "#36b6c9", test: "#3f9be0", model: "#5b6cf0", surv: "#4d7dff", gen: "#2fa7a0", chem: "#7c8cff", net: "#8a96ad" };
-const ICONS = { struct: "layers", test: "chart", model: "cpu", surv: "clock", gen: "dna", chem: "atom", net: "network" };
+const COLOURS = { seq: "#36b6c9", proc: "#3fb0c9", struct: "#3f9be0", test: "#4d7dff", model: "#5b6cf0", surv: "#6a6ef0", gen: "#2fa7a0", chem: "#7c8cff", net: "#8a96ad" };
+const ICONS = { seq: "dna", proc: "repeat", struct: "layers", test: "chart", model: "cpu", surv: "clock", gen: "target", chem: "atom", net: "network" };
 
 const tabs = document.getElementById("m-tabs");
 const results = document.getElementById("m-results");

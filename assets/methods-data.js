@@ -3,6 +3,8 @@
 
 export const CATEGORIES = [
   ["all", "All methods"],
+  ["seq", "Sequencing and variants"],
+  ["proc", "Processing and normalisation"],
   ["struct", "Structure and dimensionality"],
   ["test", "Statistical testing"],
   ["model", "Predictive modelling"],
@@ -13,6 +15,169 @@ export const CATEGORIES = [
 ];
 
 export const METHODS = [
+  /* ---------------- Sequencing and variants ---------------- */
+  {
+    id: "phred", cat: "seq", name: "Phred quality scores", short: "Base quality",
+    solves: "Attach a calibrated probability of error to every base a sequencer reports.",
+    idea: "Q = −10 log₁₀ P(error), stored as an ASCII character offset by 33. Q20 is a 1-in-100 chance the base is wrong, Q30 is 1-in-1,000, Q40 is 1-in-10,000. The logarithmic scale means the difference between Q30 and Q40 is an order of magnitude, not a tenth.",
+    assumptions: [
+      "The instrument's quality model is calibrated — that a reported Q30 really does mean 1-in-1,000 in this run, on this chemistry.",
+      "Errors are independent between bases, which they are not: they cluster at read ends, in homopolymers and in low-complexity sequence.",
+    ],
+    fails: [
+      "Quality degrades along a read, so a mean quality per read hides a tail that should be trimmed.",
+      "Miscalibration is systematic rather than random, which is why base quality score recalibration exists as a step at all.",
+      "A high-quality base can still be mapped to the wrong place. Base quality and mapping quality are different numbers answering different questions, and confusing them is common.",
+    ],
+    read: "Report per-base quality distributions rather than a single mean, and state the trimming thresholds used. A variant supported only by low-quality bases, or by bases at read ends, deserves suspicion regardless of depth.",
+    use: "The first thing to check in any sequencing dataset, and the reason QC precedes everything in the pipeline proposal.",
+    ref: "Ewing & Green (1998).",
+  },
+  {
+    id: "align", cat: "seq", name: "Alignment and pseudoalignment", short: "Read mapping",
+    solves: "Work out where in a reference each sequencing read came from — or, for quantification, which transcripts it is compatible with.",
+    idea: "Aligners such as BWA-MEM and STAR find the position and the base-level correspondence, using a suffix-array or seed-and-extend index; STAR additionally handles reads that span splice junctions. Pseudoaligners such as kallisto and salmon skip base-level alignment altogether and determine only the set of transcripts each read is compatible with, which is all that transcript quantification needs and is dramatically faster.",
+    assumptions: [
+      "The reference is appropriate for the sample. Mapping to a reference that lacks the sample's haplotypes produces reference bias — reads carrying the alternate allele map slightly worse, or not at all.",
+      "For pseudoalignment, that the transcriptome index is complete. A read from an unannotated transcript has nowhere to go.",
+      "Reads come from the organism and assay you think they do.",
+    ],
+    fails: [
+      "Repetitive regions and paralogues give reads that map equally well in several places, reported as mapping quality zero. Silently keeping or discarding those changes results in whole gene families.",
+      "Pseudoalignment gives no base-level alignment, so it cannot be used for variant calling — it answers a narrower question by design.",
+      "Reference bias systematically under-calls heterozygous sites at divergent loci, which matters most in populations least like the reference.",
+    ],
+    read: "Report the reference build and annotation version, the aligner and its parameters, and the mapping rate. An unexplained drop in mapping rate between samples is a technical signal that will otherwise reappear as biology downstream.",
+    use: "The step the pipeline proposal is built around, and the reason that proposal specifies a workflow engine with recorded provenance.",
+    ref: "Li & Durbin (2009), BWA; Dobin et al. (2013), STAR; Bray et al. (2016), kallisto; Patro et al. (2017), salmon.",
+  },
+  {
+    id: "callset", cat: "seq", name: "Variant calling and filtering", short: "Variant calls",
+    solves: "Decide where a sample differs from the reference, and which of those differences to believe.",
+    idea: "Local reassembly callers such as GATK HaplotypeCaller rebuild candidate haplotypes in active regions rather than reading the pileup column by column, then genotype the sample against them. Joint calling across a cohort shares evidence, so a site that is marginal in one sample can be called confidently when others carry it. Filtering is then applied by hard thresholds or by a trained model such as VQSR.",
+    assumptions: [
+      "Sufficient and reasonably even depth. Coverage is not uniform — GC-rich and repetitive regions are systematically under-covered.",
+      "Ploidy is known and constant, which is wrong for sex chromosomes, mitochondria and tumour samples with copy-number change.",
+      "Errors are modelled well enough that a likelihood ratio means what it claims.",
+    ],
+    fails: [
+      "Indels, particularly in homopolymers and short tandem repeats, are far less reliable than SNVs, and conflating the two in a quality summary hides that.",
+      "A filtered callset is a trade: raising stringency removes false positives and real variants together, and the balance that suits an association study is not the one that suits a clinical report.",
+      "Absence of a call is not a reference genotype. Uncovered sites and filtered sites both look like 'no variant' downstream unless they are tracked separately.",
+    ],
+    read: "State caller, version, filtering strategy and the resulting transition/transversion ratio — a Ti/Tv far from about 2.0–2.1 for whole-genome data signals something wrong with the callset rather than something interesting about the sample.",
+    use: "The layer my pharmacogenomics work currently sits above rather than inside; going from a VCF to a diplotype is the named gap in that programme.",
+    ref: "DePristo et al. (2011); Poplin et al. (2018) on joint calling.",
+  },
+  {
+    id: "vcfnorm", cat: "seq", name: "VCF representation and normalisation", short: "Variant normalisation",
+    solves: "Make the same biological variant compare equal between two files that spell it differently.",
+    idea: "An indel can be written at several positions with several padding choices, all describing the same change. Normalisation makes the representation canonical: left-align the variant as far as it can shift without changing the sequence, trim shared bases from the ends, and split multi-allelic records into separate rows (or decide deliberately to keep them joined).",
+    assumptions: [
+      "Both files use the same reference build, and the same contig naming — chr1 and 1 do not join.",
+      "Left-alignment is performed against the same reference sequence used for calling.",
+    ],
+    fails: [
+      "Un-normalised indels silently fail to match between a callset and an annotation database, so a known pathogenic variant is reported as novel. This is one of the most common and least visible bugs in variant workflows.",
+      "Multi-allelic sites broken apart carelessly corrupt the genotype and allele-depth fields, which are positional.",
+      "Liftover between builds is lossy: some variants cannot be mapped, some flip strand, and treating a lifted file as equivalent to a natively called one is unsafe.",
+    ],
+    read: "State the reference build explicitly — GRCh37 and GRCh38 coordinates are not interchangeable and a position alone is ambiguous without it — and normalise both sides before comparing or annotating.",
+    use: "Why every variant record on this site carries its assembly, and why the Lab tools name GRCh38 on screen rather than in a footnote.",
+    ref: "Tan, Abecasis & Kang (2015) on variant normalisation.",
+  },
+  {
+    id: "coverage", cat: "seq", name: "Coverage and depth", short: "Coverage",
+    solves: "Decide whether a region was sequenced well enough to make a claim about it.",
+    idea: "Depth is the number of reads overlapping a position; breadth of coverage is the fraction of target bases at or above a chosen depth. Power to detect a heterozygous variant rises steeply with depth and then saturates, which is why targeted panels run at far higher depth than whole genomes.",
+    assumptions: [
+      "Reads are independent observations. PCR duplicates are not, so duplicate marking has to happen before depth means anything.",
+      "Coverage is reasonably uniform across the target, which GC content, mappability and capture efficiency all violate.",
+    ],
+    fails: [
+      "Mean depth is a poor summary: a target can average 100× while a clinically important exon sits at 5×. Breadth at a threshold is the more honest statistic.",
+      "A variant absent from a region with no coverage is not evidence of absence, and reporting it as wild-type is a real clinical hazard.",
+      "In tumour sequencing, depth requirements depend on purity and clonality — a subclonal variant at low allele fraction needs far more depth than a germline heterozygote.",
+    ],
+    read: "Report breadth at defined thresholds, and list regions falling below them rather than averaging them away. For pharmacogenes, state coverage per gene: CYP2D6 in particular is hard to cover well.",
+    use: "Directly relevant to the pharmacogenomics programme's gap list: a tool cannot know what an assay did not look at.",
+    ref: "Sims et al. (2014) on sequencing depth and coverage.",
+  },
+
+  /* ---------------- Processing and normalisation ---------------- */
+  {
+    id: "units", cat: "proc", name: "Expression units: counts, CPM, TPM", short: "Expression units",
+    solves: "Make expression values comparable — but only in the directions the unit actually supports.",
+    idea: "Raw counts depend on library size and transcript length. CPM divides by library size; RPKM/FPKM divides by length then library size; TPM divides by length first and then normalises so the values sum to a fixed total per sample, which makes it a proportion of the transcript pool.",
+    assumptions: [
+      "Length normalisation assumes the effective transcript length is known, which depends on the annotation and on fragment length.",
+      "Any within-sample proportion assumes you want a share of a pool rather than an absolute quantity.",
+      "Between-sample methods such as TMM or median-of-ratios assume most genes are not differentially expressed.",
+    ],
+    fails: [
+      "TPM is comparable within a sample, not between samples: because the values must sum to a constant, a large increase in a handful of transcripts pushes everything else down. Reading that as widespread down-regulation is a standard error.",
+      "Differential expression on TPM or FPKM discards the count-level variance the statistical model needs. Count models want raw counts with an offset, not pre-normalised values.",
+      "Global transcriptional shifts break the assumption underneath TMM and median-of-ratios, and need spike-ins or another external anchor.",
+    ],
+    read: "State the unit and what it licenses. TPM for comparing transcripts within a sample; raw counts with a model-appropriate normalisation for comparing conditions. Never report a fold change computed from TPM as though it had been tested.",
+    use: "The step that sits between the illustrative fold-change workflow and the real differential expression analysis the multi-omics proposal would run.",
+    ref: "Robinson & Oshlack (2010), TMM; Wagner et al. (2012) on TPM.",
+  },
+  {
+    id: "batch", cat: "proc", name: "Batch effects and correction", short: "Batch correction",
+    solves: "Remove technical variation introduced by when, where and how samples were processed.",
+    idea: "ComBat models batch as location and scale shifts per gene and shrinks those estimates across genes with an empirical Bayes prior; linear-model approaches such as limma's removeBatchEffect regress batch out directly, or keep it as a covariate in the design rather than modifying the data.",
+    assumptions: [
+      "Batch is known and recorded. Unrecorded batch cannot be corrected, only detected — if you are lucky.",
+      "Batch is not confounded with the biological variable of interest. This is the assumption that matters, and the one most often broken.",
+      "The effect is of the form the method models: additive and multiplicative per gene for ComBat.",
+    ],
+    fails: [
+      "If cases were processed in one batch and controls in another, batch and biology are the same variable. No correction can separate them, and applying one anyway produces a confident, clean, wrong answer.",
+      "Correcting then testing on the corrected values understates variance and inflates significance. Keeping batch as a covariate in the model is usually the better route.",
+      "Over-correction removes real biology when groups are unevenly distributed across batches.",
+    ],
+    read: "Show a PCA coloured by batch before and after, report how biology and batch are distributed against each other, and prefer modelling batch as a covariate over editing the data. If the design is confounded, say so and stop — that is the honest finding.",
+    use: "The first thing I would check in the multi-omics proposal, and the reason that proposal treats PC1 as technical until shown otherwise.",
+    ref: "Johnson, Li & Rabinovic (2007), ComBat; Leek et al. (2010) on batch effects.",
+  },
+  {
+    id: "imputation", cat: "proc", name: "Genotype imputation", short: "Imputation",
+    solves: "Infer genotypes at variants that were not directly assayed, using haplotype sharing with a reference panel.",
+    idea: "A hidden Markov model treats each study haplotype as a mosaic of reference panel haplotypes, switching between them at recombination points. Untyped genotypes are then filled in probabilistically from the reference haplotypes the model is currently following, with a per-variant quality score (INFO or r²) describing confidence.",
+    assumptions: [
+      "The reference panel represents the study population's haplotype diversity. This is the crux: imputation accuracy drops sharply for ancestries under-represented in the panel.",
+      "Phasing is accurate enough for the mosaic to be meaningful.",
+      "Study genotypes are themselves well called and strand-aligned to the panel.",
+    ],
+    fails: [
+      "Rare variants impute poorly, and exactly the variants most likely to matter functionally are the ones least well recovered.",
+      "Strand and allele mismatches against the panel produce silently wrong genotypes rather than errors — A/T and C/G sites are the classic trap.",
+      "Low-quality imputed variants carried into association testing generate false signals that look exactly like real ones.",
+    ],
+    read: "Report the panel and its version, filter on imputation quality with a stated threshold, and say which ancestries the panel covers well. Where the study population is poorly represented, that limitation belongs in the results, not the appendix.",
+    use: "Context for the GWAS work: it uses summary statistics rather than imputed genotypes, which is a limitation those projects state.",
+    ref: "Howie et al. (2009); Das et al. (2016), Minimac; Browning et al. (2021) on panel diversity.",
+  },
+  {
+    id: "roc", cat: "model", name: "ROC, precision-recall and calibration", short: "Classifier evaluation",
+    solves: "Describe how good a classifier is — in the respect that matters for how it will be used.",
+    idea: "ROC plots true positive rate against false positive rate across thresholds, and AUC is the probability a random positive is ranked above a random negative. A precision-recall curve instead plots precision against recall, which is far more informative when positives are rare. Calibration asks a different question entirely: when the model says 0.7, does the event happen about 70% of the time?",
+    assumptions: [
+      "For AUC, that ranking is what matters and a threshold will be chosen later.",
+      "For calibration, that predicted probabilities will be acted on as probabilities — which is exactly what happens in a clinical setting.",
+      "The evaluation set reflects the deployment prevalence.",
+    ],
+    fails: [
+      "AUC is insensitive to class imbalance, so a model can post an impressive AUC while being useless at the prevalence it will meet. With 1% positives, precision-recall tells the real story.",
+      "AUC says nothing about calibration. A model can rank perfectly and still produce probabilities that are systematically far too confident.",
+      "Tree ensembles and heavily regularised models are often poorly calibrated out of the box, and reporting AUC alone hides it.",
+    ],
+    read: "Report AUC with a confidence interval, add precision-recall when positives are rare, and show a calibration curve whenever the probability itself will be used. State the prevalence in the evaluation set, because every one of these quantities depends on it.",
+    use: "The evaluation standard for the cancer biomarker proposal, where the probability — not just the ranking — would matter.",
+    ref: "Hanley & McNeil (1982); Saito & Rehmsmeier (2015); Van Calster et al. (2019) on calibration.",
+  },
+
   /* ---------------- Structure and dimensionality ---------------- */
   {
     id: "pca", cat: "struct", name: "Principal component analysis", short: "PCA",

@@ -288,9 +288,13 @@ test("counts quoted in page copy match the data", () => {
     "the projects page states a count that no longer matches the data"
   );
 
+  // the methods page renders its counts from the data, so assert the wiring exists
   const methodsPage = read("methods.html");
-  assert.ok(methodsPage.includes(`<b>${CATEGORIES.length - 1}</b> areas`),
-    "the methods page states the wrong number of areas");
+  assert.ok(methodsPage.includes('id="m-count"') && methodsPage.includes('id="m-areas"'),
+    "the methods page should render its counts from the data rather than hard-coding them");
+  const methodsJs = read("assets/methods.js");
+  assert.match(methodsJs, /m-areas"\)\.textContent = CATEGORIES\.length - 1/,
+    "the areas count must come from CATEGORIES");
 });
 
 test("no page claims a peer-reviewed publication", () => {

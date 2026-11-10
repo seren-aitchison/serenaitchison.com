@@ -25,11 +25,12 @@
     <section class="page-hero">
       <span class="eyebrow">Computational Lab · interactive</span>
       <h1>Explore the science <span class="grad serif">yourself.</span></h1>
-      <p class="lede">Seven working tools, not screenshots. Four of them query public scientific APIs live from your browser, so you are looking at current data. Nothing you do here is uploaded, stored or tracked.</p>
+      <p class="lede">Eight working tools, not screenshots. Five of them query public scientific APIs live from your browser, so you are looking at current data. Nothing you do here is uploaded, stored or tracked.</p>
       <div class="lab-nav">
         <a class="chip" href="#pgx">Pharmacogenomics explorer</a>
         <a class="chip" href="#diplo">Diplotype to phenotype</a>
         <a class="chip" href="#protein">Variant to protein</a>
+        <a class="chip" href="#vcf">VCF normalisation</a>
         <a class="chip" href="#freq">Population frequencies</a>
         <a class="chip" href="#mol">Molecular explorer</a>
         <a class="chip" href="#net">Interaction networks</a>
@@ -112,11 +113,35 @@
       </div>
     </section>
 
-    <!-- 04 Population frequency -->
+
+    <!-- 04 VCF normalisation -->
+    <section class="lab-app glass" id="vcf" aria-labelledby="vcf-t">
+      <div class="lab-head">
+        <span class="icon" style="--c:#3fb0c9" data-ico="repeat"></span>
+        <div><h2 id="vcf-t">04 · VCF normalisation</h2><p>Split multi-allelic records, trim shared bases, and left-align indels against the real reference.</p></div>
+        <div class="right"><span class="live-dot" id="vcf-status">Ready</span><a class="chip" href="methods.html#vcfnorm">The method</a></div>
+      </div>
+      <div class="lab-body">
+        <aside>
+          <label class="f">Example
+            <select id="vcf-example"></select>
+          </label>
+          <label class="f">VCF data lines
+            <textarea id="vcf-in" rows="5" spellcheck="false" style="font-family:var(--mono);font-size:12.5px"></textarea>
+          </label>
+          <button class="btn btn-primary btn-sm lg" id="vcf-run" type="button"><span>Normalise</span></button>
+          <button class="btn btn-ghost btn-sm lg" id="vcf-clear" type="button"></button>
+          <p class="faint" style="font-size:12px;margin:0;line-height:1.5">Reference sequence is fetched from Ensembl on GRCh38. Paste your own lines in the form CHROM POS ID REF ALT — nothing is uploaded anywhere.</p>
+        </aside>
+        <div id="vcf-out"></div>
+      </div>
+    </section>
+
+    <!-- 05 Population frequency -->
     <section class="lab-app glass" id="freq" aria-labelledby="freq-t">
       <div class="lab-head">
         <span class="icon" style="--c:#36b6c9" data-ico="globe"></span>
-        <div><h2 id="freq-t">04 · Population frequency explorer</h2><p>Allele frequencies across gnomAD population groups, fetched live.</p></div>
+        <div><h2 id="freq-t">05 · Population frequency explorer</h2><p>Allele frequencies across gnomAD population groups, fetched live.</p></div>
         <div class="right"><span class="live-dot" id="freq-status">Ready</span><a class="chip" href="project.html?p=pop-freq">The project</a></div>
       </div>
       <div class="lab-body">
@@ -134,11 +159,11 @@
       </div>
     </section>
 
-    <!-- 05 Molecular explorer -->
+    <!-- 06 Molecular explorer -->
     <section class="lab-app glass" id="mol" aria-labelledby="mol-t">
       <div class="lab-head">
         <span class="icon" style="--c:#7c8cff" data-ico="atom"></span>
-        <div><h2 id="mol-t">05 · Molecular explorer</h2><p>Structures in 3D with descriptors and drug-likeness rules, from PubChem.</p></div>
+        <div><h2 id="mol-t">06 · Molecular explorer</h2><p>Structures in 3D with descriptors and drug-likeness rules, from PubChem.</p></div>
         <div class="right"><span class="live-dot" id="mol-status">Ready</span><a class="chip" href="research.html#drug-discovery">The proposal</a></div>
       </div>
       <div class="lab-body">
@@ -156,11 +181,11 @@
       </div>
     </section>
 
-    <!-- 06 Networks -->
+    <!-- 07 Networks -->
     <section class="lab-app glass" id="net" aria-labelledby="net-t">
       <div class="lab-head">
         <span class="icon" style="--c:#2fa7a0" data-ico="network"></span>
-        <div><h2 id="net-t">06 · Protein interaction network</h2><p>Build a network around a protein, then watch the hubs move as you raise the confidence threshold.</p></div>
+        <div><h2 id="net-t">07 · Protein interaction network</h2><p>Build a network around a protein, then watch the hubs move as you raise the confidence threshold.</p></div>
         <div class="right"><span class="live-dot" id="net-status">Ready</span><a class="chip" href="research.html#networks">The proposal</a></div>
       </div>
       <div class="lab-body">
@@ -181,11 +206,11 @@
       </div>
     </section>
 
-    <!-- 07 Statistics -->
+    <!-- 08 Statistics -->
     <section class="lab-app glass" id="gwas" aria-labelledby="gwas-t">
       <div class="lab-head">
         <span class="icon" style="--c:#3f9be0" data-ico="chart"></span>
-        <div><h2 id="gwas-t">07 · Statistics studio</h2><p>Manhattan and QQ plots, and expression fold changes, computed in the page.</p></div>
+        <div><h2 id="gwas-t">08 · Statistics studio</h2><p>Manhattan and QQ plots, and expression fold changes, computed in the page.</p></div>
         <div class="right"><span class="live-dot ok">Local computation</span><a class="chip" href="project.html?p=gwas-viz">The project</a></div>
       </div>
       <div class="lab-body">

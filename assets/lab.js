@@ -5,6 +5,7 @@ import { PGX, PGX_NOTE, FREQ_VARIANTS, POPS, COMPOUNDS, RULES, NET_FALLBACK } fr
 import { drawManhattan, drawQQ, drawExpression, STAT_CONTROLS } from "./lab-stats.js";
 import { mountDiplotype } from "./lab-diplotype.js";
 import { mountProtein } from "./lab-protein.js";
+import { mountVcf } from "./lab-vcf.js";
 
 mountChrome("lab.html");
 document.querySelectorAll("[data-ico]").forEach((el) => { el.innerHTML = icon(el.dataset.ico); });
@@ -133,7 +134,10 @@ mountProtein(document.getElementById("protein"));
   if (w && v) w.addEventListener("input", () => { v.textContent = w.value; });
 }
 
-/* ======================= 04 · Population frequencies ======================= */
+/* ======================= 04 · VCF normalisation ======================= */
+mountVcf(document.getElementById("vcf"));
+
+/* ======================= 05 · Population frequencies ======================= */
 (function freqTool() {
   const sel = $("#freq-variant"), dsSel = $("#freq-dataset"), out = $("#freq-out"), status = $("#freq-status");
   if (!sel) return;
@@ -194,7 +198,7 @@ mountProtein(document.getElementById("protein"));
   render();
 })();
 
-/* ======================= 05 · Molecular explorer ======================= */
+/* ======================= 06 · Molecular explorer ======================= */
 (function molTool() {
   const pick = $("#mol-pick"), styleSel = $("#mol-style"), out = $("#mol-out"), status = $("#mol-status");
   if (!pick) return;
@@ -301,7 +305,7 @@ mountProtein(document.getElementById("protein"));
   shell(`<div class="empty">Press <b>Load structure</b> to fetch from PubChem.</div>`);
 })();
 
-/* ======================= 06 · Interaction network ======================= */
+/* ======================= 07 · Interaction network ======================= */
 (function netTool() {
   const geneIn = $("#net-gene"), sizeSel = $("#net-size"), conf = $("#net-conf"), confV = $("#net-conf-v");
   const out = $("#net-out"), info = $("#net-info"), status = $("#net-status");
@@ -378,7 +382,7 @@ mountProtein(document.getElementById("protein"));
   load();
 })();
 
-/* ======================= 07 · Statistics studio ======================= */
+/* ======================= 08 · Statistics studio ======================= */
 (function statsTool() {
   const modes = $("#stat-mode"), controls = $("#stat-controls"), out = $("#stat-out");
   if (!modes) return;

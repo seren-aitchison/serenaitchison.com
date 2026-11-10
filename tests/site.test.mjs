@@ -282,11 +282,11 @@ test("counts quoted in page copy match the data", () => {
     `the homepage should say "${published} published analyses"`);
 
   const projects = read("projects.html");
-  assert.ok(
-    projects.includes(`${WORK.length} projects and ${PROPOSALS.length} research proposals`) ||
-    projects.includes(`Twelve projects and seven research proposals`),
-    "the projects page states a count that no longer matches the data"
-  );
+  assert.ok(projects.includes('id="lede-counts"'),
+    "the projects page should render its counts from the data rather than hard-coding them");
+  const projectsJs = read("assets/projects.js");
+  assert.match(projectsJs, /WORK\.length\} projects and \$\{PROPOSALS\.length\} research proposals/,
+    "the projects lede count must come from the data");
 
   // the methods page renders its counts from the data, so assert the wiring exists
   const methodsPage = read("methods.html");

@@ -401,6 +401,7 @@ select, input[type="text"], input[type="search"], textarea {
 }
 select:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
 input[type="range"] { width: 100%; accent-color: var(--accent); }
+textarea#vcf-in { white-space: pre; overflow-x: auto; }
 .opt-list { display: flex; flex-direction: column; gap: 6px; }
 .opt-list button { all: unset; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 12px; border-radius: 12px; font-size: 14px; border: 1px solid var(--line); color: var(--mute); }
 .opt-list button:hover { color: var(--fg); background: rgba(255, 255, 255, .04); }

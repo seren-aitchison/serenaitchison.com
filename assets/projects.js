@@ -16,6 +16,9 @@ const set = (id, v) => {
 };
 set("c-pub", counts.pub); set("c-live", counts.live); set("c-dev", counts.dev || 0); set("c-prop", PROPOSALS.length);
 
+const lede = document.getElementById("lede-counts");
+if (lede) lede.textContent = `${WORK.length} projects and ${PROPOSALS.length} research proposals.`;
+
 /* ---------- Filters ---------- */
 const tabs = document.getElementById("theme-tabs");
 const results = document.getElementById("results");

@@ -112,6 +112,7 @@ a { color: inherit; }
   padding: 13px 24px; border-radius: 999px;
   transition: transform .15s;
 }
+.btn svg { width: 16px; height: 16px; flex: none; }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(1px) scale(.99); }
 .btn-primary.lg {

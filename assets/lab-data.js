@@ -140,3 +140,183 @@ export const NET_FALLBACK = {
     ["PTEN", 0.74], ["MYC", 0.70], ["E2F1", 0.68],
   ],
 };
+
+// ---------------------------------------------------------------------------
+// Diplotype → phenotype. Implements the CPIC framework: each allele carries a
+// function (and, for activity-score genes, a numeric value); a diplotype is the
+// pair. Two assignment styles are used, matching CPIC's own:
+//   "score"    sum the two activity values, then band the total
+//   "function" map the pair of function categories directly
+// Allele function assignments follow CPIC allele definition and function tables.
+// This reproduces the published framework for teaching. It is not a clinical
+// calling tool: real assignment needs the full tested allele set, phase, and
+// copy number, and the current guideline should always be checked directly.
+// ---------------------------------------------------------------------------
+
+export const DIPLO = {
+  CYP2D6: {
+    mode: "score",
+    drugs: "Codeine, tramadol, tamoxifen, tricyclic antidepressants",
+    note: "CYP2D6 is the hardest pharmacogene to call. Gene deletions, duplications and hybrids with CYP2D7 mean copy number has to be measured, not assumed — a duplicated normal-function allele doubles its contribution.",
+    alleles: [
+      { a: "*1", v: 1, fn: "Normal function" },
+      { a: "*2", v: 1, fn: "Normal function" },
+      { a: "*1x2", v: 2, fn: "Normal function, duplicated" },
+      { a: "*9", v: 0.5, fn: "Decreased function" },
+      { a: "*17", v: 0.5, fn: "Decreased function" },
+      { a: "*29", v: 0.5, fn: "Decreased function" },
+      { a: "*41", v: 0.5, fn: "Decreased function" },
+      { a: "*10", v: 0.25, fn: "Decreased function" },
+      { a: "*3", v: 0, fn: "No function" },
+      { a: "*4", v: 0, fn: "No function" },
+      { a: "*5", v: 0, fn: "No function (gene deletion)" },
+      { a: "*6", v: 0, fn: "No function" },
+    ],
+    bands: [
+      { max: 0, label: "Poor metaboliser", cls: "bad" },
+      { max: 1.0, label: "Intermediate metaboliser", cls: "warn" },
+      { max: 2.25, label: "Normal metaboliser", cls: "ok" },
+      { max: Infinity, label: "Ultrarapid metaboliser", cls: "warn" },
+    ],
+    consequence: {
+      "Poor metaboliser": "For codeine and tramadol, little conversion to the active opioid, so reduced analgesia. For tamoxifen, reduced formation of endoxifen.",
+      "Intermediate metaboliser": "Reduced conversion relative to normal metabolisers; the clinical significance depends on the drug and the score.",
+      "Normal metaboliser": "Expected conversion. Standard dosing considerations apply.",
+      "Ultrarapid metaboliser": "Rapid conversion of codeine and tramadol to active opioid, with a corresponding risk of toxicity. CPIC advises avoiding codeine in this group.",
+    },
+  },
+  CYP2C19: {
+    mode: "function",
+    drugs: "Clopidogrel, voriconazole, SSRIs, proton-pump inhibitors",
+    note: "CYP2C19 has an increased-function promoter allele (*17) as well as loss-of-function alleles, so the phenotype runs in both directions from normal.",
+    alleles: [
+      { a: "*1", fn: "Normal function" },
+      { a: "*17", fn: "Increased function" },
+      { a: "*2", fn: "No function" },
+      { a: "*3", fn: "No function" },
+    ],
+    rules: [
+      { has: ["Normal function", "Normal function"], label: "Normal metaboliser", cls: "ok" },
+      { has: ["Normal function", "Increased function"], label: "Rapid metaboliser", cls: "warn" },
+      { has: ["Increased function", "Increased function"], label: "Ultrarapid metaboliser", cls: "warn" },
+      { has: ["Normal function", "No function"], label: "Intermediate metaboliser", cls: "warn" },
+      { has: ["Increased function", "No function"], label: "Intermediate metaboliser", cls: "warn" },
+      { has: ["No function", "No function"], label: "Poor metaboliser", cls: "bad" },
+    ],
+    consequence: {
+      "Normal metaboliser": "Expected clopidogrel activation.",
+      "Rapid metaboliser": "Increased activation of clopidogrel; for PPIs, lower exposure and potentially reduced effect.",
+      "Ultrarapid metaboliser": "As rapid, more pronounced. PPI exposure may be substantially reduced.",
+      "Intermediate metaboliser": "Reduced clopidogrel activation. CPIC recommends considering an alternative antiplatelet after acute coronary syndrome or PCI.",
+      "Poor metaboliser": "Markedly reduced clopidogrel activation, and an alternative antiplatelet is recommended in that setting.",
+    },
+  },
+  CYP2C9: {
+    mode: "score",
+    drugs: "Warfarin, phenytoin, NSAIDs",
+    note: "Warfarin dosing depends on CYP2C9 together with VKORC1, which is a target variant rather than a metabolism variant — two genes acting by different mechanisms on one drug.",
+    alleles: [
+      { a: "*1", v: 1, fn: "Normal function" },
+      { a: "*2", v: 0.5, fn: "Decreased function" },
+      { a: "*8", v: 0.5, fn: "Decreased function" },
+      { a: "*11", v: 0.5, fn: "Decreased function" },
+      { a: "*3", v: 0, fn: "No function" },
+      { a: "*6", v: 0, fn: "No function" },
+    ],
+    bands: [
+      { max: 0.5, label: "Poor metaboliser", cls: "bad" },
+      { max: 1.5, label: "Intermediate metaboliser", cls: "warn" },
+      { max: Infinity, label: "Normal metaboliser", cls: "ok" },
+    ],
+    consequence: {
+      "Poor metaboliser": "Substantially reduced clearance; for warfarin, a markedly lower dose requirement and higher bleeding risk during initiation.",
+      "Intermediate metaboliser": "Reduced clearance and a lower dose requirement than normal metabolisers.",
+      "Normal metaboliser": "Expected clearance.",
+    },
+  },
+  DPYD: {
+    mode: "score",
+    drugs: "5-Fluorouracil, capecitabine",
+    note: "This is a toxicity-avoidance gene rather than an efficacy one. Reduced DPD activity means fluoropyrimidine is cleared slowly, and severe toxicity can follow a standard dose.",
+    alleles: [
+      { a: "Reference", v: 1, fn: "Normal function" },
+      { a: "c.2846A>T", v: 0.5, fn: "Decreased function" },
+      { a: "c.1236G>A (HapB3)", v: 0.5, fn: "Decreased function" },
+      { a: "*2A", v: 0, fn: "No function" },
+      { a: "*13", v: 0, fn: "No function" },
+    ],
+    bands: [
+      { max: 0.5, label: "Poor metaboliser", cls: "bad" },
+      { max: 1.5, label: "Intermediate metaboliser", cls: "warn" },
+      { max: Infinity, label: "Normal metaboliser", cls: "ok" },
+    ],
+    consequence: {
+      "Poor metaboliser": "Very high risk of severe or fatal toxicity. CPIC advises avoiding fluoropyrimidines, or a strongly reduced dose with close monitoring.",
+      "Intermediate metaboliser": "Increased toxicity risk; CPIC advises starting at a reduced dose with subsequent titration.",
+      "Normal metaboliser": "Standard starting dose by the usual clinical criteria.",
+    },
+  },
+  TPMT: {
+    mode: "function",
+    drugs: "Azathioprine, mercaptopurine, thioguanine",
+    note: "TPMT and NUDT15 both govern thiopurine toxicity through different steps. Testing only TPMT misses a major risk allele that is common in East Asian populations.",
+    alleles: [
+      { a: "*1", fn: "Normal function" },
+      { a: "*2", fn: "No function" },
+      { a: "*3A", fn: "No function" },
+      { a: "*3B", fn: "No function" },
+      { a: "*3C", fn: "No function" },
+    ],
+    rules: [
+      { has: ["Normal function", "Normal function"], label: "Normal metaboliser", cls: "ok" },
+      { has: ["Normal function", "No function"], label: "Intermediate metaboliser", cls: "warn" },
+      { has: ["No function", "No function"], label: "Poor metaboliser", cls: "bad" },
+    ],
+    consequence: {
+      "Normal metaboliser": "Standard starting dose.",
+      "Intermediate metaboliser": "Accumulation of active thioguanine nucleotides; CPIC advises a reduced starting dose.",
+      "Poor metaboliser": "High risk of severe myelosuppression at conventional doses; a drastically reduced dose or an alternative agent is advised.",
+    },
+  },
+  NUDT15: {
+    mode: "function",
+    drugs: "Azathioprine, mercaptopurine, thioguanine",
+    note: "Loss of NUDT15 function raises thiopurine toxicity risk independently of TPMT, and is far more common in East Asian than European populations.",
+    alleles: [
+      { a: "*1", fn: "Normal function" },
+      { a: "*2", fn: "No function" },
+      { a: "*3", fn: "No function" },
+    ],
+    rules: [
+      { has: ["Normal function", "Normal function"], label: "Normal metaboliser", cls: "ok" },
+      { has: ["Normal function", "No function"], label: "Intermediate metaboliser", cls: "warn" },
+      { has: ["No function", "No function"], label: "Poor metaboliser", cls: "bad" },
+    ],
+    consequence: {
+      "Normal metaboliser": "Standard starting dose.",
+      "Intermediate metaboliser": "Increased myelosuppression risk; CPIC advises a reduced starting dose.",
+      "Poor metaboliser": "High risk of severe myelosuppression; a substantially reduced dose or alternative agent is advised.",
+    },
+  },
+  SLCO1B1: {
+    mode: "function",
+    drugs: "Simvastatin, atorvastatin, rosuvastatin",
+    note: "SLCO1B1 is a hepatic uptake transporter, so reduced function raises statin concentration in plasma rather than changing how fast it is metabolised. CPIC describes this gene by transporter function, not metaboliser status.",
+    alleles: [
+      { a: "*1", fn: "Normal function" },
+      { a: "*5", fn: "Decreased function" },
+      { a: "*15", fn: "Decreased function" },
+      { a: "*17", fn: "Decreased function" },
+    ],
+    rules: [
+      { has: ["Normal function", "Normal function"], label: "Normal function", cls: "ok" },
+      { has: ["Normal function", "Decreased function"], label: "Decreased function", cls: "warn" },
+      { has: ["Decreased function", "Decreased function"], label: "Poor function", cls: "bad" },
+    ],
+    consequence: {
+      "Normal function": "Expected hepatic uptake; standard dosing considerations.",
+      "Decreased function": "Higher statin plasma exposure and increased myopathy risk, particularly with simvastatin at higher doses.",
+      "Poor function": "Substantially higher exposure; CPIC advises a lower dose or an alternative statin.",
+    },
+  },
+};

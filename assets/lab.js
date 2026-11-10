@@ -3,6 +3,7 @@
 import { mountChrome, icon, esc } from "./ui.js";
 import { PGX, PGX_NOTE, FREQ_VARIANTS, POPS, COMPOUNDS, RULES, NET_FALLBACK } from "./lab-data.js";
 import { drawManhattan, drawQQ, drawExpression, STAT_CONTROLS } from "./lab-stats.js";
+import { mountDiplotype } from "./lab-diplotype.js";
 
 mountChrome("lab.html");
 document.querySelectorAll("[data-ico]").forEach((el) => { el.innerHTML = icon(el.dataset.ico); });
@@ -121,7 +122,10 @@ const errorBox = (e, what) => `<div class="callout warn"><b>Could not reach ${es
   render();
 })();
 
-/* ======================= 02 · Population frequencies ======================= */
+/* ======================= 02 · Diplotype to phenotype ======================= */
+mountDiplotype(document.getElementById("diplo"));
+
+/* ======================= 03 · Population frequencies ======================= */
 (function freqTool() {
   const sel = $("#freq-variant"), dsSel = $("#freq-dataset"), out = $("#freq-out"), status = $("#freq-status");
   if (!sel) return;
@@ -182,7 +186,7 @@ const errorBox = (e, what) => `<div class="callout warn"><b>Could not reach ${es
   render();
 })();
 
-/* ======================= 03 · Molecular explorer ======================= */
+/* ======================= 04 · Molecular explorer ======================= */
 (function molTool() {
   const pick = $("#mol-pick"), styleSel = $("#mol-style"), out = $("#mol-out"), status = $("#mol-status");
   if (!pick) return;
@@ -289,7 +293,7 @@ const errorBox = (e, what) => `<div class="callout warn"><b>Could not reach ${es
   shell(`<div class="empty">Press <b>Load structure</b> to fetch from PubChem.</div>`);
 })();
 
-/* ======================= 04 · Interaction network ======================= */
+/* ======================= 05 · Interaction network ======================= */
 (function netTool() {
   const geneIn = $("#net-gene"), sizeSel = $("#net-size"), conf = $("#net-conf"), confV = $("#net-conf-v");
   const out = $("#net-out"), info = $("#net-info"), status = $("#net-status");
@@ -366,7 +370,7 @@ const errorBox = (e, what) => `<div class="callout warn"><b>Could not reach ${es
   load();
 })();
 
-/* ======================= 05 · Statistics studio ======================= */
+/* ======================= 06 · Statistics studio ======================= */
 (function statsTool() {
   const modes = $("#stat-mode"), controls = $("#stat-controls"), out = $("#stat-out");
   if (!modes) return;

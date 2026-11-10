@@ -75,7 +75,7 @@ if (side && main) {
       <div class="panel glass">
         <div class="panel-head"><h3>In the Lab</h3></div>
         <div class="rows">
-          ${[["Pharmacogenomics", "lab.html#pgx", "pill"], ["Molecules", "lab.html#mol", "atom"], ["Networks", "lab.html#net", "network"]].map(([t, h, ic]) => `
+          ${[["Pharmacogenomics", "lab.html#pgx", "pill"], ["Diplotypes", "lab.html#diplo", "target"], ["Molecules", "lab.html#mol", "atom"]].map(([t, h, ic]) => `
             <a class="row" style="--c:#4d7dff" href="${h}"><span class="icon sm" style="--c:#4d7dff">${icon(ic)}</span><span class="row-txt"><b>${t}</b></span><span class="go">${icon("chev")}</span></a>`).join("")}
         </div>
       </div>`,

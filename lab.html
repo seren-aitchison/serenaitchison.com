@@ -25,9 +25,10 @@
     <section class="page-hero">
       <span class="eyebrow">Computational Lab · interactive</span>
       <h1>Explore the science <span class="grad serif">yourself.</span></h1>
-      <p class="lede">Five working tools, not screenshots. Three of them query public scientific APIs live from your browser, so you are looking at current data. Nothing you do here is uploaded, stored or tracked.</p>
+      <p class="lede">Six working tools, not screenshots. Three of them query public scientific APIs live from your browser, so you are looking at current data. Nothing you do here is uploaded, stored or tracked.</p>
       <div class="lab-nav">
         <a class="chip" href="#pgx">Pharmacogenomics explorer</a>
+        <a class="chip" href="#diplo">Diplotype to phenotype</a>
         <a class="chip" href="#freq">Population frequencies</a>
         <a class="chip" href="#mol">Molecular explorer</a>
         <a class="chip" href="#net">Interaction networks</a>
@@ -61,11 +62,37 @@
       </div>
     </section>
 
-    <!-- 02 Population frequency -->
+
+    <!-- 02 Diplotype -->
+    <section class="lab-app glass" id="diplo" aria-labelledby="dp-t">
+      <div class="lab-head">
+        <span class="icon" style="--c:#4d7dff" data-ico="target"></span>
+        <div><h2 id="dp-t">02 · Diplotype to phenotype</h2><p>The CPIC assignment framework: activity scores and function categories, worked through for seven pharmacogenes.</p></div>
+        <div class="right"><span class="live-dot ok">Local computation</span><a class="chip" href="methods.html#pgx-phen">The method</a></div>
+      </div>
+      <div class="lab-body">
+        <aside>
+          <label class="f">Pharmacogene
+            <select id="dp-gene"></select>
+          </label>
+          <label class="f">Allele 1
+            <select id="dp-a1"></select>
+          </label>
+          <label class="f">Allele 2
+            <select id="dp-a2"></select>
+          </label>
+          <button class="btn btn-ghost btn-sm lg" id="dp-swap" type="button"></button>
+          <div id="dp-note"></div>
+        </aside>
+        <div id="dp-out"></div>
+      </div>
+    </section>
+
+    <!-- 03 Population frequency -->
     <section class="lab-app glass" id="freq" aria-labelledby="freq-t">
       <div class="lab-head">
         <span class="icon" style="--c:#36b6c9" data-ico="globe"></span>
-        <div><h2 id="freq-t">02 · Population frequency explorer</h2><p>Allele frequencies across gnomAD population groups, fetched live.</p></div>
+        <div><h2 id="freq-t">03 · Population frequency explorer</h2><p>Allele frequencies across gnomAD population groups, fetched live.</p></div>
         <div class="right"><span class="live-dot" id="freq-status">Ready</span><a class="chip" href="project.html?p=pop-freq">The project</a></div>
       </div>
       <div class="lab-body">
@@ -83,11 +110,11 @@
       </div>
     </section>
 
-    <!-- 03 Molecular explorer -->
+    <!-- 04 Molecular explorer -->
     <section class="lab-app glass" id="mol" aria-labelledby="mol-t">
       <div class="lab-head">
         <span class="icon" style="--c:#7c8cff" data-ico="atom"></span>
-        <div><h2 id="mol-t">03 · Molecular explorer</h2><p>Structures in 3D with descriptors and drug-likeness rules, from PubChem.</p></div>
+        <div><h2 id="mol-t">04 · Molecular explorer</h2><p>Structures in 3D with descriptors and drug-likeness rules, from PubChem.</p></div>
         <div class="right"><span class="live-dot" id="mol-status">Ready</span><a class="chip" href="research.html#drug-discovery">The proposal</a></div>
       </div>
       <div class="lab-body">
@@ -105,11 +132,11 @@
       </div>
     </section>
 
-    <!-- 04 Networks -->
+    <!-- 05 Networks -->
     <section class="lab-app glass" id="net" aria-labelledby="net-t">
       <div class="lab-head">
         <span class="icon" style="--c:#2fa7a0" data-ico="network"></span>
-        <div><h2 id="net-t">04 · Protein interaction network</h2><p>Build a network around a protein, then watch the hubs move as you raise the confidence threshold.</p></div>
+        <div><h2 id="net-t">05 · Protein interaction network</h2><p>Build a network around a protein, then watch the hubs move as you raise the confidence threshold.</p></div>
         <div class="right"><span class="live-dot" id="net-status">Ready</span><a class="chip" href="research.html#networks">The proposal</a></div>
       </div>
       <div class="lab-body">
@@ -130,11 +157,11 @@
       </div>
     </section>
 
-    <!-- 05 Statistics -->
+    <!-- 06 Statistics -->
     <section class="lab-app glass" id="gwas" aria-labelledby="gwas-t">
       <div class="lab-head">
         <span class="icon" style="--c:#3f9be0" data-ico="chart"></span>
-        <div><h2 id="gwas-t">05 · Statistics studio</h2><p>Manhattan and QQ plots, and expression fold changes, computed in the page.</p></div>
+        <div><h2 id="gwas-t">06 · Statistics studio</h2><p>Manhattan and QQ plots, and expression fold changes, computed in the page.</p></div>
         <div class="right"><span class="live-dot ok">Local computation</span><a class="chip" href="project.html?p=gwas-viz">The project</a></div>
       </div>
       <div class="lab-body">

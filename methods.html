@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Methods library · Seren Aitchison</title>
+<meta name="description" content="A reference library of computational methods: what each solves, the idea behind it, its assumptions, how it fails, and how to read its output.">
+<link rel="canonical" href="https://serenaitchison.com/methods.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/methods.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero">
+      <span class="eyebrow">Methods library</span>
+      <h1>Methods, and <span class="grad serif">how they fail.</span></h1>
+      <p class="lede">A working reference for the methods I use. Each entry covers the problem it solves, the idea behind it, the assumptions it makes, the ways it breaks, and how to read its output honestly. The failure modes are the part I find most worth writing down — they are what separates using a method from understanding it.</p>
+      <div class="meta-strip">
+        <span><b id="m-count">·</b> methods</span>
+        <span><b>7</b> areas</span>
+        <span><b>Assumptions</b> and failure modes for each</span>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Browse methods">
+      <div class="find glass lg">
+        <div class="search lg">
+          <input id="mq" type="search" placeholder="Search methods, assumptions or failure modes…" aria-label="Search methods" autocomplete="off">
+          <button class="search-btn" type="button" aria-label="Search" id="mq-btn"></button>
+        </div>
+        <div class="tabs" id="m-tabs" role="group" aria-label="Filter by area"></div>
+      </div>
+      <div id="m-results"></div>
+    </section>
+
+    <section class="banner">
+      <span class="gem-chip"><span class="gem" aria-hidden="true"></span><span>Why this exists</span></span>
+      <h2>Knowing when not to trust a method.</h2>
+      <p>Any of these can be run from a library call in one line. The part that takes time to learn is recognising the situation where the output will be confidently wrong — a UMAP distance read as a measurement, a hazard ratio from crossing survival curves, a lead SNP treated as causal. That is what this library is for.</p>
+      <div class="actions" style="justify-content:center">
+        <a class="btn btn-primary lg" href="lab.html"><span>See them running</span> <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost lg" href="writing.html"><span>Longer method notes</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

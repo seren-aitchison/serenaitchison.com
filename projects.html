@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Projects · Seren Aitchison</title>
+<meta name="description" content="Published computational biology analyses, production software and independent research proposals, each labelled with its real status.">
+<link rel="canonical" href="https://serenaitchison.com/projects.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/projects.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero">
+      <span class="eyebrow">Project portfolio</span>
+      <h1>The work, <span class="grad serif">and what it can support.</span></h1>
+      <p class="lede">Twelve projects and seven research proposals. Each one carries a status label, so nothing reads as finished research unless it is. Published projects state their limitations as prominently as their findings.</p>
+      <div class="meta-strip">
+        <span><b id="c-pub">·</b> published</span>
+        <span><b id="c-live">·</b> in production</span>
+        <span><b id="c-dev">·</b> in development</span>
+        <span><b id="c-prop">·</b> proposals</span>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Find a project">
+      <div class="find glass lg">
+        <div class="search lg">
+          <input id="q" type="search" placeholder="Search by project, gene, method or technology…" aria-label="Search projects" autocomplete="off">
+          <button class="search-btn" type="button" aria-label="Search" id="q-btn"></button>
+        </div>
+        <div class="tabs" id="theme-tabs" role="group" aria-label="Filter by theme"></div>
+      </div>
+      <div id="results"></div>
+    </section>
+
+    <section class="section" id="proposals" aria-labelledby="pr-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Independent research proposals</span>
+        <h2 id="pr-t">Where I'd take this next.</h2>
+        <p>These are research concepts, written independently and not yet undertaken. They are here so a supervisor has something concrete to disagree with. Each states the question, the approach, and the part I think is actually hard.</p>
+      </div>
+      <div class="grid" id="prop-grid"></div>
+    </section>
+
+    <section class="banner">
+      <span class="gem-chip"><span class="gem" aria-hidden="true"></span><span>Status labels</span></span>
+      <h2>What each label means.</h2>
+      <div class="four" style="margin-top:34px">
+        <div class="glass"><span class="status is-pub">Published</span><h3>Complete and documented</h3><p>Code, data provenance, findings and limitations all exist. Reproducible by someone else.</p></div>
+        <div class="glass"><span class="status is-live">Live</span><h3>In production</h3><p>Running software with real users, a database and automated tests.</p></div>
+        <div class="glass"><span class="status is-dev">In development</span><h3>Partly built</h3><p>Working components exist, usually a Lab tool. The full study is still being assembled.</p></div>
+        <div class="glass"><span class="status is-prop">Proposal</span><h3>Not yet undertaken</h3><p>A research question and a proposed approach. No results, and none implied.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

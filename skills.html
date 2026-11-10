@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Technical skills · Seren Aitchison</title>
+<meta name="description" content="A technical capability matrix with evidence attached to every entry: programming, bioinformatics, statistics, computational chemistry and software engineering.">
+<link rel="canonical" href="https://serenaitchison.com/skills.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/skills.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero">
+      <span class="eyebrow">Technical capabilities</span>
+      <h1>No percentage bars. <span class="grad serif">Evidence instead.</span></h1>
+      <p class="lede">"Python 95%" tells you nothing. Every capability below links to the work where it is actually used, so you can check the claim rather than take it. Only technologies that appear in work shown on this site are listed.</p>
+    </section>
+
+    <section class="section" aria-labelledby="ex-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Explore</span>
+        <h2 id="ex-t">Pick a capability.</h2>
+      </div>
+      <div class="tabs glass" id="cap-tabs" role="group" aria-label="Filter capabilities"></div>
+      <div class="bubble-stage">
+        <div class="bubbles" id="cap-bubbles"></div>
+        <aside class="panel glass bubble-detail" id="cap-detail" aria-live="polite"></aside>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="mx-t">
+      <div class="sec-head left">
+        <span class="eyebrow">The matrix</span>
+        <h2 id="mx-t">Capability areas.</h2>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th scope="col">Area</th><th scope="col">Technologies and methods</th></tr></thead>
+          <tbody id="matrix"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="se-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Software engineering</span>
+        <h2 id="se-t">What production work taught me.</h2>
+        <p>Most bioinformatics graduates have written analysis code. Fewer have had to keep a system running for other people. These are the specific things that came from doing the second.</p>
+      </div>
+      <div class="three">
+        <div class="theme-card glass">
+          <span class="n">01</span>
+          <h3>Trust boundaries</h3>
+          <p>ForgeLab grades code submitted by the person being graded. Anything the browser claims has to be re-established on the server, under a permission model that assumes the submitted code is hostile.</p>
+          <p class="q">Node permission model · process isolation · bounded runtime</p>
+        </div>
+        <div class="theme-card glass">
+          <span class="n">02</span>
+          <h3>Shared architecture</h3>
+          <p>Gradify runs 30+ sites from one kit. The rule that makes that survivable is that sites consume the kit and never fork it, so a fix lands everywhere at once.</p>
+          <p class="q">ES modules · shared design system · no build step</p>
+        </div>
+        <div class="theme-card glass">
+          <span class="n">03</span>
+          <h3>Data that outlives the code</h3>
+          <p>Version-controlled migrations, row-level security and a schema designed to be queried by someone who did not write it.</p>
+          <p class="q">PostgreSQL · migrations · row-level security</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:24px">
+        <b>Where I am still building.</b> I would not yet claim production experience with workflow engines at scale, deep learning in biology, or cloud infrastructure beyond deployment. Those are listed in my proposals as directions, not in this matrix as capabilities. Overstating the range would be easy and would fail at the first technical interview.
+      </div>
+    </section>
+
+    <section class="banner">
+      <span class="gem-chip"><span class="gem" aria-hidden="true"></span><span>Check it yourself</span></span>
+      <h2>The claims are all testable.</h2>
+      <p>Every capability links to code, a live tool, or a written analysis. If something looks overstated, the evidence is one click away — and I would rather you check than assume.</p>
+      <div class="actions" style="justify-content:center">
+        <a class="btn btn-primary lg" href="lab.html"><span>Open the Lab</span> <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost lg" href="reproducibility.html"><span>Reproducibility</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

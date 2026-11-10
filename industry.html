@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Industry pathway · Seren Aitchison</title>
+<meta name="description" content="For biotech and pharmaceutical hiring managers: computational biology, pharmacogenomics, molecular modelling and the software engineering to make analyses reproducible.">
+<link rel="canonical" href="https://serenaitchison.com/industry.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/pathway.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero">
+      <span class="eyebrow">Computational science · biotechnology · pharmaceutical R&amp;D</span>
+      <h1>Turning biological data <span class="grad serif">into something you can act on.</span></h1>
+      <p class="lede">Computational biology, pharmacogenomics, molecular modelling and machine learning — plus the software engineering that decides whether an analysis can be re-run next year by someone who did not write it. I build things that work for other people, not just notebooks that worked once.</p>
+      <div class="actions">
+        <a class="btn btn-primary lg" href="cv.html"><span>Industry CV</span> <span aria-hidden="true">→</span></a>
+        <a class="btn btn-gem lg" href="lab.html"><span class="gem" aria-hidden="true"></span><span>See working tools</span></a>
+        <a class="text-link" href="contact.html">Email me</a>
+      </div>
+      <p class="avail" style="margin-top:24px"><i aria-hidden="true"></i> Open to computational biology, bioinformatics and scientific software positions</p>
+    </section>
+
+    <!-- Core capabilities -->
+    <section class="section" aria-labelledby="cc-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Core capabilities</span>
+        <h2 id="cc-t">Four things I can do now.</h2>
+      </div>
+      <div class="four">
+        <div class="glass">
+          <span class="outline-ico" data-ico="dna"></span>
+          <h3>Genomic analysis</h3>
+          <p>Variant annotation, population genetics and association statistics against live public resources — Ensembl, VEP, gnomAD.</p>
+          <span class="small">6 published analyses</span>
+        </div>
+        <div class="glass">
+          <span class="outline-ico" data-ico="pill"></span>
+          <h3>Pharmacogenomics</h3>
+          <p>Gene–drug evidence, star alleles, CPIC function categories, and a clear separation between annotation and clinical guidance.</p>
+          <span class="small">8 pharmacogenes · live tool</span>
+        </div>
+        <div class="glass">
+          <span class="outline-ico" data-ico="atom"></span>
+          <h3>Molecular work</h3>
+          <p>Descriptors, drug-likeness filters and docking, backed by three years of actual synthesis and characterisation.</p>
+          <span class="small">BSc Medicinal Chemistry</span>
+        </div>
+        <div class="glass">
+          <span class="outline-ico" data-ico="code"></span>
+          <h3>Software engineering</h3>
+          <p>PostgreSQL schema design, sandboxed code execution, automated testing and continuous deployment, in production.</p>
+          <span class="small">2 live systems</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Production evidence -->
+    <section class="section ecosystem" aria-labelledby="pe-t">
+      <div>
+        <span class="eyebrow">The part most graduates can't show</span>
+        <h2 id="pe-t">Systems that <span class="grad">other people use.</span></h2>
+        <p>Analysis skill is common. What is less common in a graduate is having had to keep software running when the people depending on it are not you.</p>
+        <ul class="ticks">
+          <li><span><b>A hostile trust boundary.</b> ForgeLab grades code written by the person being graded, so every claim the browser makes is re-established server-side, under a permission model with no filesystem writes, no child processes and a hard runtime limit.</span></li>
+          <li><span><b>Shared architecture at scale.</b> Gradify runs 30+ sites from a single kit. Sites consume it and never fork it, which is the only reason a fix can land everywhere at once.</span></li>
+          <li><span><b>A real database.</b> PostgreSQL with version-controlled migrations and row-level security, not a pile of CSVs.</span></li>
+          <li><span><b>Tests that run.</b> Including a self-test for the grader itself, because a grading system that silently breaks is worse than one that is down.</span></li>
+        </ul>
+        <div class="actions">
+          <a class="btn btn-ghost lg" href="project.html?p=forgelab"><span>ForgeLab architecture</span> <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="panel glass">
+        <div class="panel-head"><h3>Honest gaps</h3></div>
+        <p class="muted" style="margin:0;font-size:15px;line-height:1.65">Worth knowing before an interview rather than during one.</p>
+        <div class="rows">
+          <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="layers"></span><span class="row-txt"><b>No industry experience yet</b><span>My production software is my own, not a company's</span></span></span>
+          <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="repeat"></span><span class="row-txt"><b>Workflow engines are proposed, not used</b><span>Nextflow and Snakemake are a direction, not a claim</span></span></span>
+          <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="cpu"></span><span class="row-txt"><b>No deep learning in production</b><span>Classical ML only, so far</span></span></span>
+          <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="shield"></span><span class="row-txt"><b>No GxP or regulated environment experience</b><span>Familiar with the reproducibility principles, not the compliance framework</span></span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Role mapping -->
+    <section class="section" aria-labelledby="rm-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Where I'd fit</span>
+        <h2 id="rm-t">By role.</h2>
+        <p>If you are hiring for one of these, these are the pieces of work most worth your time.</p>
+      </div>
+      <div class="three" id="roles"></div>
+    </section>
+
+    <!-- How I work -->
+    <section class="section" aria-labelledby="hw-t">
+      <div class="sec-head left">
+        <span class="eyebrow">How I work</span>
+        <h2 id="hw-t">Three commitments.</h2>
+      </div>
+      <div class="three">
+        <div class="theme-card glass"><span class="n">01</span><h3>I will tell you what the data can't support</h3><p>Including when that is inconvenient for a deadline. An analysis that overstates its confidence costs far more later than one that is delivered with its caveats attached.</p></div>
+        <div class="theme-card glass"><span class="n">02</span><h3>I build it so it can be re-run</h3><p>Pinned environments, fixed seeds, documented provenance. The test is whether a colleague can reproduce the numbers without me in the room.</p></div>
+        <div class="theme-card glass"><span class="n">03</span><h3>I can talk to the chemists</h3><p>Having done synthesis and characterisation, I can explain a computational result to people who will have to act on it, and take their scepticism seriously.</p></div>
+      </div>
+    </section>
+
+    <section class="banner">
+      <span class="gem-chip"><span class="gem" aria-hidden="true"></span><span>Next step</span></span>
+      <h2>Easy to evaluate.</h2>
+      <p>Open the Lab and use the tools, read a project and check the limitations, or email me and I will walk through any of it. Private repositories can be shared on request.</p>
+      <div class="actions" style="justify-content:center">
+        <a class="btn btn-primary lg" href="contact.html"><span>Get in touch</span> <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost lg" href="cv.html"><span>Industry CV</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

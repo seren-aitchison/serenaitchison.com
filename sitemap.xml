@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://serenaitchison.com/</loc><lastmod>2026-11-10</lastmod><priority>1.0</priority></url>
+  <url><loc>https://serenaitchison.com/projects.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/research.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/lab.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/skills.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/writing.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/about.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/phd.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/industry.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/cv.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/contact.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/reproducibility.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=pgx-cyp2c19</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=pop-freq</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=vep-apoe</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=drug-gene</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=gene-expr</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=gwas-real</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=gwas-viz</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=gwas-assoc</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=gwas-gene</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=gwas-qc</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=gradify</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+  <url><loc>https://serenaitchison.com/project.html?p=forgelab</loc><lastmod>2026-11-10</lastmod><priority>0.7</priority></url>
+</urlset>

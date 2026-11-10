@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PhD pathway · Seren Aitchison</title>
+<meta name="description" content="For doctoral supervisors and admissions committees: research readiness, methodological reasoning, independent proposals, and specific interests at UCL and the University of Sydney.">
+<link rel="canonical" href="https://serenaitchison.com/phd.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/pathway.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero">
+      <span class="eyebrow">For doctoral supervisors and admissions committees</span>
+      <h1>Research readiness, <span class="grad serif">shown rather than asserted.</span></h1>
+      <p class="lede">The case I would make is not that I already know how to do a PhD. It is that I can identify a question, choose a method for a reason I can defend, implement it, and recognise when the result does not support what I wanted it to say. This page gathers the evidence for that, including where it is thin.</p>
+      <div class="actions">
+        <a class="btn btn-primary lg" href="research.html#proposals"><span>Read the proposals</span> <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost lg" href="cv.html"><span>Academic CV</span></a>
+        <a class="text-link" href="contact.html">Email me</a>
+      </div>
+      <p class="avail" style="margin-top:24px"><i aria-hidden="true"></i> Seeking doctoral research in computational biology, bioinformatics or precision medicine</p>
+    </section>
+
+    <!-- Evidence -->
+    <section class="section" aria-labelledby="ev-t">
+      <div class="sec-head left">
+        <span class="eyebrow">What to look at, and why</span>
+        <h2 id="ev-t">Four pieces of evidence.</h2>
+        <p>Ordered by what I think is most informative about research potential, rather than by what is most impressive.</p>
+      </div>
+      <div class="timeline" id="evidence"></div>
+    </section>
+
+    <!-- Research thinking -->
+    <section class="section ecosystem" aria-labelledby="rt-t">
+      <div>
+        <span class="eyebrow">Research thinking</span>
+        <h2 id="rt-t">The habits I'd bring <span class="grad">to a group.</span></h2>
+        <p>These are visible in the published work, which is the only reason I am willing to claim them.</p>
+        <ul class="ticks">
+          <li><span><b>I report the result that undermines the method.</b> The VEP project exists largely because SIFT calls a well-established functional variant "tolerated". That is the interesting part, and it is in the findings rather than buried.</span></li>
+          <li><span><b>I check against a case whose answer I know.</b> The gene annotation pipeline silently returned "no overlapping gene" for a variant that is textbook MTHFR. It was only caught because the right answer was known in advance.</span></li>
+          <li><span><b>I separate the layers of a claim.</b> Transcript annotation, allele function and clinical guidance are three different kinds of evidence. Collapsing them is how pharmacogenomic overclaims happen.</span></li>
+          <li><span><b>I state what the data cannot support.</b> A fold-change analysis with one value per condition gets no p-value, and the project says so rather than quietly implying significance.</span></li>
+        </ul>
+      </div>
+      <div class="panel glass">
+        <div class="panel-head"><h3>Where I am weakest</h3></div>
+        <p class="muted" style="margin:0;font-size:15px;line-height:1.65">I would rather you hear this from me than discover it in an interview.</p>
+        <div class="rows">
+          <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="target"></span><span class="row-txt"><b>No wet-lab biology experience</b><span>My laboratory work is chemistry, not molecular biology</span></span></span>
+          <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="chart"></span><span class="row-txt"><b>Statistics are self-taught</b><span>Solid on fundamentals; no formal graduate training</span></span></span>
+          <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="layers"></span><span class="row-txt"><b>No large-scale omics analysis yet</b><span>My published work uses small datasets; the flagship is proposed, not done</span></span></span>
+          <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="doc"></span><span class="row-txt"><b>No publications</b><span>Independent outputs only, not peer reviewed</span></span></span>
+        </div>
+        <p class="faint" style="font-size:13px;margin:0;line-height:1.6">A 2:1 also sits below some programmes' stated entry requirements, and I am aware that is a real constraint rather than something a portfolio overrides.</p>
+      </div>
+    </section>
+
+    <!-- UCL -->
+    <section class="section" id="ucl" aria-labelledby="ucl-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Institution interest</span>
+        <h2 id="ucl-t">University College London</h2>
+      </div>
+      <div class="two">
+        <div class="theme-card glass">
+          <h3>Why UCL</h3>
+          <p>UCL's computational biology and cancer research environment spans genomics, cancer evolution and translational work in a way that would suit how my interests are developing — particularly the move from variant-level annotation towards tumour heterogeneity and spatially resolved data.</p>
+          <p class="q">The proposals most relevant here: multi-omics subtyping, single-cell transcriptomics, and explainable models for biomarker discovery.</p>
+        </div>
+        <div class="panel glass">
+          <div class="panel-head"><h3>What I would prioritise showing</h3></div>
+          <div class="rows" id="ucl-rows"></div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:20px">
+        <b>An honest note.</b> I have deliberately not written a paragraph claiming deep familiarity with specific UCL groups. Before applying I would read a prospective supervisor's recent work properly and write to them about it specifically — which is a different exercise from a portfolio page, and one that should not be faked here. No affiliation with UCL is held or implied.
+      </div>
+    </section>
+
+    <!-- Sydney -->
+    <section class="section" id="sydney" aria-labelledby="syd-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Institution interest</span>
+        <h2 id="syd-t">University of Sydney</h2>
+      </div>
+      <div class="two">
+        <div class="theme-card glass">
+          <h3>Why Sydney</h3>
+          <p>Sydney's interdisciplinary research culture, and the Charles Perkins Centre's model of putting computational, clinical and biological researchers on the same problem, fits the way I want to work — at the join between molecular detail and systems-level questions rather than inside one discipline.</p>
+          <p class="q">The proposals most relevant here: pharmacogenomics, computational drug discovery, and network-based target investigation.</p>
+        </div>
+        <div class="panel glass">
+          <div class="panel-head"><h3>What I would prioritise showing</h3></div>
+          <div class="rows" id="syd-rows"></div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:20px">
+        <b>Same caveat.</b> This is a statement of my interest, not a claim of any connection to the University of Sydney. Specific supervisor alignment is something I would research properly and discuss directly rather than assert on a web page.
+      </div>
+    </section>
+
+    <section class="banner">
+      <span class="gem-chip"><span class="gem" aria-hidden="true"></span><span>Contact</span></span>
+      <h2>Worth a conversation?</h2>
+      <p>If any of this overlaps with your group's work, I would welcome an email — including one telling me a proposal is naive. I can send an academic CV, talk through any project in detail, or share private repositories.</p>
+      <div class="actions" style="justify-content:center">
+        <a class="btn btn-primary lg" href="contact.html"><span>Get in touch</span> <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost lg" href="cv.html"><span>Academic CV</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

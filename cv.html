@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CV · Seren Aitchison</title>
+<meta name="description" content="Curriculum vitae: education, research outputs, technical capabilities and software projects. Academic and industry emphasis, printable to PDF.">
+<link rel="canonical" href="https://serenaitchison.com/cv.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/cv.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero no-print">
+      <span class="eyebrow">Curriculum vitae</span>
+      <h1>Seren Aitchison</h1>
+      <p class="lede">Medicinal chemistry graduate working in computational biology, bioinformatics and machine learning. Choose an emphasis below, then print to PDF — the page is laid out for it.</p>
+      <div class="actions">
+        <div class="tabs glass" id="cv-mode" role="group" aria-label="CV emphasis">
+          <button type="button" data-m="academic" aria-pressed="true">Academic</button>
+          <button type="button" data-m="industry" aria-pressed="false">Industry</button>
+        </div>
+        <button class="btn btn-primary lg" id="print" type="button"><span data-ico="down"></span><span>Print / save as PDF</span></button>
+      </div>
+      <p class="faint" style="font-size:13px;margin-top:16px">Both versions contain the same facts. The emphasis changes what is listed first and how much detail each section carries.</p>
+    </section>
+
+    <!-- Printable CV -->
+    <article id="cv" class="section">
+      <header style="border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:28px">
+        <h2 style="font-size:34px;letter-spacing:-.03em;margin:0">Seren Aitchison</h2>
+        <p class="muted" style="margin:6px 0 0;font-size:17px" id="cv-tagline">Computational biology · bioinformatics · medicinal chemistry</p>
+        <p class="mono faint" style="margin:12px 0 0;font-size:13px">
+          serenaitchison.com · <span id="cv-email"></span> · github.com/seren-aitchison
+        </p>
+      </header>
+
+      <section style="margin-bottom:32px">
+        <h3 class="eyebrow" style="margin-bottom:12px">Profile</h3>
+        <p id="cv-profile" style="margin:0;color:#cfcfcf;line-height:1.7;max-width:70em"></p>
+      </section>
+
+      <section style="margin-bottom:32px">
+        <h3 class="eyebrow" style="margin-bottom:12px">Education</h3>
+        <div class="t-item" style="padding:0;border:0;background:none">
+          <div><p class="when">2022 – 2025</p></div>
+          <div>
+            <h4 style="margin:0;font-size:17px">BSc Medicinal Chemistry — Cardiff University</h4>
+            <p class="muted" style="margin:4px 0 0">Second Class Honours (Upper Division), 2:1</p>
+            <p style="margin:10px 0 0;color:#cfcfcf;line-height:1.65"><b>Dissertation (40 credits):</b> Catalytic Synthesis and Characterisation of a Biobased Heterocyclic Scaffold with Medicinal Potential. Independent research covering catalytic synthesis from furfural, comparison of Amberlyst-26, γ-alumina and calcium oxide catalysts, analytical characterisation by TGA, TEM and GC, and molecular docking of the resulting scaffold.</p>
+            <p class="muted" style="margin:8px 0 0;font-size:14px">Coursework: medicinal chemistry and molecular design · organic and inorganic chemistry · physical and analytical chemistry · molecular interactions · chemical characterisation · computational chemistry · biological and pharmaceutical principles</p>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-bottom:32px">
+        <h3 class="eyebrow" style="margin-bottom:12px">Research outputs</h3>
+        <p class="faint" style="margin:0 0 14px;font-size:13.5px">Independent computational analyses. Not peer reviewed. Each has a public write-up with stated methods and limitations; repositories marked private can be shared on request.</p>
+        <div id="cv-research"></div>
+      </section>
+
+      <section style="margin-bottom:32px">
+        <h3 class="eyebrow" style="margin-bottom:12px">Software projects</h3>
+        <div id="cv-software"></div>
+      </section>
+
+      <section style="margin-bottom:32px">
+        <h3 class="eyebrow" style="margin-bottom:12px">Technical skills</h3>
+        <div class="table-wrap" style="border:0;background:none">
+          <table class="data"><tbody id="cv-skills"></tbody></table>
+        </div>
+      </section>
+
+      <section style="margin-bottom:32px" id="cv-proposals-wrap">
+        <h3 class="eyebrow" style="margin-bottom:12px">Independent research proposals</h3>
+        <p class="faint" style="margin:0 0 14px;font-size:13.5px">Written independently; not undertaken and not supervised.</p>
+        <div id="cv-proposals"></div>
+      </section>
+
+      <section style="margin-bottom:32px">
+        <h3 class="eyebrow" style="margin-bottom:12px">Writing</h3>
+        <ul style="margin:0;padding-left:18px;color:#cfcfcf;line-height:1.8">
+          <li>What a UMAP plot does and does not preserve — dimensionality reduction and the limits of visual interpretation</li>
+          <li>Why a docking score is not a binding affinity — scoring functions, rigid receptors and honest claims</li>
+          <li>Why genome-wide significance is 5 × 10⁻⁸ — multiple testing and reading a QQ plot</li>
+          <li>SHAP explains a model, not a mechanism — feature attribution and biological inference</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 class="eyebrow" style="margin-bottom:12px">Interests and direction</h3>
+        <p style="margin:0;color:#cfcfcf;line-height:1.7;max-width:70em">Precision medicine and multi-omics integration; computational genomics and single-cell analysis; computational drug discovery and pharmacogenomics; interpretable machine learning for biological data; translational and spatial biology. Seeking doctoral research or a computational scientist position where chemistry and computation meet.</p>
+      </section>
+    </article>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

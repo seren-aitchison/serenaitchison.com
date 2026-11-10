@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Computational Lab · Seren Aitchison</title>
+<meta name="description" content="Five interactive scientific tools running in the browser: pharmacogenomics, population frequencies, molecular descriptors, protein interaction networks and statistical genetics.">
+<link rel="canonical" href="https://serenaitchison.com/lab.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/lab.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero">
+      <span class="eyebrow">Computational Lab · interactive</span>
+      <h1>Explore the science <span class="grad serif">yourself.</span></h1>
+      <p class="lede">Five working tools, not screenshots. Three of them query public scientific APIs live from your browser, so you are looking at current data. Nothing you do here is uploaded, stored or tracked.</p>
+      <div class="lab-nav">
+        <a class="chip" href="#pgx">Pharmacogenomics explorer</a>
+        <a class="chip" href="#freq">Population frequencies</a>
+        <a class="chip" href="#mol">Molecular explorer</a>
+        <a class="chip" href="#net">Interaction networks</a>
+        <a class="chip" href="#gwas">Statistics studio</a>
+      </div>
+      <div class="callout" style="margin-top:28px">
+        <b>Educational tools.</b> These are built for exploring methods and public data. Nothing here is clinical advice, a diagnostic result, or a basis for any decision about medicines.
+      </div>
+    </section>
+
+    <!-- 01 Pharmacogenomics -->
+    <section class="lab-app glass" id="pgx" aria-labelledby="pgx-t">
+      <div class="lab-head">
+        <span class="icon" style="--c:#4d7dff" data-ico="pill"></span>
+        <div><h2 id="pgx-t">01 · Pharmacogenomics explorer</h2><p>Variant annotation from Ensembl, allele function and drug association from CPIC.</p></div>
+        <div class="right"><span class="live-dot" id="pgx-status">Ready</span><a class="chip" href="project.html?p=pgx-cyp2c19">The project</a></div>
+      </div>
+      <div class="lab-body">
+        <aside>
+          <label class="f">Pharmacogene
+            <select id="pgx-gene"></select>
+          </label>
+          <div>
+            <span class="f" style="margin-bottom:6px;display:block">Variant</span>
+            <div class="opt-list" id="pgx-variants"></div>
+          </div>
+          <button class="btn btn-primary btn-sm lg" id="pgx-fetch" type="button"><span>Query Ensembl</span></button>
+          <p class="faint" style="font-size:12px;margin:0;line-height:1.5">Live lookup against the Ensembl REST API (GRCh38). The allele function and drug columns are curated from CPIC.</p>
+        </aside>
+        <div id="pgx-out"></div>
+      </div>
+    </section>
+
+    <!-- 02 Population frequency -->
+    <section class="lab-app glass" id="freq" aria-labelledby="freq-t">
+      <div class="lab-head">
+        <span class="icon" style="--c:#36b6c9" data-ico="globe"></span>
+        <div><h2 id="freq-t">02 · Population frequency explorer</h2><p>Allele frequencies across gnomAD population groups, fetched live.</p></div>
+        <div class="right"><span class="live-dot" id="freq-status">Ready</span><a class="chip" href="project.html?p=pop-freq">The project</a></div>
+      </div>
+      <div class="lab-body">
+        <aside>
+          <label class="f">Variant
+            <select id="freq-variant"></select>
+          </label>
+          <label class="f">Dataset
+            <select id="freq-dataset"><option value="exomes">gnomAD exomes</option><option value="genomes">gnomAD genomes</option></select>
+          </label>
+          <button class="btn btn-primary btn-sm lg" id="freq-fetch" type="button"><span>Fetch frequencies</span></button>
+          <p class="faint" style="font-size:12px;margin:0;line-height:1.5">Population labels are broad continental groupings. A frequency is not a risk, and these labels do not describe any individual.</p>
+        </aside>
+        <div id="freq-out"></div>
+      </div>
+    </section>
+
+    <!-- 03 Molecular explorer -->
+    <section class="lab-app glass" id="mol" aria-labelledby="mol-t">
+      <div class="lab-head">
+        <span class="icon" style="--c:#7c8cff" data-ico="atom"></span>
+        <div><h2 id="mol-t">03 · Molecular explorer</h2><p>Structures in 3D with descriptors and drug-likeness rules, from PubChem.</p></div>
+        <div class="right"><span class="live-dot" id="mol-status">Ready</span><a class="chip" href="research.html#drug-discovery">The proposal</a></div>
+      </div>
+      <div class="lab-body">
+        <aside>
+          <label class="f">Compound
+            <select id="mol-pick"></select>
+          </label>
+          <label class="f">Representation
+            <select id="mol-style"><option value="stick">Stick</option><option value="sphere">Space-filling</option><option value="line">Wireframe</option></select>
+          </label>
+          <button class="btn btn-primary btn-sm lg" id="mol-fetch" type="button"><span>Load structure</span></button>
+          <p class="faint" style="font-size:12px;margin:0;line-height:1.5">Descriptors are PubChem's computed properties. Rule filters are heuristics for oral bioavailability, not predictions of activity.</p>
+        </aside>
+        <div id="mol-out"></div>
+      </div>
+    </section>
+
+    <!-- 04 Networks -->
+    <section class="lab-app glass" id="net" aria-labelledby="net-t">
+      <div class="lab-head">
+        <span class="icon" style="--c:#2fa7a0" data-ico="network"></span>
+        <div><h2 id="net-t">04 · Protein interaction network</h2><p>Build a network around a protein, then watch the hubs move as you raise the confidence threshold.</p></div>
+        <div class="right"><span class="live-dot" id="net-status">Ready</span><a class="chip" href="research.html#networks">The proposal</a></div>
+      </div>
+      <div class="lab-body">
+        <aside>
+          <label class="f">Protein
+            <input id="net-gene" type="text" value="CYP2C19" spellcheck="false" autocomplete="off">
+          </label>
+          <label class="f">Network size
+            <select id="net-size"><option value="12">12 partners</option><option value="20" selected>20 partners</option><option value="30">30 partners</option></select>
+          </label>
+          <label class="f">Minimum confidence <span id="net-conf-v" class="mono">0.70</span>
+            <input id="net-conf" type="range" min="15" max="95" value="70" step="5">
+          </label>
+          <button class="btn btn-primary btn-sm lg" id="net-fetch" type="button"><span>Build network</span></button>
+          <div id="net-info"></div>
+        </aside>
+        <div id="net-out"></div>
+      </div>
+    </section>
+
+    <!-- 05 Statistics -->
+    <section class="lab-app glass" id="gwas" aria-labelledby="gwas-t">
+      <div class="lab-head">
+        <span class="icon" style="--c:#3f9be0" data-ico="chart"></span>
+        <div><h2 id="gwas-t">05 · Statistics studio</h2><p>Manhattan and QQ plots, and expression fold changes, computed in the page.</p></div>
+        <div class="right"><span class="live-dot ok">Local computation</span><a class="chip" href="project.html?p=gwas-viz">The project</a></div>
+      </div>
+      <div class="lab-body">
+        <aside>
+          <div class="opt-list" id="stat-mode">
+            <button type="button" data-m="manhattan" aria-pressed="true">Manhattan plot <small>−log₁₀ p</small></button>
+            <button type="button" data-m="qq">QQ plot <small>observed vs expected</small></button>
+            <button type="button" data-m="expr">Expression <small>fold change</small></button>
+          </div>
+          <div id="stat-controls"></div>
+          <p class="faint" style="font-size:12px;margin:0;line-height:1.5">GWAS data here is simulated, as in the source projects. The expression values are the illustrative dataset from the differential expression workflow.</p>
+        </aside>
+        <div id="stat-out"></div>
+      </div>
+    </section>
+
+    <section class="banner">
+      <span class="gem-chip"><span class="gem" aria-hidden="true"></span><span>How these are built</span></span>
+      <h2>No framework, no build step.</h2>
+      <p>Every tool is plain ES modules, SVG and canvas. Network requests go straight to the public APIs from your browser. The force layout, the plots and the statistics are implemented here rather than pulled from a charting library, because the point is to show the working.</p>
+      <div class="actions" style="justify-content:center">
+        <a class="btn btn-ghost lg" href="skills.html"><span>Technical capabilities</span> <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost lg" href="reproducibility.html"><span>Reproducibility</span> <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

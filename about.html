@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About · Seren Aitchison</title>
+<meta name="description" content="Medicinal chemistry graduate moving into computational biology: background, the Cardiff dissertation on a biobased heterocyclic scaffold, and how the two disciplines connect.">
+<link rel="canonical" href="https://serenaitchison.com/about.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/page.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero">
+      <span class="eyebrow">About</span>
+      <h1>A chemist who learned <span class="grad serif">to compute.</span></h1>
+      <p class="lede">I read Medicinal Chemistry at Cardiff University, spent three years doing the laboratory work that teaches you what a molecule actually is, and then started building the computational skills to work on biological questions at a scale the bench cannot reach. I am not leaving chemistry behind — it is the thing that makes the computational work worth trusting.</p>
+      <div class="actions">
+        <a class="btn btn-primary lg" href="cv.html"><span>Full CV</span> <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost lg" href="#dissertation"><span>Dissertation case study</span></a>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section class="section" aria-labelledby="ed-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Education</span>
+        <h2 id="ed-t">The foundation.</h2>
+      </div>
+      <div class="timeline">
+        <article class="t-item glass" style="--c:#7c8cff">
+          <div>
+            <p class="when">2022 – 2025</p>
+            <span class="status is-pub" style="margin-top:8px">2:1</span>
+          </div>
+          <div>
+            <h3>BSc Medicinal Chemistry · Cardiff University</h3>
+            <p>A chemistry degree oriented towards drug design: how molecules are made, how they are characterised, and how structure governs the way they interact with biological targets.</p>
+            <div class="chips" style="margin-top:16px">
+              <span class="chip">Medicinal chemistry and molecular design</span>
+              <span class="chip">Organic and inorganic chemistry</span>
+              <span class="chip">Physical and analytical chemistry</span>
+              <span class="chip">Molecular interactions</span>
+              <span class="chip">Chemical characterisation</span>
+              <span class="chip">Computational chemistry</span>
+              <span class="chip">Biological and pharmaceutical principles</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="callout" style="margin-top:20px">
+        <b>On the 2:1.</b> It is what it is, and I would rather state it plainly than bury it. What I would ask anyone assessing me to weigh alongside it is the work on this site: it is independent, it is documented, and it can be checked.
+      </div>
+    </section>
+
+    <!-- Dissertation -->
+    <section class="section" id="dissertation" aria-labelledby="ds-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Undergraduate research · 40 credits</span>
+        <h2 id="ds-t">Catalytic synthesis of a biobased heterocyclic scaffold.</h2>
+        <p>An independent research project spanning synthesis, catalysis, analytical characterisation and molecular docking — which is also, in miniature, the arc this whole portfolio follows.</p>
+      </div>
+
+      <div class="pipeline">
+        <div class="step"><small>Feedstock</small><b>Furfural</b></div>
+        <div class="step"><small>Route</small><b>Catalytic synthesis</b></div>
+        <div class="step"><small>Catalysts</small><b>Amberlyst-26 · γ-Al₂O₃ · CaO</b></div>
+        <div class="step"><small>Characterisation</small><b>TGA · TEM · GC</b></div>
+        <div class="step"><small>Modelling</small><b>Molecular docking</b></div>
+      </div>
+
+      <div class="paper" style="margin-top:36px">
+        <nav class="toc" aria-label="On this page">
+          <a href="#d-why">01 · Motivation</a>
+          <a href="#d-design">02 · Reaction design</a>
+          <a href="#d-char">03 · Characterisation</a>
+          <a href="#d-dock">04 · Docking</a>
+          <a href="#d-learn">05 · What it taught me</a>
+        </nav>
+        <article class="prose">
+          <section id="d-why">
+            <h2><span class="n">01</span> Motivation</h2>
+            <p>Furfural is derived from agricultural residues rather than petrochemical feedstock, which makes it an attractive starting point for building heterocyclic scaffolds. Heterocycles are everywhere in medicinal chemistry: they provide the rigid cores and hydrogen-bonding patterns that let a small molecule present a defined shape to a protein. The project asked whether a biobased route could deliver a scaffold of genuine medicinal interest.</p>
+          </section>
+          <section id="d-design">
+            <h2><span class="n">02</span> Reaction design and catalysis</h2>
+            <p>The synthetic work compared heterogeneous catalysts — <strong>Amberlyst-26</strong>, <strong>γ-alumina</strong> and <strong>calcium oxide</strong> — for the key transformation. Heterogeneous catalysts are chosen partly for practical reasons: they can be recovered and reused, and they avoid contaminating the product with residual metal. Comparing an ion-exchange resin against two metal oxides meant comparing quite different surface chemistry, and so quite different behaviour in the same reaction.</p>
+            <div class="callout">
+              <b>Why this matters computationally.</b> Catalyst comparison is an experiment with a small number of expensive runs, which is the opposite of the data regime I now work in. Having done both, I have a reasonably concrete sense of what experimental data actually costs to produce — which changes how you treat a public dataset of ten thousand samples.
+            </div>
+          </section>
+          <section id="d-char">
+            <h2><span class="n">03</span> Analytical characterisation</h2>
+            <p>Thermogravimetric analysis, transmission electron microscopy and gas chromatography were used to characterise the catalysts and the reaction outputs. Each answers a different question: TGA on thermal stability and loss of volatiles, TEM on morphology and particle structure, GC on what the reaction mixture actually contains.</p>
+            <p>The habit this builds is corroboration. No single technique establishes a result on its own, and when two disagree the disagreement is the finding. That transfers directly: a differential expression result and a pathway enrichment result that point in different directions are telling you something, and the temptation to report only the one that fits the story is exactly the thing to resist.</p>
+          </section>
+          <section id="d-dock">
+            <h2><span class="n">04</span> Molecular docking</h2>
+            <p>The computational component investigated how the synthesised scaffold might bind a protein target, examining poses and the interactions available to the ligand within the binding site.</p>
+            <div class="callout warn">
+              <b>The limitation I would state first.</b> Docking scores rank poses within a scoring function. They are not binding affinities, they are not validated predictions of activity, and the correlation between docking score and measured affinity is frequently poor. The honest claim is that docking generated a structural hypothesis about how the scaffold could sit in the site. Confirming it would require experimental binding data.
+            </div>
+          </section>
+          <section id="d-learn">
+            <h2><span class="n">05</span> What it taught me</h2>
+            <p>Three things, all of which show up in the computational work on this site.</p>
+            <ul>
+              <li><strong>Molecules are physical objects.</strong> When a model outputs a logP or a descriptor vector, I have some intuition for whether the number is plausible, because I have handled compounds whose behaviour those numbers are trying to describe.</li>
+              <li><strong>Characterisation is adversarial.</strong> You run several techniques because you are trying to catch yourself being wrong, not to accumulate supporting evidence.</li>
+              <li><strong>Computational output needs a stated epistemic status.</strong> A docking pose is a hypothesis. A SIFT prediction is a hypothesis. Treating either as a finding is the most common way computational work loses credibility with experimentalists.</li>
+            </ul>
+            <div class="actions">
+              <a class="btn btn-ghost lg" href="research.html#drug-discovery"><span>Where I'd take this next</span> <span aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost lg" href="lab.html#mol"><span>Explore furfural in the Lab</span></a>
+            </div>
+          </section>
+        </article>
+      </div>
+    </section>
+
+    <!-- The transition -->
+    <section class="section ecosystem" aria-labelledby="tr-t">
+      <div>
+        <span class="eyebrow">The transition</span>
+        <h2 id="tr-t">Not a change of direction. <span class="grad">A continuation.</span></h2>
+        <p>The route from experimental medicinal chemistry to computational biology is shorter than it looks. Both are about structure determining behaviour; the difference is scale and the kind of evidence available.</p>
+        <ul class="ticks">
+          <li><span><b>Molecules → targets.</b> Medicinal chemistry asks how one molecule engages one protein. Pharmacogenomics asks what happens when the protein varies between people.</span></li>
+          <li><span><b>Targets → systems.</b> A drug–gene pair is one edge in a much larger graph. Network and pathway analysis is the same question asked of the whole system.</span></li>
+          <li><span><b>Systems → populations.</b> Allele frequencies and association statistics ask how that variation is distributed, and what follows for treating people rather than samples.</span></li>
+          <li><span><b>Throughout → engineering.</b> None of it is useful if it cannot be re-run. That is why the software work is on this site rather than hidden in a footnote.</span></li>
+        </ul>
+      </div>
+      <div class="panel glass">
+        <div class="panel-head"><h3>Beyond the science</h3></div>
+        <p class="muted" style="margin:0;font-size:15px;line-height:1.65">Alongside the research work I build and run <a class="text-link" href="project.html?p=gradify">Gradify</a>, a family of learning platforms, and <a class="text-link" href="project.html?p=forgelab">ForgeLab</a>, a browser-based code execution and grading system. They are products rather than research, but they are where most of my software engineering has actually been learned: schema design, sandboxing untrusted code, automated testing and shipping things other people depend on.</p>
+        <div class="rows" style="margin-top:6px">
+          <a class="row" style="--c:#8a96ad" href="project.html?p=gradify"><span class="icon sm" style="--c:#8a96ad" data-ico="layers"></span><span class="row-txt"><b>Gradify</b><span>30+ sites, one shared kit, PostgreSQL</span></span><span class="go" data-ico="chev"></span></a>
+          <a class="row" style="--c:#8a96ad" href="project.html?p=forgelab"><span class="icon sm" style="--c:#8a96ad" data-ico="code"></span><span class="row-txt"><b>ForgeLab</b><span>Sandboxed Python execution and grading</span></span><span class="go" data-ico="chev"></span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="banner">
+      <span class="gem-chip"><span class="gem" aria-hidden="true"></span><span>Next</span></span>
+      <h2>Where to go from here.</h2>
+      <div class="four" style="margin-top:34px">
+        <a class="glass" href="research.html"><span class="outline-ico" data-ico="book"></span><h3>Research interests</h3><p>Five themes and seven proposals.</p><span class="small">Read →</span></a>
+        <a class="glass" href="projects.html"><span class="outline-ico" data-ico="layers"></span><h3>Projects</h3><p>Published analyses and software.</p><span class="small">Read →</span></a>
+        <a class="glass" href="skills.html"><span class="outline-ico" data-ico="cpu"></span><h3>Technical skills</h3><p>Capabilities with evidence attached.</p><span class="small">Read →</span></a>
+        <a class="glass" href="contact.html"><span class="outline-ico" data-ico="mail"></span><h3>Contact</h3><p>Supervisors, recruiters, collaborators.</p><span class="small">Read →</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

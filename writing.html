@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Writing · Seren Aitchison</title>
+<meta name="description" content="Method notes on computational biology: what UMAP does and does not preserve, the limits of docking scores, multiple testing, and interpreting SHAP values in biological models.">
+<link rel="canonical" href="https://serenaitchison.com/writing.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/page.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero">
+      <span class="eyebrow">Method notes</span>
+      <h1>Notes on methods <span class="grad serif">and how they mislead.</span></h1>
+      <p class="lede">Short pieces on computational methods I use, each focused on the same question: what is this actually measuring, and what will it let me believe that I shouldn't? Written to think things through, not to teach.</p>
+      <div class="meta-strip"><span><b>4</b> notes</span><span><b>Method</b> focused</span><span><b>Independent</b> writing, not peer reviewed</span></div>
+    </section>
+
+    <section class="section">
+      <div class="timeline">
+
+        <!-- Note 1 -->
+        <details class="prop glass" id="umap" style="--c:#36b6c9">
+          <summary>
+            <span class="letter">01</span>
+            <span>
+              <h3>What a UMAP plot does and does not preserve</h3>
+              <p>Dimensionality reduction · the distance between two clusters usually means nothing</p>
+            </span>
+            <span class="plus" data-ico="plus"></span>
+          </summary>
+          <div class="inner">
+            <p>UMAP and t-SNE are everywhere in single-cell work, and both are read far more literally than they deserve. The useful mental model is that they are optimised to preserve <strong>local neighbourhoods</strong> — which points are near which other points — and that they make no promise whatsoever about global geometry.</p>
+            <h4>What this rules out</h4>
+            <ul>
+              <li><strong>Distance between clusters is not interpretable.</strong> Two blobs sitting far apart on a UMAP are not necessarily more different than two blobs that are close. The spacing is an artefact of the optimisation, not a measurement.</li>
+              <li><strong>Cluster size is not abundance or variance.</strong> A large sprawling island may just be a region where the algorithm had room to spread points out.</li>
+              <li><strong>The number of clusters is a parameter, not a finding.</strong> Change the neighbourhood size or the clustering resolution and the count changes. Reporting "we identified 14 cell types" without reporting the resolution you chose is reporting a decision as though it were a result.</li>
+            </ul>
+            <h4>What it is good for</h4>
+            <p>Seeing whether structure exists at all; spotting batch effects, where samples separate by processing run rather than biology; and giving a visual handle on a clustering you have validated by other means — marker genes, known biology, or stability across parameters.</p>
+            <div class="callout"><b>The check I would run.</b> Re-run the embedding with a different random seed and a different neighbourhood parameter. Structure that survives both is worth discussing. Structure that does not is a picture of the algorithm, not of the tissue.</div>
+          </div>
+        </details>
+
+        <!-- Note 2 -->
+        <details class="prop glass" id="docking" style="--c:#7c8cff">
+          <summary>
+            <span class="letter">02</span>
+            <span>
+              <h3>Why a docking score is not a binding affinity</h3>
+              <p>Computational chemistry · the most common overclaim in computational drug discovery</p>
+            </span>
+            <span class="plus" data-ico="plus"></span>
+          </summary>
+          <div class="inner">
+            <p>Docking does two separable things: it generates plausible poses for a ligand in a binding site, and it scores them. It is reasonably good at the first and considerably weaker at the second, and the distinction gets lost whenever a docking score is reported in kcal/mol as though it were a measurement.</p>
+            <h4>Where the scoring functions struggle</h4>
+            <ul>
+              <li><strong>Entropy and desolvation.</strong> Binding involves stripping ordered water from both partners and losing conformational freedom. Scoring functions approximate these terms crudely because computing them properly is expensive.</li>
+              <li><strong>Protein flexibility.</strong> Most docking treats the receptor as rigid. Real binding sites reorganise, and induced fit is exactly the case a rigid model handles worst.</li>
+              <li><strong>Ranking versus prediction.</strong> A scoring function may order a congeneric series sensibly while being unreliable across chemically diverse compounds — the case where you most want it to work.</li>
+            </ul>
+            <h4>What can be said honestly</h4>
+            <p>That docking generated a structural hypothesis: a pose, and a set of interactions the ligand could make if it binds in that orientation. That hypothesis is genuinely useful — it guides which analogue to make next. It is not evidence of activity, and the gap is closed by assay data, not by a better score.</p>
+            <div class="callout warn"><b>Why I am insistent about this.</b> It is the fastest way for computational work to lose the confidence of experimental colleagues. Having been on the synthesis side, I have some sense of what it costs to make the compound a docking score suggested.</div>
+          </div>
+        </details>
+
+        <!-- Note 3 -->
+        <details class="prop glass" id="multiple-testing" style="--c:#3f9be0">
+          <summary>
+            <span class="letter">03</span>
+            <span>
+              <h3>Why genome-wide significance is 5 × 10⁻⁸</h3>
+              <p>Statistics · multiple testing, and what a QQ plot is really for</p>
+            </span>
+            <span class="plus" data-ico="plus"></span>
+          </summary>
+          <div class="inner">
+            <p>Test a million independent hypotheses at p &lt; 0.05 and you expect around fifty thousand false positives. The genome-wide threshold is a Bonferroni-style correction for roughly a million independent tests — an approximation of the number of effectively independent common variants in the human genome, given the correlation structure of linkage disequilibrium. 0.05 ÷ 10⁶ gives 5 × 10⁻⁸.</p>
+            <h4>What the threshold is not</h4>
+            <p>It is not a line between real and unreal. A variant at p = 6 × 10⁻⁸ is not meaningfully different from one at 4 × 10⁻⁸; the threshold controls a family-wise error rate across a scan, and that is all it does. An effect that misses it may simply be underpowered, which is why effect sizes should be reported alongside p-values rather than instead of being mentioned.</p>
+            <h4>The QQ plot is the diagnostic that matters</h4>
+            <ul>
+              <li><strong>Points on the diagonal:</strong> test statistics behaving as the null predicts.</li>
+              <li><strong>A tail lifting away at the top:</strong> what genuine association looks like.</li>
+              <li><strong>The whole line above the diagonal:</strong> inflation. Usually population structure or cryptic relatedness, occasionally a technical artefact — and almost never a genome full of real signal.</li>
+            </ul>
+            <p>The genomic inflation factor λ summarises this as the ratio of the median observed chi-square to its null expectation. λ near 1 is what you want; λ above about 1.1 means something needs explaining before the hits are worth discussing.</p>
+            <div class="callout"><b>See it move.</b> The <a class="text-link" href="lab.html#gwas">statistics studio</a> computes λ live. Raise the inflation slider with zero true signals planted and watch the entire line lift — that is the pattern that should stop you trusting a scan.</div>
+          </div>
+        </details>
+
+        <!-- Note 4 -->
+        <details class="prop glass" id="shap" style="--c:#5b6cf0">
+          <summary>
+            <span class="letter">04</span>
+            <span>
+              <h3>SHAP explains a model, not a mechanism</h3>
+              <p>Interpretability · the gap between feature importance and biology</p>
+            </span>
+            <span class="plus" data-ico="plus"></span>
+          </summary>
+          <div class="inner">
+            <p>SHAP values distribute a prediction across the input features, using an approach borrowed from cooperative game theory: each feature's contribution is its average marginal effect across orderings of the features. The mathematics is principled, and the usual interpretation of the output is not.</p>
+            <h4>Three ways the biological reading goes wrong</h4>
+            <ul>
+              <li><strong>Correlated features share credit arbitrarily.</strong> Genes in the same pathway are often highly correlated. The model may lean on one and effectively ignore its neighbours; SHAP will faithfully report that, and a reader will conclude the chosen gene is the important one. Swap the correlated partner in and the model performs identically.</li>
+              <li><strong>Confounds get attributed as biology.</strong> If a batch effect predicts the outcome, the features carrying it will show high attribution. The model is not wrong — that feature genuinely drives its prediction — but the explanation is about the dataset, not the disease.</li>
+              <li><strong>Attribution is not causal.</strong> SHAP describes a model that was fitted to observational data. Nothing in the procedure licenses an intervention claim.</li>
+            </ul>
+            <h4>How I would use it anyway</h4>
+            <p>As a debugging tool first: if the top features are technical covariates or known confounds, the model has learned the wrong thing and the explanation has just saved you from publishing it. As a hypothesis generator second, where a high-attribution feature with a plausible mechanism is worth following up experimentally. Never as a finding in its own right.</p>
+            <div class="callout warn"><b>The honest summary.</b> "The model relies on gene X" and "gene X matters biologically" are different statements. Interpretability methods establish the first. Only an experiment establishes the second.</div>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <section class="banner">
+      <span class="gem-chip"><span class="gem" aria-hidden="true"></span><span>More to come</span></span>
+      <h2>Written as I go.</h2>
+      <p>These are independent notes rather than peer-reviewed writing, and I will add to them as I work through methods properly. If one is wrong, I would like to know — that is worth more to me than agreement.</p>
+      <div class="actions" style="justify-content:center">
+        <a class="btn btn-primary lg" href="contact.html"><span>Tell me I'm wrong</span> <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost lg" href="research.html"><span>Research interests</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

@@ -102,8 +102,15 @@ Repository visibility is set in `assets/data.js`. A project whose repo is marked
 
 ## Deploy
 
-GitHub Pages from the repository root. `CNAME` holds the custom domain and `.nojekyll` tells Pages
-to serve the files as they are.
+GitHub Pages from the repository root — Settings → Pages → *Deploy from a branch*, `main`, `/ (root)`.
+
+Pages has to be switched on by hand once: neither the REST API nor `actions/configure-pages`
+can create the site, because creating it needs admin rights that `GITHUB_TOKEN` does not carry.
+After that first switch-on, every push to `main` publishes within a minute or so.
+
+`CNAME` holds the custom domain and `.nojekyll` tells Pages to serve the files as they are.
+Branch-based deployment reads `CNAME` from the repository root, so the custom domain is picked
+up without touching settings again.
 
 DNS for an apex domain needs four `A` records pointing at GitHub Pages
 (185.199.108–111.153), plus a `CNAME` for `www` to `<username>.github.io`.

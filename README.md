@@ -13,7 +13,8 @@ project.html?p=<id>     project detail, laid out as a short paper
 research.html           five research themes and seven independent proposals
 lab.html                the Computational Lab: six interactive tools
 skills.html             capability matrix, every entry linked to evidence
-writing.html            method notes
+methods.html            reference library: 19 methods, with assumptions and failure modes
+writing.html            longer method notes
 about.html              background and the dissertation case study
 phd.html                pathway for doctoral supervisors (incl. UCL and Sydney sections)
 industry.html           pathway for biotech and pharmaceutical hiring
@@ -29,7 +30,7 @@ assets/
   skills-data.js        capabilities and the capability matrix
   lab-data.js           curated CPIC pharmacogene reference, compounds, rule sets
   ui.js                 icons, top bar, footer, shared render helpers
-  lab.js                the five Lab tools
+  lab.js                the Lab tools
   lab-stats.js          Manhattan, QQ and expression plots
   lab-diplotype.js      CPIC diplotype → phenotype assignment
   methods-data.js       the methods library
@@ -48,7 +49,7 @@ Then open http://localhost:8080.
 
 ## The Lab
 
-Three tools query public APIs directly from the visitor's browser:
+Six tools; three query public APIs directly from the visitor's browser:
 
 | Tool | Source | Notes |
 |---|---|---|

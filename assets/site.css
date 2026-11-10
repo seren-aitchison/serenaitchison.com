@@ -368,6 +368,8 @@ h1 { margin: 0; font-size: clamp(40px, 6vw, 76px); line-height: 1.03; letter-spa
 table.data { width: 100%; border-collapse: collapse; font-size: 14.5px; }
 table.data th, table.data td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
 table.data th { font: 500 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+/* figure tables: row headers are data (variant ids, gene names), not labels */
+table.data.plain tbody th { font: 500 14.5px var(--sans); letter-spacing: 0; text-transform: none; color: #e4e4e4; }
 table.data td { color: #d6d6d6; }
 table.data td.num { font-family: var(--mono); text-align: right; }
 .table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: rgba(255, 255, 255, .015); }

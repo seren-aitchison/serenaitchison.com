@@ -3,6 +3,7 @@
 import { THEMES } from "./data.js";
 import { WORK } from "./projects-data.js";
 import { mountChrome, icon, esc, statusPill, repoLink } from "./ui.js";
+import { renderFigure } from "./figures.js";
 
 mountChrome("projects.html");
 
@@ -89,6 +90,7 @@ if (!p) {
       ${p.findings ? `<section id="findings">
         <h2><span class="n">04</span> Findings</h2>
         ${findingsBlock()}
+        ${renderFigure(p.id)}
       </section>` : ""}
 
       ${p.discussion ? `<section id="discussion">

@@ -6,6 +6,7 @@ import { drawManhattan, drawQQ, drawExpression, STAT_CONTROLS } from "./lab-stat
 import { mountDiplotype } from "./lab-diplotype.js";
 import { mountProtein } from "./lab-protein.js";
 import { mountVcf } from "./lab-vcf.js";
+import { mountFastq } from "./lab-fastq.js";
 
 mountChrome("lab.html");
 document.querySelectorAll("[data-ico]").forEach((el) => { el.innerHTML = icon(el.dataset.ico); });
@@ -137,7 +138,10 @@ mountProtein(document.getElementById("protein"));
 /* ======================= 04 · VCF normalisation ======================= */
 mountVcf(document.getElementById("vcf"));
 
-/* ======================= 05 · Population frequencies ======================= */
+/* ======================= 05 · Read quality control ======================= */
+mountFastq(document.getElementById("fastq"));
+
+/* ======================= 06 · Population frequencies ======================= */
 (function freqTool() {
   const sel = $("#freq-variant"), dsSel = $("#freq-dataset"), out = $("#freq-out"), status = $("#freq-status");
   if (!sel) return;
@@ -198,7 +202,7 @@ mountVcf(document.getElementById("vcf"));
   render();
 })();
 
-/* ======================= 06 · Molecular explorer ======================= */
+/* ======================= 07 · Molecular explorer ======================= */
 (function molTool() {
   const pick = $("#mol-pick"), styleSel = $("#mol-style"), out = $("#mol-out"), status = $("#mol-status");
   if (!pick) return;
@@ -305,7 +309,7 @@ mountVcf(document.getElementById("vcf"));
   shell(`<div class="empty">Press <b>Load structure</b> to fetch from PubChem.</div>`);
 })();
 
-/* ======================= 07 · Interaction network ======================= */
+/* ======================= 08 · Interaction network ======================= */
 (function netTool() {
   const geneIn = $("#net-gene"), sizeSel = $("#net-size"), conf = $("#net-conf"), confV = $("#net-conf-v");
   const out = $("#net-out"), info = $("#net-info"), status = $("#net-status");
@@ -382,7 +386,7 @@ mountVcf(document.getElementById("vcf"));
   load();
 })();
 
-/* ======================= 08 · Statistics studio ======================= */
+/* ======================= 09 · Statistics studio ======================= */
 (function statsTool() {
   const modes = $("#stat-mode"), controls = $("#stat-controls"), out = $("#stat-out");
   if (!modes) return;

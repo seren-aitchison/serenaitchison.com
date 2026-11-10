@@ -474,6 +474,12 @@ footer.site { margin: 110px 0 32px; padding: 28px; color: var(--mute); font-size
   .aurora, header.bar, footer.site, .no-print { display: none !important; }
   .glass { background: none !important; box-shadow: none !important; border: 1px solid #ddd !important; backdrop-filter: none !important; }
   .muted, .faint, .t-item p, .t-item .when { color: #444 !important; }
+  /* the CV carries inline light-grey text for the dark theme: force it readable on paper */
+  #cv, #cv p, #cv li, #cv td, #cv th, #cv h3, #cv h4, #cv b, #cv strong { color: #111 !important; }
+  #cv .faint, #cv .muted, #cv .when, #cv .eyebrow { color: #555 !important; }
+  #cv section { break-inside: avoid; }
+  #cv h4 { break-after: avoid; }
+  table.data th, table.data td { border-bottom-color: #ddd !important; }
   .grad { color: #1d3fd6; background: none; }
   a { color: #000; }
 }

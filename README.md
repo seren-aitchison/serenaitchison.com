@@ -66,6 +66,26 @@ headers on purpose: adding one triggers a CORS preflight that PubChem does not a
 Every API call retries twice, because a throttled response arrives without CORS headers and the
 browser reports it as a network error rather than a status code.
 
+## Tests
+
+```bash
+npm test
+```
+
+23 tests over the content and structure, run in CI on every push. Most of them exist to enforce
+the honesty rules mechanically rather than by memory:
+
+- a project marked **published** must report findings; a **proposal** must not carry findings or results
+- every project must state limitations — the assertion fails if the list is empty
+- projects built on simulated or illustrative data must say so in their visible text, not only in a footnote
+- every repository referenced must appear in the visibility map, so a private repo can never render as a link
+- every phenotype the diplotype tool can assign must have a written consequence, and the tool must keep its educational-use caveat
+- every capability claimed must have evidence linked, and every link must resolve
+- counts quoted in page copy ("10 published analyses") must match the data
+
+A second CI job loads every page in Chromium and fails on an uncaught error, a console error,
+a missing or duplicated `h1`, or a broken internal link.
+
 ## Content rules
 
 Content lives in `assets/projects-data.js`, not in the HTML. Two rules it follows:

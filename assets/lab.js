@@ -374,7 +374,10 @@ mountDiplotype(document.getElementById("diplo"));
 (function statsTool() {
   const modes = $("#stat-mode"), controls = $("#stat-controls"), out = $("#stat-out");
   if (!modes) return;
-  let mode = "manhattan";
+  // ?stat=expr opens the studio on a particular view, so a project can link straight to its own figure.
+  const wanted = new URLSearchParams(location.search).get("stat");
+  let mode = ["manhattan", "qq", "expr"].includes(wanted) ? wanted : "manhattan";
+  modes.querySelectorAll("button[data-m]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.m === mode)));
 
   function render() {
     controls.innerHTML = STAT_CONTROLS[mode] || "";

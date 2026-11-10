@@ -136,7 +136,7 @@ export const WORK = [
     title: "Differential expression workflow",
     short: "Fold-change analysis across eight genes, written to be explicit about where description ends and inference would begin.",
     tags: ["Python", "pandas", "matplotlib"],
-    lab: "lab.html#expr",
+    lab: "lab.html?stat=expr#gwas",
     question: "What does a fold-change comparison actually establish without replicates or a statistical model?",
     background: "Fold change is the first quantity anyone computes in an expression comparison and the easiest to over-interpret. This workflow implements the arithmetic and then states plainly what it does not support.",
     pipeline: [["Data", "Control / treatment"], ["Ratio", "Fold change"], ["Rank", "By change"], ["Classify", "Up / down"], ["Plot", "Bar charts"]],

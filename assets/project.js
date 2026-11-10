@@ -22,6 +22,7 @@ if (!p) {
   const t = THEMES[p.theme];
   document.title = `${p.title} · Seren Aitchison`;
   document.querySelector('meta[name="description"]')?.setAttribute("content", p.short);
+  document.querySelector('link[rel="canonical"]')?.setAttribute("href", `https://serenaitchison.com/project.html?p=${p.id}`);
 
   const idx = WORK.indexOf(p);
   const next = WORK[(idx + 1) % WORK.length];

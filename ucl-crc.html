@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mapping spatial plasticity in colorectal cancer · Seren Aitchison</title>
+<meta name="description" content="A research proposal responding to the UCL Cancer Institute PhD project on regional variation in colorectal cancer plasticity: multi-region organoids, mass cytometry and spatial transcriptomics.">
+<link rel="canonical" href="https://serenaitchison.com/ucl-crc.html">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/page.js"></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="wrap">
+  <header data-chrome="bar"></header>
+
+  <main>
+    <section class="page-hero">
+      <span class="eyebrow">Doctoral application · UCL Cancer Institute</span>
+      <h1>Are all regions of a tumour <span class="grad serif">equally able to adapt?</span></h1>
+      <p class="lede">A response to the PhD project on mapping spatial plasticity dynamics in colorectal cancer. This is my own reading of the question and how I would approach it — written to be argued with, not to flatter the advert. Everything here is a proposal: I have not done this work, and parts of it I would need to be taught.</p>
+      <div class="meta-strip">
+        <span><b>Multi-region organoids</b></span>
+        <span><b>Mass cytometry</b></span>
+        <span><b>Spatial transcriptomics</b></span>
+        <span><b>Four years</b> from 2027</span>
+      </div>
+    </section>
+
+    <!-- Why this project -->
+    <section class="section ecosystem" aria-labelledby="why-t">
+      <div>
+        <span class="eyebrow">Why this one</span>
+        <h2 id="why-t">The question is about <span class="grad">capacity</span>, not state.</h2>
+        <p>Most work on treatment resistance asks what state a cell is in. This project asks something harder and more useful: what a cell is <em>capable of becoming</em>, and whether that capacity is distributed evenly across a tumour.</p>
+        <p style="margin-top:14px">That reframing is what makes it a computational problem rather than a cataloguing exercise. A state is something you measure once. A capacity has to be inferred from how a population responds to perturbation — which means the analysis is doing real inferential work rather than describing a snapshot.</p>
+        <ul class="ticks">
+          <li><span><b>It is a perturbation problem.</b> Plasticity is only visible when you push the system and watch where it goes, which is exactly what organoids plus mass cytometry are for.</span></li>
+          <li><span><b>It has a built-in control for the microenvironment.</b> Organoids strip the stroma away. That makes cell-intrinsic and environment-induced plasticity separable by design rather than by argument.</span></li>
+          <li><span><b>It joins two data types with different geometries.</b> Mass cytometry gives many cells and no position; spatial transcriptomics gives position and far less resolution. Making them speak to each other is the interesting part.</span></li>
+        </ul>
+      </div>
+      <div class="panel glass">
+        <div class="panel-head"><h3>The biology, as I understand it</h3></div>
+        <p class="muted" style="margin:0;font-size:15px;line-height:1.7">Intestinal epithelium can abandon the normal <span class="mono" style="font-size:13px">LGR5+</span> stem-cell programme for a fetal-like, regenerative state during wound healing — a YAP/TAZ-associated programme that is slow-cycling and tolerates cytotoxic chemotherapy, which preferentially kills what is dividing fastest.</p>
+        <p class="muted" style="margin:0;font-size:15px;line-height:1.7">Colorectal cancer appears to co-opt that programme. The drug-tolerant population is not necessarily a pre-existing resistant clone: cells can enter the state, persist, and re-enter proliferation afterwards. If that is right, resistance is partly a reversible phenotype, and the quantity that matters is how readily a given population makes the switch.</p>
+        <div class="callout" style="font-size:14px"><b>Which is why region matters.</b> If the capacity to switch is uneven across a tumour, then a biopsy samples one region's capacity and generalises it to the whole. That is a sampling problem with direct clinical consequences.</div>
+      </div>
+    </section>
+
+    <!-- The proposal -->
+    <section class="section" aria-labelledby="prop-t">
+      <div class="sec-head left">
+        <span class="eyebrow">My proposal</span>
+        <h2 id="prop-t">How I would try to answer it.</h2>
+        <p>Written independently, before any conversation with the lab. I expect the design to change on contact with people who know the system — that is rather the point of doing a PhD — but I would rather bring something specific to be corrected than arrive with nothing.</p>
+      </div>
+
+      <div class="paper">
+        <nav class="toc" aria-label="On this page">
+          <a href="#p1">01 · Hypothesis</a>
+          <a href="#p2">02 · The separating experiment</a>
+          <a href="#p3">03 · Defining a plasticity index</a>
+          <a href="#p4">04 · Joining CyTOF to space</a>
+          <a href="#p5">05 · Statistical design</a>
+          <a href="#p6">06 · How it could fail</a>
+        </nav>
+        <article class="prose">
+          <section id="p1">
+            <h2><span class="n">01</span> Hypothesis</h2>
+            <p>Plasticity — the capacity to enter the wound-healing, drug-tolerant state — varies systematically between regions of a single tumour, and that variation has two separable sources:</p>
+            <ul>
+              <li><strong>A cell-intrinsic component</strong> that is heritable through organoid derivation, and so persists when the microenvironment is removed.</li>
+              <li><strong>An environment-induced component</strong> that is only recovered when the relevant stromal signals are restored in co-culture.</li>
+            </ul>
+            <p>The prediction that makes this testable: regions whose organoids differ in plasticity <em>in pure epithelial culture</em> differ for intrinsic reasons, while regions that converge in pure culture but diverge again under co-culture differ because of where they sat in the tissue.</p>
+          </section>
+
+          <section id="p2">
+            <h2><span class="n">02</span> The separating experiment</h2>
+            <p>Derive organoids from several spatially annotated regions per patient, then measure the drug-tolerant transition under a factorial perturbation:</p>
+            <div class="pipeline">
+              <div class="step"><small>Factor 1</small><b>Region of origin</b></div>
+              <div class="step"><small>Factor 2</small><b>± chemotherapy</b></div>
+              <div class="step"><small>Factor 3</small><b>± stromal co-culture</b></div>
+              <div class="step"><small>Readout</small><b>Mass cytometry</b></div>
+              <div class="step"><small>Mapped back to</small><b>Spatial transcriptomics</b></div>
+            </div>
+            <p style="margin-top:18px">The co-culture arm is the control that makes the design work. Without it, every regional difference surviving organoid derivation is ambiguous between "intrinsic" and "the microenvironment left a mark that culture has not yet erased". With it, the interaction term between region and co-culture is the quantity of interest rather than a nuisance.</p>
+            <p>Mass cytometry is the right readout here specifically because it measures signalling and cell-state markers in the same cells at single-cell resolution. A state transition that happens in 8% of cells is invisible in a bulk lysate and obvious in a CyTOF distribution.</p>
+          </section>
+
+          <section id="p3">
+            <h2><span class="n">03</span> Defining a plasticity index</h2>
+            <p>The project needs one number per region that means "how readily this population switches". I would define it as an <strong>inducible shift in state occupancy</strong> rather than as a marker intensity:</p>
+            <ol>
+              <li>Arcsinh-transform, bead-normalise and batch-correct the CyTOF data, with anchor samples carried across every barcoding batch.</li>
+              <li>Cluster all conditions together into shared cell states, so that states are defined once rather than per sample — otherwise conditions cannot be compared.</li>
+              <li>For each region and condition, compute the occupancy of the drug-tolerant state as a proportion of cells.</li>
+              <li>Define the plasticity index as the shift in occupancy between the unperturbed and perturbed conditions, quantified as an earth mover's distance over the state distribution rather than a difference of means, so a change in distribution shape is not discarded.</li>
+            </ol>
+            <div class="callout"><b>Why a distributional measure.</b> Mean marker intensity across a population conflates "all cells shifted slightly" with "a subpopulation shifted completely". Those are different biology, and for a question about plasticity they are the two answers you most need to tell apart.</div>
+          </section>
+
+          <section id="p4">
+            <h2><span class="n">04</span> Joining CyTOF to space</h2>
+            <p>The two data types have incompatible geometries: dissociated cells with deep marker detail and no position; spots with position and coarser resolution. I would not try to integrate them into one embedding. I would instead use the spatial data to ask a targeted question of the regions themselves:</p>
+            <ul>
+              <li><strong>Deconvolve</strong> each spot into cell-type proportions, with the matched organoid and stromal profiles as the reference, so the reference is from the same patient rather than an atlas.</li>
+              <li><strong>Characterise each sampled region's neighbourhood</strong>: which cell types co-occur around the epithelium, at what density, and how close to the invasive front.</li>
+              <li><strong>Test the association</strong> between a region's measured plasticity index and its neighbourhood composition, treating the index as the outcome and the spatial features as predictors.</li>
+            </ul>
+            <p>That keeps each modality doing what it is good at. The CyTOF measures capacity; the spatial data explains where that capacity sits and what was next to it.</p>
+          </section>
+
+          <section id="p5">
+            <h2><span class="n">05</span> Statistical design</h2>
+            <p>The failure mode I would most want to avoid is treating wells as replicates. Regions are nested within patients, and patients are the level at which a finding generalises.</p>
+            <ul>
+              <li>A mixed-effects model with patient as a random effect and region nested within it, so between-patient variation does not masquerade as a regional effect.</li>
+              <li>Technical replicates modelled as such, never pooled into the sample size.</li>
+              <li>Batch structure recorded in the design and tested against the biological factors before analysis — if batch is confounded with region, the experiment cannot answer the question and it is better to find that out at the design stage.</li>
+              <li>Power considered in terms of regions per patient and patients per arm, since with a handful of patients the honest limit is a well-characterised case series rather than a population claim.</li>
+            </ul>
+          </section>
+
+          <section id="p6">
+            <h2><span class="n">06</span> How it could fail</h2>
+            <p>The ways I would expect this to go wrong, in order of how much they would worry me:</p>
+            <ul>
+              <li><strong>Organoid drift.</strong> Derivation and passaging select. A regional difference could be a difference in how well each region's cells took to culture rather than a property of the tumour. Mitigation: low-passage work, derivation efficiency recorded as a covariate, and early-versus-late passage comparison treated as a result rather than a check.</li>
+              <li><strong>Batch confounded with region.</strong> If regions are processed in the order they are dissected, batch and region are the same variable. Mitigation: randomise the barcoding layout across regions and patients.</li>
+              <li><strong>The state is a continuum, not two states.</strong> If cells occupy a gradient, clustering imposes a boundary and "occupancy" becomes an artefact of where it was drawn. Mitigation: report the index across a range of boundaries and show the conclusion does not depend on one.</li>
+              <li><strong>Deconvolution error.</strong> Spots contain several cells, so neighbourhood composition is inferred rather than observed. Mitigation: validate against imaging where available, and treat weakly deconvolved spots as missing rather than as zero.</li>
+              <li><strong>Too few patients.</strong> Regional variation within a patient can be real while being swamped by variation between patients. That is a finding and should be reported as one, not hidden behind a pooled analysis.</li>
+            </ul>
+          </section>
+        </article>
+      </div>
+    </section>
+
+    <!-- What I bring / what I lack -->
+    <section class="section" aria-labelledby="fit-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Fit, honestly</span>
+        <h2 id="fit-t">What I bring, and what I would have to learn.</h2>
+      </div>
+      <div class="two">
+        <div class="panel glass">
+          <div class="panel-head"><h3>What I bring</h3></div>
+          <div class="rows">
+            <span class="row" style="--c:#4fe0a6"><span class="icon sm" style="--c:#4fe0a6" data-ico="chart"></span><span class="row-txt"><b>High-dimensional analysis discipline</b><span>Clustering, batch effects and the resolution-parameter problem, written up in the methods library</span></span></span>
+            <span class="row" style="--c:#4fe0a6"><span class="icon sm" style="--c:#4fe0a6" data-ico="flask"></span><span class="row-txt"><b>Laboratory experience, in chemistry</b><span>Three years of synthesis and characterisation — I know what it costs to generate data</span></span></span>
+            <span class="row" style="--c:#4fe0a6"><span class="icon sm" style="--c:#4fe0a6" data-ico="code"></span><span class="row-txt"><b>Software that other people run</b><span>Two production systems, with databases, tests and CI</span></span></span>
+            <span class="row" style="--c:#4fe0a6"><span class="icon sm" style="--c:#4fe0a6" data-ico="shield"></span><span class="row-txt"><b>A habit of reporting what breaks</b><span>Several published analyses exist mainly to document where a method fails</span></span></span>
+          </div>
+        </div>
+        <div class="panel glass">
+          <div class="panel-head"><h3>What I would have to learn</h3></div>
+          <div class="rows">
+            <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="beaker"></span><span class="row-txt"><b>Organoid culture</b><span>No experience. Derivation, passaging and co-culture would all be new</span></span></span>
+            <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="layers"></span><span class="row-txt"><b>Mass cytometry, at the bench</b><span>I understand the analysis; I have never run a panel or barcoded a batch</span></span></span>
+            <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="dna"></span><span class="row-txt"><b>Spatial transcriptomics in practice</b><span>Proposed in my own research plans, not yet executed</span></span></span>
+            <span class="row" style="--c:#ffc24b"><span class="icon sm" style="--c:#ffc24b" data-ico="user"></span><span class="row-txt"><b>Working with clinical samples</b><span>Governance, consent and the realities of tissue from theatre</span></span></span>
+          </div>
+          <p class="faint" style="font-size:13px;margin:0;line-height:1.6">A medicinal chemistry graduate is not the obvious candidate for a cancer biology PhD. The case I would make is that the computational and experimental halves of this project are both learnable, and that I have evidence of learning hard technical things unsupervised — but the biology gap is real and I would not pretend otherwise.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="banner">
+      <span class="gem-chip"><span class="gem" aria-hidden="true"></span><span>Relevant work on this site</span></span>
+      <h2>Where to check the claims.</h2>
+      <div class="four" style="margin-top:34px">
+        <a class="glass" href="methods.html?cat=struct"><span class="outline-ico" data-ico="layers"></span><h3>High-dimensional methods</h3><p>Clustering, embeddings, batch correction — assumptions and failure modes.</p><span class="small">Methods library →</span></a>
+        <a class="glass" href="research.html#spatial"><span class="outline-ico" data-ico="target"></span><h3>Spatial proposal</h3><p>My independent proposal on spatial transcriptomics, written before this advert.</p><span class="small">Research →</span></a>
+        <a class="glass" href="lab.html"><span class="outline-ico" data-ico="beaker"></span><h3>Computational Lab</h3><p>Ten working tools, built on real data rather than screenshots.</p><span class="small">Open →</span></a>
+        <a class="glass" href="contact.html"><span class="outline-ico" data-ico="mail"></span><h3>Tell me I'm wrong</h3><p>If the design has an obvious flaw, I would genuinely like to know.</p><span class="small">Contact →</span></a>
+      </div>
+      <div class="note-line" style="margin-top:30px">
+        <span class="tag-y">Not an affiliation</span>
+        <span>This is an independent proposal written in support of an application. It implies no connection to UCL, UCLH or the research team.</span>
+      </div>
+    </section>
+  </main>
+
+  <footer data-chrome="footer"></footer>
+</div>
+</body>
+</html>

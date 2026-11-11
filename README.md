@@ -14,10 +14,11 @@ research.html           five research themes and thirteen independent proposals
 programme.html          the pharmacogenomics synthesis: evidence layers, and what is missing
 lab.html                the Computational Lab: ten interactive tools
 skills.html             capability matrix, every entry linked to evidence
-methods.html            reference library: 28 methods, with assumptions and failure modes
+methods.html            reference library: 34 methods, with assumptions and failure modes
 writing.html            longer method notes
 about.html              background and the dissertation case study
-phd.html                pathway for doctoral supervisors (incl. UCL and Sydney sections)
+phd.html                pathway for doctoral supervisors
+ucl-crc.html            full proposal for the UCL colorectal plasticity PhD
 industry.html           pathway for biotech and pharmaceutical hiring
 cv.html                 CV with academic / industry emphasis, printable to PDF
 contact.html            contact and email templates

@@ -6,6 +6,7 @@ export const CATEGORIES = [
   ["seq", "Sequencing and variants"],
   ["proc", "Processing and normalisation"],
   ["struct", "Structure and dimensionality"],
+  ["cell", "Single-cell and spatial"],
   ["test", "Statistical testing"],
   ["model", "Predictive modelling"],
   ["surv", "Time-to-event"],
@@ -249,6 +250,115 @@ export const METHODS = [
     read: "State the resolution and show how the partition changes across a range of it. Cell types that persist across resolutions are more credible than ones that appear at a single setting.",
     use: "The standard clustering step in the proposed single-cell work.",
     ref: "Blondel et al. (2008); Traag, Waltman & van Eck (2019).",
+  },
+
+  /* ---------------- Single-cell and spatial ---------------- */
+  {
+    id: "cytof", cat: "cell", name: "Mass cytometry", short: "CyTOF",
+    solves: "Measure dozens of proteins and post-translational modifications in single cells at once, without the spectral overlap that limits fluorescence.",
+    idea: "Antibodies are tagged with purified metal isotopes rather than fluorophores; cells are nebulised, atomised in plasma and the isotopes counted by time-of-flight mass spectrometry. Because the isotopes are resolved by mass, around 40 parameters can be measured with minimal crosstalk. Counts are arcsinh-transformed, conventionally with cofactor 5, to stabilise variance across the dynamic range.",
+    assumptions: [
+      "Signal is proportional to antibody binding, which assumes the panel was titrated and the epitopes survive fixation.",
+      "Arcsinh with a chosen cofactor is appropriate — a decision that visibly changes where populations sit, and one that should be stated.",
+      "Dissociation did not itself change the cells. Any state driven by cell contact or architecture is destroyed before measurement.",
+    ],
+    fails: [
+      "Signal spillover is small but real: isotopic impurity and oxide formation mean neighbouring mass channels bleed, and uncompensated panels create populations that do not exist.",
+      "Sensitivity is lower than flow cytometry and cells are consumed, so rare populations need large inputs and nothing can be sorted afterwards.",
+      "Batch effects are severe across acquisition days. Without barcoding and anchor samples carried through every batch, batch and biology become the same variable.",
+    ],
+    read: "Report the panel, the arcsinh cofactor, the barcoding scheme and the anchor samples. Show that known populations land where they should before interpreting unexpected ones. Cluster all conditions together, so states are defined once and occupancy can be compared between them.",
+    use: "Central to the UCL colorectal plasticity proposal, where the readout is a shift in state occupancy under perturbation.",
+    ref: "Bandura et al. (2009); Bendall et al. (2011); Zunder et al. (2015) on barcoding.",
+  },
+  {
+    id: "flowsom", cat: "cell", name: "Clustering high-dimensional cytometry", short: "FlowSOM, Phenograph",
+    solves: "Identify cell populations from 40-parameter data without drawing gates by hand.",
+    idea: "FlowSOM fits a self-organising map, then builds a minimal spanning tree over the nodes and consensus-clusters them into metaclusters; Phenograph builds a k-nearest-neighbour graph and partitions it by community detection. Both replace sequential manual gating, which scales badly beyond a handful of markers and embeds the analyst's expectations.",
+    assumptions: [
+      "Populations are reasonably well separated in the measured space — true for lineage markers, far less so for signalling states that form continua.",
+      "The number of metaclusters, or the graph resolution, has been chosen on some stated basis.",
+      "All samples were transformed and normalised identically before clustering, or clusters partly encode batch.",
+    ],
+    fails: [
+      "Clustering each sample separately makes conditions incomparable, because cluster 4 in one sample is not cluster 4 in another. Cluster the pooled data, then compare occupancy.",
+      "Rare populations are merged into larger neighbours unless the cluster count is deliberately raised past what looks tidy.",
+      "A continuum forced into discrete clusters produces boundaries that move with the parameters, and proportions that move with them.",
+    ],
+    read: "State the algorithm, the cluster count and how it was chosen, and show stability across a range of it. Where the biology is a gradient, report a trajectory or a distributional distance alongside the discrete proportions.",
+    use: "The step between raw CyTOF and any statement about state occupancy in the plasticity proposal.",
+    ref: "Van Gassen et al. (2015), FlowSOM; Levine et al. (2015), Phenograph.",
+  },
+  {
+    id: "emd", cat: "cell", name: "Comparing distributions, not means", short: "Earth mover's distance",
+    solves: "Quantify how a single-cell population changed under perturbation, when the change is in the shape of the distribution rather than its centre.",
+    idea: "The earth mover's distance — the Wasserstein distance — is the minimum cost of transforming one distribution into another, moving probability mass over the measurement space. Unlike a difference of means it registers a subpopulation shifting completely while the rest stays put, and unlike a Kolmogorov–Smirnov statistic it accounts for how far the mass moved.",
+    assumptions: [
+      "The measurement space is comparable between the samples being compared — so transformation, normalisation and batch correction have already done their job.",
+      "Enough cells per sample that the empirical distribution is a fair estimate.",
+    ],
+    fails: [
+      "It is sensitive to the batch effects it cannot distinguish from biology: an uncorrected acquisition shift produces a large, meaningless distance.",
+      "A distance has no direction. It says the distributions differ, not which way, so it needs pairing with an interpretable summary.",
+      "Significance requires a permutation null; the raw distance alone has no scale that transfers between panels or markers.",
+    ],
+    read: "Report the distance with a permutation-based null, alongside a view of the distributions themselves. A reader should be able to see what moved, not only that something did.",
+    use: "How I would define the plasticity index in the UCL proposal: an inducible shift in state occupancy rather than a change in mean marker intensity.",
+    ref: "Rubner et al. (2000); Orlova et al. (2016) on EMD for cytometry.",
+  },
+  {
+    id: "spatial", cat: "cell", name: "Spatial transcriptomics and deconvolution", short: "Spatial",
+    solves: "Measure expression while keeping the tissue coordinates, so composition can be related to architecture.",
+    idea: "Barcoded capture spots record position along with transcripts. Most platforms capture several cells per spot, so composition is inferred by deconvolution: a reference of cell-type profiles, usually from matched single-cell data, is fitted to each spot's mixture to estimate proportions. Downstream questions are then about neighbourhoods — which types co-occur, and at what distance.",
+    assumptions: [
+      "The reference contains every cell type actually present. A type missing from the reference is redistributed across the ones that are there, silently.",
+      "Capture efficiency is uniform across the section, which tissue density and RNA quality both violate.",
+      "Spot composition is a linear mixture of reference profiles — a convenient approximation rather than a biological fact.",
+    ],
+    fails: [
+      "Deconvolution sits between the data and every conclusion, and its error is not reported alongside the proportions it produces.",
+      "Lower resolution than single-cell data means a rare population inside a spot is easily lost, and co-occurrence within a spot is not the same as physical interaction.",
+      "A matched single-cell reference from different tissue, or a different patient, imports that sample's composition into this one's estimate.",
+    ],
+    read: "State the platform, resolution and reference used, and prefer a patient-matched reference where one exists. Treat weakly deconvolved spots as missing rather than as zero, and validate neighbourhood findings against imaging where it is available.",
+    use: "The second modality in the UCL proposal, used to characterise what surrounded each sampled region rather than to re-measure the cells.",
+    ref: "Ståhl et al. (2016); Cable et al. (2022), RCTD; Kleshchevnikov et al. (2022), cell2location.",
+  },
+  {
+    id: "trajectory", cat: "cell", name: "Trajectory inference and pseudotime", short: "Trajectories",
+    solves: "Order cells along a continuous process — differentiation, a state transition — from a single static snapshot.",
+    idea: "Build a graph or manifold over cells in expression space and assign each a position along it, on the assumption that cells captured at one moment occupy different points of a shared trajectory. RNA velocity adds a direction estimate by comparing unspliced and spliced transcript abundance, which carries information about where a cell is heading.",
+    assumptions: [
+      "The process is continuous and asynchronous, so a snapshot contains cells at every stage.",
+      "A root or starting point has been specified — and pseudotime direction usually depends entirely on that choice.",
+      "For velocity, that splicing kinetics are roughly constant across genes and cell types, which is known to be shaky.",
+    ],
+    fails: [
+      "Trajectory algorithms return a trajectory on data with no trajectory in it. Receiving a smooth path is not evidence that a process exists.",
+      "Pseudotime is not time. It has no units, does not compare between datasets, and a long pseudotime interval may be a fast transition with few cells in it.",
+      "RNA velocity can point confidently backwards when kinetic assumptions fail, and the confidence looks identical either way.",
+    ],
+    read: "State the root and show how conclusions change if it moves. Confirm the ordering against something external — a known marker sequence, or a time course — before treating it as a process rather than a layout.",
+    use: "How I would test whether the drug-tolerant state is a discrete population or one end of a continuum, which changes what the plasticity index is measuring.",
+    ref: "Trapnell et al. (2014); Street et al. (2018), Slingshot; La Manno et al. (2018), RNA velocity; Bergen et al. (2021) on its limits.",
+  },
+  {
+    id: "organoid", cat: "cell", name: "Organoids as a model system", short: "Organoids",
+    solves: "Keep patient tumour cells growing in a form that retains tissue architecture and genotype, and that can be perturbed experimentally.",
+    idea: "Stem-cell-containing tissue is embedded in extracellular matrix with a defined niche factor cocktail — Wnt agonists, R-spondin, EGF, Noggin — so the epithelium self-organises into three-dimensional structures. Tumour organoids often grow without some factors, which is itself informative about which pathways are constitutively active.",
+    assumptions: [
+      "The derived culture represents the tissue it came from, which derivation efficiency and passage number both erode.",
+      "The matrix and the medium are not themselves driving the phenotype being measured — a strong assumption when the niche cocktail contains the pathway agonists under study.",
+      "Without co-culture, an organoid is epithelium alone: no immune cells, no fibroblasts, no vasculature.",
+    ],
+    fails: [
+      "Derivation selects. Regions whose cells grow readily are over-represented, and a regional difference can be a difference in how well each region took to culture.",
+      "Clonal drift over passages changes the population being measured, so late-passage results are a different experiment from early-passage ones.",
+      "Stripping the microenvironment removes exactly the signals a question about microenvironmental influence is asking about — which is why co-culture is a control rather than an extra.",
+    ],
+    read: "Report derivation efficiency, passage number, and the medium composition. Treat early-versus-late passage comparison as a result worth showing, not a check to pass quietly.",
+    use: "The experimental substrate of the UCL proposal, and the reason its design separates cell-intrinsic from environment-induced plasticity.",
+    ref: "Sato et al. (2009); van de Wetering et al. (2015) on tumour organoid biobanks.",
   },
 
   /* ---------------- Statistical testing ---------------- */

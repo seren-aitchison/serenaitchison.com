@@ -103,7 +103,7 @@ export function mountChrome(current = "") {
           <a href="research.html">Interests</a><a href="research.html#proposals">Proposals</a><a href="projects.html">Projects</a><a href="programme.html">PGx programme</a><a href="methods.html">Methods library</a><a href="writing.html">Writing</a><a href="reproducibility.html">Reproducibility</a>
         </nav>
         <nav aria-label="Pathways"><b>Pathways</b>
-          <a href="phd.html">PhD supervisors</a><a href="phd.html#ucl">UCL</a><a href="phd.html#sydney">Sydney</a><a href="industry.html">Industry</a><a href="lab.html">Computational Lab</a>
+          <a href="phd.html">PhD supervisors</a><a href="ucl-crc.html">UCL colorectal proposal</a><a href="phd.html#sydney">Sydney</a><a href="industry.html">Industry</a><a href="lab.html">Computational Lab</a>
         </nav>
         <nav aria-label="Profile"><b>Profile</b>
           <a href="about.html">About</a><a href="skills.html">Technical skills</a><a href="cv.html">CV</a><a href="contact.html">Contact</a>

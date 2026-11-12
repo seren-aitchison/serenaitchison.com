@@ -43,3 +43,27 @@ jobs:
           python3 -m http.server 8080 &
           sleep 2
           node .github/crawl.mjs
+
+  analysis:
+    name: CRC analysis tests
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: analysis/crc-plasticity
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      # Synthetic fixtures only: the real matrices are 2.5 GB and live on GEO.
+      # scripts/download_data.py verifies them by checksum for a full local run.
+      - name: Install
+        run: pip install -r requirements.lock
+
+      - name: Tests
+        run: python -m pytest tests/ -q
+
+      - name: Package imports cleanly without data present
+        run: python -c "import crc, crc.stats, crc.scoring, crc.figures; print(crc.__version__)"

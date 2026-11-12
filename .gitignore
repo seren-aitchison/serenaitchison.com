@@ -6,3 +6,5 @@ node_modules/
 analysis/crc-plasticity/*_cells.csv.gz
 __pycache__/
 *.pyc
+analysis/crc-plasticity/data/raw/
+analysis/crc-plasticity/results/

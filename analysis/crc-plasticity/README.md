@@ -1,112 +1,198 @@
-# Signalling varies across colorectal tumours; the state it drives does not
+# Regional heterogeneity of a fetal-like epithelial programme in colorectal cancer
 
-**Full write-up: [MANUSCRIPT.md](MANUSCRIPT.md).** This README covers the original
-single-cohort analysis; the manuscript covers all four cohorts and the technical reference.
+Independent computational reanalysis of public single-cell data · Python
 
-An independent reanalysis of public single-cell data, asking whether the
-wound-healing/fetal-like programme that confers chemotherapy tolerance is
-distributed evenly across a colorectal tumour.
+> **Status.** Independent analysis, not peer reviewed. Every number below is generated
+> from `results/tables/statistics.json` by `scripts/render_readme.py`; none is typed by
+> hand. Full write-up in [MANUSCRIPT.md](MANUSCRIPT.md).
 
-## Data
+## Research question
 
-| | |
-|---|---|
-| Accession | [GSE144735](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE144735) (KUL3 cohort) |
-| Content | 27,414 cells, 6 patients, 3 matched regions each: tumour core, tumour border, adjacent normal |
-| Matrix | Author-processed natural-log TPM, 33,694 genes |
-| Cells used | 6,168 annotated as epithelial — the compartment the programmes describe |
+Intestinal epithelium can adopt a fetal-like, regenerative transcriptional programme that
+prior work associates with tolerance of cytotoxic chemotherapy. If a tumour is uneven in
+this respect, a single biopsy measures one region and is taken to represent the whole lesion.
 
-Nothing was re-aligned or re-quantified; this starts from the authors' processed matrix
-and their cell-type annotation.
+**How much of the variation in this programme lies between regions of one tumour, and how
+much lies between patients?**
+
+### What this analysis does and does not measure
+
+Three distinctions that the wording throughout is careful about:
+
+- It measures a **mean expression-based signature score** across epithelial cells. It is not
+  a count of cells occupying a defined state, and is not described as "occupancy".
+- The programme is **associated with drug tolerance in prior literature**. These are
+  cross-sectional expression data with no treatment arm; nothing here measures drug response.
+- The YAP set measures **target transcript abundance**, a downstream readout. It is not a
+  direct measure of YAP/TAZ signalling activity.
+
+## Quick start
+
+```bash
+pip install -r requirements.lock
+python3 scripts/download_data.py       # fetches from GEO, verifies SHA-256
+python3 scripts/run_analysis.py        # score all cohorts
+python3 scripts/run_statistics.py      # all statistics -> results/tables/
+python3 scripts/make_figures.py        # figures, read from those tables
+python3 scripts/render_readme.py       # regenerate the numbers below
+python3 -m pytest tests/ -q            # 16 tests, synthetic fixtures, no data needed
+```
+
+Data lands in `data/raw/` by default; set `CRC_DATA_DIR` to put it elsewhere. No path in
+the package is machine-specific. The largest cohort takes about 40 minutes to score; the
+other three take a few minutes each.
+
+## Layout
+
+```
+crc/                 the analysis package
+  config.py          paths and parameters, all overridable
+  signatures.py      gene sets, fixed before any result was examined
+  io.py              loaders for three file formats, with input validation
+  scoring.py         expression-matched control scoring, with provenance
+  stats.py           paired contrasts, ICC with bootstrap, leave-one-patient-out
+  pipeline.py        score a cohort, write tables and run metadata
+  figures.py         figures, every value read from results/tables/
+scripts/             download, run, render — each does one thing
+tests/               16 tests against synthetic fixtures with known structure
+data/manifest.json   SHA-256 and byte size for every input file
+results/             generated; gitignored except the committed summary tables
+```
 
 ## Method
 
-Signatures were fixed in `sigs.py` **before** any result was looked at, to avoid
-choosing genes that produce the answer:
+Scores follow Tirosh *et al.* (2016): genes are binned by mean expression, control genes are
+drawn from the bins the signature genes occupy, and the score is mean(signature) −
+mean(control). This removes dependence on sequencing depth and on the absolute expression of
+the signature genes. Control selection is seeded and the drawn genes are recorded.
 
-- **FETAL** — fetal-like / revival regenerative programme (15 genes)
-- **YAP** — canonical YAP/TAZ targets, the pathway driving it (7)
-- **ISC** — LGR5+ intestinal stem-cell programme, the state cells leave (9)
-- **DIFF** — differentiated enterocyte markers, as a specificity control (6 of 7; MUC2 absent)
+Cell scores are aggregated to the **sample** — patient × region — before any statistical
+test. Cells within a sample are not independent replicates, and treating them as such would
+inflate significance by orders of magnitude.
 
-Scoring follows Tirosh et al. (2016): genes are binned by mean expression, control genes
-are drawn from the same bins, and the score is mean(signature) − mean(control). That removes
-dependence on sequencing depth and on how highly expressed the signature genes happen to be.
+<!-- AUTO:START -->
 
-Variance components come from a mixed model with patient as a random effect, fitted at the
-**sample** level (patient × region), because the sample is the unit at which a regional claim
-is made. Treating cells as replicates would inflate significance enormously.
+## Cohorts
 
-## Result
+| Cohort | Cells | Epithelial | Patients | Normalisation |
+|---|---:|---:|---:|---|
+| GSE144735 | 27,414 | 6,168 | 6 | author-provided natural-log TPM |
+| GSE132465 | 63,689 | 18,539 | 23 | author-provided natural-log TPM |
+| GSE200997 | 49,859 | 49,859 | 16 | log1p(CP10K), computed here from raw counts |
+| GSE178341 | 370,115 | 168,295 | 62 | log1p(CP10K), computed here from raw counts |
 
-Across the two tumour regions, the fetal-like programme is almost entirely a patient-level
-property:
+**511,077 cells across 4 cohorts.** Samples enter the analysis with at least 20 epithelial cells.
 
-| Signature | Between patients | Between regions | ICC |
+## Signatures
+
+| Set | Genes | Measures | Caveat |
+|---|---:|---|---|
+| FETAL | 15 | Fetal-like / revival programme | A transcriptional programme associated with drug tolerance in prior literature. This analysis does not measure drug response. |
+| YAP | 7 | YAP/TAZ target expression | Measures target transcript abundance, which is a downstream readout and not a direct measure of YAP/TAZ signalling activity. |
+| ISC | 9 | LGR5+ intestinal stem-cell programme | — |
+| DIFF | 7 | Differentiated epithelium | — |
+
+Genes absent from a matrix are reported, not silently dropped. In GSE144735: DIFF missing MUC2.
+
+## Primary analysis: paired within-tumour contrast
+
+With six patients, the inference the design supports is a paired per-patient
+contrast, tested by exact sign-flip permutation over all 2ⁿ assignments.
+
+| Signature | Core − border | 95% CI | Exact p | Direction |
+|---|---:|---|---:|---|
+| FETAL | +0.0220 | [+0.0038, +0.0358] | 0.125 | 4/5 positive |
+| YAP | +0.0052 | [-0.0194, +0.0297] | 0.750 | 3/5 positive |
+| ISC | -0.0393 | [-0.0907, +0.0002] | 0.250 | 1/5 positive |
+| DIFF | +0.1031 | [-0.0059, +0.2197] | 0.250 | 3/5 positive |
+
+No signature shows a significant systematic core–border shift. For the fetal-like programme the mean difference is +0.0220 (exact p = 0.125).
+
+> The bootstrap interval and the exact p-value disagree in sign-of-evidence here. At n = 5–6 the percentile bootstrap is anticonservative, so **the exact permutation p-value is the result**; the interval is shown for scale, not inference.
+
+## Validity: tumour versus matched normal
+
+| Comparison | Higher in tumour | Mean difference | Exact p |
 |---|---:|---:|---:|
-| **Fetal-like** | 0.0544 | 0.0005 | **0.990** |
-| Differentiation | 0.0430 | 0.0133 | 0.764 |
-| Stem (LGR5+) | 0.0054 | 0.0024 | 0.689 |
-| YAP targets | 0.0008 | 0.0009 | 0.461 |
+| Core − normal | 6/6 | +0.2502 | 0.031 |
+| Border − normal | 5/5 | +0.2686 | 0.062 |
 
-Mean |core − border| difference is 0.029 against a between-patient SD of 0.230 — roughly
-eightfold. The result survives dropping every sample with fewer than 100 epithelial cells
-(ICC 0.991, 5 patients).
+The two regions are reported separately because they differ: the core comparison and the border comparison do not have the same n or the same p-value.
 
-The score behaves as the biology predicts: it is elevated in tumour over matched normal in
-6/6 patients (Wilcoxon p = 0.031) and anticorrelates with the stem programme at cell level
-(r = −0.34).
+## Secondary: variance decomposition (exploratory)
 
-## The limitation that matters
+| Signature | ICC | 95% bootstrap CI | Leave-one-patient-out | Converged |
+|---|---:|---|---|---|
+| FETAL | 0.992 | [0.866, 0.997] | [0.990, 0.995] | True |
+| YAP | 0.766 | [0.145, 0.818] | [0.682, 0.802] | True |
+| ISC | 0.746 | [0.345, 0.958] | [0.686, 0.923] | True |
+| DIFF | 0.762 | [0.000, 0.982] | [0.656, 0.922] | True |
 
-This measures **state occupancy, not capacity**. A snapshot cannot distinguish a population
-that cannot enter the drug-tolerant state from one that simply has not been pushed into it.
-Establishing that difference needs perturbation — which is the argument for doing the
-organoid experiment rather than more reanalysis.
+> **What the residual is.** With two tumour samples per patient, the residual of a random-intercept model is *within-patient sample-level* variation. It contains the regional difference and sample-level technical variation together, and this design cannot separate them. It is reported as within-patient, never as between-region. The technical tier below is what gives the regional number a scale.
 
-Other limitations: 6 patients; only two tumour regions, so one spatial axis; three samples
-with fewer than 100 epithelial cells; core/border assignment is the authors'.
+## Tiers: regional, technical, between-patient
 
-## The four-cohort extension
+Each paired difference is divided by the mean difference between two random patients **in the same cohort**, because normalisations differ between cohorts and raw magnitudes do not transfer.
 
-| Cohort | Accession | Cells | Patients | Used for |
-|---|---|---:|---:|---|
-| KUL3 | GSE144735 | 27,414 | 6 | tumour core vs border — the regional question |
-| SMC | GSE132465 | 63,689 | 23 | between-patient spread, tumour vs normal |
-| Lee *et al.* | GSE200997 | 49,859 | 16 | between-patient spread, tumour vs normal |
-| Pelka *et al.* | GSE178341 | 370,115 | 60 | **technical floor** — two library preparations per tumour |
-
-Standardising each paired difference by the between-patient difference in its own cohort:
-
-| Comparison | Fetal-like | YAP targets |
+| Signature | Between regions | Between library preparations |
 |---|---:|---:|
-| Two regions of one tumour | **9%** | **64%** |
-| Two library preparations of one tumour | **56%** | **26%** |
+| FETAL | 9% | 56% |
+| YAP | 65% | 26% |
+| ISC | 56% | 51% |
+| DIFF | 36% | 118% |
 
-The regional difference in the fetal-like state is smaller than the difference between two
-library preparations of the same tissue. For YAP targets it is the other way round. The method
-detects regional variation — in signalling, in the same cells — but not in the state
-signalling is thought to drive.
+Stability across minimum-cell thresholds:
 
-```bash
-python3 run_cohort.py kul3        # ~1.5 min
-python3 run_cohort.py smc         # ~3.5 min
-python3 run_cohort.py gse200997   # ~2.5 min
-python3 run_cohort.py pelka       # ~40 min, 370k cells streamed in chunks
-python3 meta.py standardise.py sensitivity.py figure2.py
-```
+| Min cells | Fetal-like regional | Fetal-like technical |
+|---:|---:|---:|
+| 0 | 11% | 56% |
+| 20 | 9% | 56% |
+| 50 | 10% | 56% |
+| 100 | 12% | 9% |
+| 200 | 12% | 9% |
 
-## Reproducing
+## Sensitivity to control-gene selection
 
-```bash
-pip install numpy pandas scipy statsmodels matplotlib
-# download the matrix and annotation from GSE144735 into ../../crc-data/
-python3 pass1.py      # cell order and per-gene means, for control binning
-python3 pass2.py      # extract signature and control gene rows
-python3 score.py      # score cells, aggregate per sample
-python3 variance.py   # variance components and tests
-python3 figure.py     # figure
-```
+| Seed | Regional % | ICC |
+|---:|---:|---:|
+| 0 | 9.3% | 0.992 |
+| 1 | 9.0% | 0.993 |
+| 2 | 9.5% | 0.992 |
+| 3 | 9.5% | 0.992 |
+| 4 | 9.5% | 0.992 |
 
-`pass1.py` streams the 257 MB matrix rather than loading it, and takes about 80 seconds.
-Seeds are fixed (`SEED = 0` in `pass2.py`), so control gene selection is deterministic.
+
+<!-- AUTO:END -->
+
+## Limitations
+
+- **One spatial axis.** Only one cohort has spatially separated tumour samples, and only two
+  per tumour. A programme could vary along an axis these samples do not capture.
+- **Six patients** for the regional comparison. The effect is consistent, but the cohort is
+  small and the intervals are correspondingly wide.
+- **The technical reference is imperfect.** Unsorted and live-enriched preparations differ in
+  more than handling, and live enrichment may itself select on cell state. It is a
+  conservative floor, not a pure technical replicate.
+- **One cohort has no cell-type annotation**, so it contributes only to the between-patient
+  and tumour-versus-normal comparisons.
+- **Signature choice.** The fetal-like set is drawn from the literature rather than derived
+  here. The specificity controls argue against the result being an artefact of one list, but
+  a different set could change the magnitude.
+- **Score, not capacity.** A cross-sectional snapshot cannot distinguish a population unable
+  to enter the programme from one that has not been pushed into it. Resolving that requires
+  perturbation.
+
+## Data
+
+All inputs are public. Accessions: GSE144735, GSE132465, GSE200997, GSE178341.
+`data/manifest.json` records the SHA-256 and size of every file; `download_data.py` refuses
+to proceed on a checksum mismatch.
+
+Raw sequencing data for GSE144735 is deposited separately as E-MTAB-8410. This analysis
+deliberately starts from the authors' processed matrices rather than re-quantifying.
+
+## References
+
+Tirosh I, *et al.* *Science* 2016. — expression-matched signature scoring
+Lee H-O, *et al.* *Nat Genet* 2020. — GSE144735, GSE132465
+Pelka K, *et al.* *Cell* 2021. — GSE178341

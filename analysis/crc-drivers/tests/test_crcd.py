@@ -100,3 +100,20 @@ def test_score_sets_detects_a_raised_signature(monkeypatch):
     df, _ = pipeline.score_sets(_FakeExpr(sig + bg, vals), {"S": dict(genes=sig)})
     s = df["S"].to_numpy()
     assert s[1] - s[0] > 1.5, "a planted 2-unit shift was not recovered"
+
+
+def test_readme_does_not_present_the_sensitivity_range_as_an_interval():
+    """The 19-47% spread is a range across signature definitions, not a confidence interval."""
+    full = (ROOT / "README.md").read_text()
+    assert "not a confidence interval" in full, "the README must say what the range is not"
+    assert "range of composition-associated variance across" in full
+    # the check applies to the sensitivity section only: the Cox table legitimately
+    # reports a real 95% CI for the hazard ratios.
+    sec = full[full.index("### 4. How much of the composition"):full.index("## The honest summary")]
+    for bad in ("95% CI", "confidence interval of", "CI [19", "95%"):
+        assert bad not in sec, f"the sensitivity section presents the range as an interval: {bad}"
+
+def test_readme_states_which_variants_were_prespecified():
+    t = (ROOT / "README.md").read_text()
+    assert "Pre-specified" in t, "the variant table must mark pre-specification"
+    assert "revival subset was not" in t, "the one non-pre-specified variant must be named"

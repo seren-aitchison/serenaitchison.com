@@ -37,7 +37,7 @@ Variance in each programme score explained by stromal, immune and epithelial pan
 | Stem (LGR5+) | 9% | 10% |
 | Differentiation | 17% | 15% |
 
-**The fetal-like figure depends on how the programme is defined** — it falls to 19% for a five-gene canonical revival list. See section 4. The YAP signature correlates with the stromal panel at ρ = +0.81.
+**The fetal-like figure depends on how the programme is defined** — it falls to 19% for a five-gene canonical revival list. That spread is a range across signature definitions, not a confidence interval. See section 4. The YAP signature correlates with the stromal panel at ρ = +0.81.
 In bulk colorectal tissue it is largely a readout of stromal content.
 
 This is the solid finding: it is large, and it reproduces almost exactly in an independent
@@ -83,47 +83,95 @@ they should, which is the sanity check that the model is working.
 ### 4. How much of the composition result is the gene list itself?
 
 The fetal-like list contains five genes that stromal and myeloid cells express strongly —
-**SPP1, S100A4, LGALS3, CD44, TIMP1**. If the 47% above is mostly those five,
-the finding describes my signature rather than bulk tissue. So the list was re-scored in four
-variants through the same code, in both cohorts.
+**SPP1, S100A4, LGALS3, CD44, TIMP1**. If the 47% above is mostly
+those five, the finding describes my signature rather than bulk tissue. So the list was
+re-scored in four variants through the same code, in both cohorts.
 
-| Fetal-like variant | R² from composition, COAD | READ | ρ with stroma, COAD | Stage, adjusted, COAD | Stage, adjusted, READ |
-|---|---:|---:|---:|---|---|
-| As published here (15 genes) | 47% | 46% | +0.62 | +0.192, p = 3.55e-05 | +0.076, p = 0.348 |
-| Five stroma/myeloid-expressed genes removed (10) | 37% | 35% | +0.52 | +0.161, p = 0.000537 | +0.018, p = 0.824 |
-| Canonical revival markers only (5) | 19% | 19% | +0.41 | +0.120, p = 0.00999 | +0.045, p = 0.573 |
-| The five flagged genes alone (5) | 45% | 46% | +0.65 | +0.116, p = 0.0131 | +0.147, p = 0.0663 |
+**What the spread below is.** It is a *range of composition-associated variance across
+signature definitions*. It is **not a confidence interval** and carries no coverage
+interpretation: each entry is a point estimate for a different definition of the programme, not
+a draw from a sampling distribution for one of them.
 
-Three things follow, and the second is not comfortable.
+#### Composition
 
-**The confound is real and not an artefact of my list.** Even the five canonical revival markers
-alone — no wound-response or matrix genes — still take
+| Fetal-like variant | R² from composition, COAD (n = 473) | READ (n = 167) | ρ with stromal panel, COAD | ρ with the full list | Pre-specified |
+|---|---:|---:|---:|---:|:--|
+| As published here (15 genes) | 47% | 46% | +0.62 | +1.00 | yes |
+| Five stroma/myeloid-expressed genes removed (10) | 37% | 35% | +0.52 | +0.95 | yes |
+| Canonical revival markers only (5) | 19% | 19% | +0.41 | +0.82 | **no** |
+| The five flagged genes alone (5) | 45% | 46% | +0.65 | +0.80 | yes |
+
+#### Stage association, each variant
+
+Spearman ρ against stage I–IV coded 1–4, on the score residualised on all three composition
+panels. `q` is Benjamini–Hochberg across the eight adjusted tests in this script only.
+
+**TCGA-COAD**
+
+| Variant | ρ adjusted | ρ unadjusted | n | p | q |
+|---|---:|---:|---:|---:|---:|
+| As published here (15 genes) | +0.192 | +0.181 | 460 | 3.55e-05 | 0.0003 |
+| Five stroma/myeloid-expressed genes removed (10) | +0.161 | +0.166 | 460 | 0.0005 | 0.0021 |
+| Canonical revival markers only (5) | +0.120 | +0.150 | 460 | 0.0100 | 0.0261 |
+| The five flagged genes alone (5) | +0.116 | +0.115 | 460 | 0.0131 | 0.0261 |
+
+**TCGA-READ (held out)**
+
+| Variant | ρ adjusted | ρ unadjusted | n | p | q |
+|---|---:|---:|---:|---:|---:|
+| As published here (15 genes) | +0.076 | +0.106 | 156 | 0.3481 | 0.4641 |
+| Five stroma/myeloid-expressed genes removed (10) | +0.018 | +0.049 | 156 | 0.8240 | 0.8240 |
+| Canonical revival markers only (5) | +0.045 | +0.052 | 156 | 0.5734 | 0.6553 |
+| The five flagged genes alone (5) | +0.147 | +0.167 | 156 | 0.0663 | 0.1061 |
+
+#### Multiplicity, stated plainly
+
+The headline association was already BH-corrected across the 20 tests in `run_analysis.py`.
+These are **sensitivity re-tests of that same association under alternative definitions**, not
+new hypotheses, so the `q` column above is a within-family correction shown for completeness.
+Neither correction is strictly right: the variants correlate
+0.78–0.95 with the full list, so they are not independent tests. The
+direction and effect size are what should be read, not the significance.
+
+#### Pre-specification, stated plainly
+
+The five flagged genes were named on cell-type-expression grounds in
+[project 1's review request](../crc-plasticity/REVIEW-REQUEST.md), in an **earlier commit than
+this analysis**, so "minus flagged" and "flagged alone" were fixed before any result here was
+seen. **The five-gene revival subset was not.** It was defined in this script, in the same
+commit as its results, on the stated criterion "canonical revival markers". That is a
+literature criterion, not a pre-registered one, and it is the variant carrying the headline
+19% figure — so it is the one to treat most sceptically.
+
+#### What follows
+
+**The confound is real and not an artefact of my list.** Even five canonical revival markers
+alone — no wound-response or matrix genes — take
 19% of their variance from composition in COAD and
-19% in READ. Scoring a clean epithelial programme in
-bulk colorectal tissue measures composition substantially, whatever the list.
+19% in READ.
 
-**But the headline 47% is inflated by signature construction.** Removing the five flagged genes
-drops it to 37%, and those five alone score
-45% — nearly the full list's value from a third of
-the genes. Roughly a fifth of the headline figure is attributable to five gene choices. **The
-honest statement is "composition explains 19–47% depending on how the fetal-like programme is
-defined", not a single number.**
+**But the headline figure is inflated by signature construction.** Removing the five flagged
+genes drops it to 37%; those five alone score
+45%. Roughly a fifth of the headline is attributable to
+five gene choices. **The defensible statement is "composition-associated variance runs
+19%–47% across these signature definitions", not a single number.**
 
-**The weak READ signal comes from the wrong place.** The stage association in READ was already
-not significant; the variants show that what little direction it has is carried by the flagged
-genes (+0.147, p = 0.066) and
-vanishes without them (+0.018,
+**The weak READ signal comes from the wrong place.** The READ stage association was already not
+significant; the variants show what direction it has is carried by the flagged genes
+(ρ = +0.147, p = 0.066) and
+vanishes without them (ρ = +0.018,
 p = 0.824). It should not be leaned on at all.
 
-What does hold: **the stage association in COAD survives adjustment under every variant**
-(p = 3.55e-05 to 0.00999), weakening as
-the list shrinks but never disappearing. That association is not simply the stromal genes. The
-variants correlate 0.80–0.95
-with the full list, so they are not independent tests — they are the same measurement made
-progressively more conservative.
+**What does hold:** the COAD stage association survives adjustment under every variant, raw
+p = 3.55e-05–0.0100, within-family
+q = 0.0003–0.0261.
+The effect size falls as the list shrinks (+0.192 →
++0.120) but the direction never changes. **That it survives
+does not establish the biological interpretation** — it establishes that the association is not
+solely the stromal genes.
 
 ```bash
-python3 scripts/run_sensitivity.py     # regenerates the table above
+python3 scripts/run_sensitivity.py     # regenerates every table above
 ```
 
 ## The honest summary
@@ -138,10 +186,7 @@ That is a negative result for the original question and a positive one for the m
 point. The methodological point is the more useful of the two, because it applies to anyone
 scoring these programmes in bulk tissue.
 
-It needs stating with its size attached. Section 4 shows the figure is **19–47% depending on how
-the fetal-like programme is defined**, so the claim that survives is directional and
-order-of-magnitude — composition is a first-order term, not a correction — rather than a
-specific percentage. Whether the fetal-like list is epithelial enough to carry any of this is
+It needs stating with its size attached. Section 4 shows the figure is **19–47% across defensible definitions of the fetal-like programme** — a range across signature definitions, not a confidence interval — so the claim that survives is directional and order-of-magnitude: composition is a first-order term, not a correction. Whether the fetal-like list is epithelial enough to carry any of this is
 the open question, and it is [put to review](REVIEW-REQUEST.md) rather than assumed.
 
 ## Method notes
@@ -159,7 +204,8 @@ the open question, and it is [put to review](REVIEW-REQUEST.md) rather than assu
 ## Limitations
 
 - **The headline composition figure is not a constant.** It moves from 47% to 19% across
-  defensible variants of the same gene list (section 4). Quote the range, not the number.
+  defensible variants of the same gene list (section 4). Quote the range, and quote it as a range
+  across signature definitions — it is not a confidence interval.
 - **The fetal-like list is unvalidated**, and both this project and project 1 depend on it. If
   it is substantially a stromal readout, the composition result partly measures the list rather
   than the tissue. Section 4 bounds that but does not remove it.

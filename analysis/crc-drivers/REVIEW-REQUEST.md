@@ -33,12 +33,21 @@ the list rather than about bulk tissue.
 **I have bounded this rather than argued about it.** The list was re-scored in four variants
 through identical code:
 
-| Fetal-like variant | R² from composition (COAD) | ρ with stromal panel |
-|---|---:|---:|
-| As published, 15 genes | 47% | +0.62 |
-| Minus SPP1, S100A4, LGALS3, CD44, TIMP1 | 37% | +0.52 |
-| Canonical revival markers only (ANXA1, ANXA3, CLU, TACSTD2, EMP1) | 19% | +0.41 |
-| The five flagged genes alone | 45% | +0.65 |
+| Fetal-like variant | R² from composition (COAD) | ρ with stromal panel | Pre-specified |
+|---|---:|---:|:--|
+| As published, 15 genes | 47% | +0.62 | yes |
+| Minus SPP1, S100A4, LGALS3, CD44, TIMP1 | 37% | +0.52 | yes |
+| Canonical revival markers only (ANXA1, ANXA3, CLU, TACSTD2, EMP1) | 19% | +0.41 | **no** |
+| The five flagged genes alone | 45% | +0.65 | yes |
+
+The flagged five were named on cell-type-expression grounds in project 1's review request, in an
+earlier commit than this analysis, so two variants were fixed before any result here was seen.
+**The revival subset was not** — it was defined in the same commit as its results, on the stated
+criterion "canonical revival markers", and it carries the 19%
+figure. Treat it as the weakest of the four.
+
+**The spread is a range of composition-associated variance across signature definitions, not a
+confidence interval.** Each row is a point estimate for a different definition.
 
 So: the confound does not vanish with a clean list (19% for
 five canonical markers), but roughly a fifth of the headline figure is attributable to five gene
@@ -102,13 +111,48 @@ acceptable for a descriptive association, and does POLE contamination matter at 
 
 ---
 
+## 4b. The one surviving association, in full
+
+This is the strongest remaining positive result, so here is everything needed to judge it.
+
+**Test.** Spearman ρ of the score against stage I–IV coded 1–4, on the score residualised by OLS
+on all three composition panels. **n = 460** staged tumours in COAD,
+**156** in READ.
+
+| Variant | COAD ρ adj | COAD ρ unadj | COAD p | COAD q | READ ρ adj | READ p |
+|---|---:|---:|---:|---:|---:|---:|
+| As published here (15 genes) | +0.192 | +0.181 | 3.55e-05 | 0.0003 | +0.076 | 0.348 |
+| Five stroma/myeloid-expressed genes removed (10) | +0.161 | +0.166 | 5.37e-04 | 0.0021 | +0.018 | 0.824 |
+| Canonical revival markers only (5) | +0.120 | +0.150 | 9.99e-03 | 0.0261 | +0.045 | 0.573 |
+| The five flagged genes alone (5) | +0.116 | +0.115 | 1.31e-02 | 0.0261 | +0.147 | 0.066 |
+
+**Multiplicity.** The headline row was BH-corrected across the 20 tests in `run_analysis.py`.
+The `q` column here is BH across the eight adjusted stage tests in the sensitivity script only.
+Neither is strictly correct — the variants correlate 0.80–0.95
+with the full list, so they are not independent tests. Both are shown rather than one chosen.
+
+**Independence of the variants from this result.** Two of the four were fixed in an earlier
+commit (above). The revival subset was not, so its row is the one most exposed to selection.
+
+**What I do and do not read into it.** The direction is stable and the effect size declines
+monotonically as the list shrinks (+0.192 →
++0.120), which says the association is not solely carried by
+the stromal genes. It does **not** establish the biological interpretation: ρ ≈ 0.12–0.19 is a
+weak association, it fails to reach significance in the held-out cohort, and stage is correlated
+with a great deal besides this programme.
+
+**Question.** Is there anything in the left-hand columns that would make you discount the
+association entirely, rather than file it as weak and unreplicated?
+
+---
+
 ## 5. Are the conclusions proportionate?
 
 What I claim:
 
 | Claimed | Not claimed |
 |---|---|
-| Composition is a first-order term when scoring these programmes in bulk | A specific percentage — it is 19–47% depending on the list |
+| Composition is a first-order term when scoring these programmes in bulk | A specific percentage — it runs 19–47% across signature definitions, which is a sensitivity range and not a confidence interval |
 | The YAP–stage association was composition | That YAP signalling is unrelated to stage |
 | A fetal-like–stage association survives adjustment in COAD | That it is established — it does not replicate in READ |
 | Project 1's epithelial restriction was necessary | That project 1 is therefore correct |

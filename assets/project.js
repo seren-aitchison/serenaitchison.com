@@ -55,6 +55,7 @@ if (!p) {
       ${statusPill(p.status)}
       ${repoLink(p.repo)}
       ${p.paper ? `<a class="btn btn-ghost btn-sm lg" href="https://github.com/seren-aitchison/serenaitchison.com/blob/main/${p.paper}" rel="noopener">${icon("doc")}<span>Full write-up</span></a>` : ""}
+      ${p.review ? `<a class="btn btn-ghost btn-sm lg" href="https://github.com/seren-aitchison/serenaitchison.com/blob/main/${p.review}" rel="noopener">${icon("search")}<span>Expert review request</span></a>` : ""}
       ${p.code ? `<a class="btn btn-ghost btn-sm lg" href="https://github.com/seren-aitchison/serenaitchison.com/tree/main/${p.code}" rel="noopener">${icon("github")}<span>Analysis code</span></a>` : ""}
       ${p.lab ? `<a class="btn btn-gem lg" href="${p.lab}"><span class="gem" aria-hidden="true"></span><span>Open in the Lab</span></a>` : ""}
       ${p.external ? `<a class="btn btn-ghost btn-sm lg" href="${p.external}" rel="noopener">${icon("ext")}<span>Visit the site</span></a>` : ""}

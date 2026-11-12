@@ -174,6 +174,45 @@ state that signalling is thought to drive.
 
 ---
 
+## Confound checks
+
+Two checks that a reviewer would ask for, run before being asked
+(`scripts/check_confounds.py`, results in `results/tables/confounds.json`).
+
+**Is the score reading stromal content?** Several FETAL genes (SPP1, S100A4, LGALS3, CD44,
+TIMP1) are expressed by stroma and myeloid cells, so ambient RNA or doublets could make an
+epithelial-restricted score track tissue composition instead. If that were happening the score
+would rise with the non-epithelial fraction. It falls:
+
+| Cohort | Spearman ρ with non-epithelial fraction | p |
+|---|---:|---:|
+| GSE144735 | -0.478 | 0.052 |
+| GSE132465 | -0.668 | 0.000 |
+
+The association runs the wrong way for contamination to explain the result.
+
+**Is it a depth artefact?** The score does correlate with epithelial cell count overall
+(ρ = +0.637 and +0.648), but tumour samples have both more
+epithelial cells and higher scores, so the two are confounded. Within region, in the larger
+cohort, the association disappears: ρ = +0.129,
+p = 0.566 across
+22 tumour samples.
+
+**But one check does fail, and it is reported rather than buried.** In GSE144735 the
+core−border *score* difference tracks the core−border *cell-count* difference
+(ρ = +0.900, p = 0.037,
+n = 5), and within its six tumour cores the score and the
+cell count are perfectly rank-correlated (ρ = +1.000).
+With six samples that could be chance, and the larger cohort shows nothing comparable — but it
+means **the small residual regional signal is more plausibly technical than biological.**
+
+That makes the headline more conservative, not less: the conclusion is that regional variation
+is small, and a technical explanation for what little remains pushes the true biological
+regional variation lower still. It does not rescue a positive result, because there is no
+positive result to rescue — the primary contrast is already null.
+
+---
+
 ## Discussion
 
 Two regions of one colorectal tumour resemble each other more closely, in fetal-like programme

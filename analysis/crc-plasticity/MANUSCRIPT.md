@@ -189,7 +189,11 @@ would rise with the non-epithelial fraction. It falls:
 | GSE144735 | -0.478 | 0.052 |
 | GSE132465 | -0.668 | 0.000 |
 
-The association runs the wrong way for contamination to explain the result.
+This is evidence against the simplest artefact — stromal and myeloid transcripts inflating the
+score in samples that contain more non-epithelial material. It is **not** evidence that the
+score is composition-independent. Dilution, correlated cell fractions and opposing
+contributions from different populations can produce associations of either sign, so what this
+check excludes is one mechanism, not the class.
 
 **Is it a depth artefact?** The score does correlate with epithelial cell count overall
 (ρ = +0.637 and +0.648), but tumour samples have both more
@@ -203,13 +207,17 @@ core−border *score* difference tracks the core−border *cell-count* differenc
 (ρ = +0.900, p = 0.037,
 n = 5), and within its six tumour cores the score and the
 cell count are perfectly rank-correlated (ρ = +1.000).
-With six samples that could be chance, and the larger cohort shows nothing comparable — but it
-means **the small residual regional signal is more plausibly technical than biological.**
+With six samples that could be chance, and the larger cohort shows nothing comparable.
 
-That makes the headline more conservative, not less: the conclusion is that regional variation
-is small, and a technical explanation for what little remains pushes the true biological
-regional variation lower still. It does not rescue a positive result, because there is no
-positive result to rescue — the primary contrast is already null.
+**What this establishes is coupling between the two differences, not its cause.** Sampling
+depth, genuine differences in cellularity between regions, measurement uncertainty at low cell
+counts, and a real biological relationship in which the region yielding more epithelial cells
+also carries the higher score all predict the same correlation. This design cannot separate
+them, and assessing which applies is one of the questions put to review.
+
+Under any of those readings the result argues for caution rather than confidence. There is no
+positive result to rescue — the primary contrast is already null — and if the coupling is
+technical, the true biological regional variation is lower still.
 
 ---
 

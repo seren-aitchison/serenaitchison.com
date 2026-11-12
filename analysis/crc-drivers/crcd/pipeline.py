@@ -30,14 +30,18 @@ def _ensembl_map(symbols):
         cache.write_text(json.dumps(known, indent=0, sort_keys=True))
     return known
 
-def run(cohort, seed=None):
+def score_sets(expr, sets, seed=None):
+    """Score an arbitrary dict of {name: {"genes": [...]}} against a loaded cohort.
+
+    Separated from run() so that sensitivity analyses can re-score alternative gene
+    lists through exactly the same control-matching code as the headline result.
+    Returns (DataFrame indexed by sample, provenance dict).
+    """
     seed = config.SEED if seed is None else seed
-    config.ensure_dirs()
-    expr = cio.BulkExpression(cohort)
     samples = expr.samples()
     genes, means = expr.gene_means()
 
-    wanted_symbols = sorted({g for s in ALL.values() for g in s["genes"]})
+    wanted_symbols = sorted({g for s in sets.values() for g in s["genes"]})
     smap = _ensembl_map(wanted_symbols)
     sym_of = {v: k for k, v in smap.items() if v}
 
@@ -46,7 +50,7 @@ def run(cohort, seed=None):
     rng = np.random.default_rng(seed)
 
     controls, prov = {}, {}
-    for name, spec in ALL.items():
+    for name, spec in sets.items():
         present = [smap[g] for g in spec["genes"] if smap.get(g) and smap[g] in index]
         missing = [g for g in spec["genes"] if not smap.get(g) or smap[g] not in index]
         pool = set()
@@ -67,6 +71,14 @@ def run(cohort, seed=None):
         sig = [rows[g] for g in c["present"] if g in rows]
         ctl = [rows[g] for g in c["controls"] if g in rows]
         df[name] = np.mean(sig, axis=0) - np.mean(ctl, axis=0)
+    return df, prov
+
+
+def run(cohort, seed=None):
+    seed = config.SEED if seed is None else seed
+    config.ensure_dirs()
+    expr = cio.BulkExpression(cohort)
+    df, prov = score_sets(expr, ALL, seed)
 
     df["tumour"] = [cio.is_tumour(s) for s in df.index]
     df["patient"] = [cio.patient_of(s) for s in df.index]

@@ -164,15 +164,21 @@ threshold rather than proportional relationship between pathway activity and sta
 Stated in advance, so this is falsifiable rather than defended:
 
 - If the FETAL list substantially measures stromal contamination, the result is an artefact
-  and I would withdraw it. **I have now run this check.** The score correlates *negatively*
-  with the non-epithelial fraction (ρ = -0.478 and
-  -0.668), which is the wrong direction for contamination to explain
-  it. I would still welcome being told the check is inadequate.
+  and I would withdraw it. **I have run one check.** The score correlates *negatively* with the
+  non-epithelial fraction (ρ = -0.478 and
+  -0.668). I take that as evidence against the simplest artefact — stromal
+  and myeloid transcripts inflating the score where there is more stroma — and **not** as
+  showing the score is composition-independent, which it does not show. Dilution, correlated
+  cell fractions and opposing contributions from different populations can give associations of
+  either sign. **Is there a check that would settle this properly?**
 - **One check does fail.** In the multi-region cohort the core−border score difference tracks
   the core−border cell-count difference (ρ = +0.900,
   p = 0.037, n = 5).
-  I read this as making the conclusion more conservative — the residual regional signal looks
-  technical — but I would like that read checked.
+  This establishes coupling between the two differences; it does not say what causes it.
+  Sampling, true cellularity, measurement uncertainty at low cell counts and a genuine
+  biological relationship all predict it. **Which of those you would bet on is a question I
+  would like answered**, since my own reading — that it makes the residual regional signal
+  likelier to be technical — is the convenient one and I do not trust it for that reason.
 - If "border" is not spatially meaningful in this dataset, the regional comparison is void.
 - If a published, data-derived fetal-like signature gives a materially different answer, that
   signature wins. Swapping the list is a one-file change and a re-run.

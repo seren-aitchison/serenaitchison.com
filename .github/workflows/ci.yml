@@ -23,7 +23,9 @@ jobs:
 
   browser:
     name: Pages load without errors
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to 26.04 in Oct 2026 and Playwright 1.56 cannot
+    # install Chromium there. Revisit when a Playwright release supports it.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5
 

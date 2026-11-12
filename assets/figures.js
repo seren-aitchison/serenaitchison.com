@@ -36,7 +36,11 @@ export const FIGURES = {
   "crc-plasticity": () => figure(
     "Fetal-like programme occupancy across tumour regions and patients. <b>A</b> Paired tumour core and border per patient — the lines are flat. <b>B</b> Share of variance between patients versus between regions, by signature. <b>C</b> Tumour versus matched normal epithelium, same patients.",
     `<img src="assets/figures/crc-plasticity.svg" alt="Three panels. A: paired core and border scores per patient, showing near-flat lines with wide separation between patients. B: variance shares, with the fetal-like programme at 99% between patients. C: scores rising from normal to border to core in every patient." style="width:100%;height:auto;display:block;border-radius:14px;background:transparent">`,
-    "Produced by <code>analysis/crc-plasticity/figure.py</code> from GSE144735. The flatness in panel A is the finding: two regions of one tumour are more alike than two tumours are to each other. Panel B's specificity control matters — YAP target variance is far more regional than the state it drives."
+    "Produced by <code>analysis/crc-plasticity/figure.py</code> from GSE144735. The flatness in panel A is the finding: two regions of one tumour are more alike than two tumours are to each other."
+  ) + figure(
+    "Across four cohorts. <b>A</b> Each comparison standardised by the between-patient difference in its own cohort. The fetal-like state varies regionally at 9% of that reference against a technical floor of 56%; YAP targets do the opposite. <b>B</b> Tumour minus matched normal, per patient. <b>C</b> Between-patient spread of tumour samples.",
+    `<img src="assets/figures/crc-signalling.svg" alt="Three panels. A: bars showing regional versus technical variation per signature, with the fetal-like state low regionally and YAP targets high. B: tumour minus normal differences per cohort, all positive. C: per-patient tumour scores spread widely in each cohort." style="width:100%;height:auto;display:block;border-radius:14px;background:transparent">`,
+    "Produced by <code>analysis/crc-plasticity/figure2.py</code>. Panel A is the result: the method clearly detects regional variation — it detects it in signalling, in the same cells — but not in the transcriptional state that signalling is supposed to drive."
   ),
 
   /* ---- Population frequency: gnomAD exome frequencies for rs429358 C ---- */

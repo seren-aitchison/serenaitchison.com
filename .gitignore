@@ -1,2 +1,8 @@
 node_modules/
 .DS_Store
+
+# Cell-level score tables: regenerable with `python3 run_cohort.py <cohort>`,
+# and large. Sample-level tables (the analysis inputs) are committed.
+analysis/crc-plasticity/*_cells.csv.gz
+__pycache__/
+*.pyc

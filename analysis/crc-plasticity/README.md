@@ -1,4 +1,7 @@
-# Regional variation in the fetal-like programme in colorectal cancer
+# Signalling varies across colorectal tumours; the state it drives does not
+
+**Full write-up: [MANUSCRIPT.md](MANUSCRIPT.md).** This README covers the original
+single-cohort analysis; the manuscript covers all four cohorts and the technical reference.
 
 An independent reanalysis of public single-cell data, asking whether the
 wound-healing/fetal-like programme that confers chemotherapy tolerance is
@@ -63,6 +66,35 @@ organoid experiment rather than more reanalysis.
 
 Other limitations: 6 patients; only two tumour regions, so one spatial axis; three samples
 with fewer than 100 epithelial cells; core/border assignment is the authors'.
+
+## The four-cohort extension
+
+| Cohort | Accession | Cells | Patients | Used for |
+|---|---|---:|---:|---|
+| KUL3 | GSE144735 | 27,414 | 6 | tumour core vs border — the regional question |
+| SMC | GSE132465 | 63,689 | 23 | between-patient spread, tumour vs normal |
+| Lee *et al.* | GSE200997 | 49,859 | 16 | between-patient spread, tumour vs normal |
+| Pelka *et al.* | GSE178341 | 370,115 | 60 | **technical floor** — two library preparations per tumour |
+
+Standardising each paired difference by the between-patient difference in its own cohort:
+
+| Comparison | Fetal-like | YAP targets |
+|---|---:|---:|
+| Two regions of one tumour | **9%** | **64%** |
+| Two library preparations of one tumour | **56%** | **26%** |
+
+The regional difference in the fetal-like state is smaller than the difference between two
+library preparations of the same tissue. For YAP targets it is the other way round. The method
+detects regional variation — in signalling, in the same cells — but not in the state
+signalling is thought to drive.
+
+```bash
+python3 run_cohort.py kul3        # ~1.5 min
+python3 run_cohort.py smc         # ~3.5 min
+python3 run_cohort.py gse200997   # ~2.5 min
+python3 run_cohort.py pelka       # ~40 min, 370k cells streamed in chunks
+python3 meta.py standardise.py sensitivity.py figure2.py
+```
 
 ## Reproducing
 

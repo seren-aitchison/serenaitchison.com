@@ -162,7 +162,7 @@ if (side && main) {
 }
 
 /* ---------------- Rotating spotlight ---------------- */
-const FEATURED = ["pgx-cyp2c19", "gwas-real", "vep-apoe", "gradify"];
+const FEATURED = ["crc-plasticity", "pgx-cyp2c19", "gwas-real", "vep-apoe"];
 const spot = document.getElementById("spotlight");
 if (spot) {
   const items = FEATURED.map((id) => WORK.find((p) => p.id === id)).filter(Boolean);
@@ -243,10 +243,10 @@ if (ring) {
 const rows = document.getElementById("start-rows");
 if (rows) {
   rows.innerHTML = [
+    ["crc-plasticity", "A finding, from public data"],
     ["pgx-cyp2c19", "Where annotation stops being enough"],
     ["gwas-real", "A pipeline failing silently"],
     ["vep-apoe", "When SIFT gets it wrong"],
-    ["forgelab", "Grading code you cannot trust"],
   ].map(([id, why]) => {
     const p = WORK.find((x) => x.id === id), t = THEMES[p.theme];
     return `<a class="row" style="--c:${t.c}" href="project.html?p=${p.id}">
@@ -296,7 +296,7 @@ if (tabs && field) {
 /* ---------------- Featured grid ---------------- */
 const grid = document.getElementById("featured-grid");
 if (grid) {
-  grid.innerHTML = ["pgx-cyp2c19", "gwas-real", "vep-apoe", "pop-freq"]
+  grid.innerHTML = ["crc-plasticity", "pgx-cyp2c19", "gwas-real", "vep-apoe"]
     .map((id) => WORK.find((p) => p.id === id))
     .map((p) => projectCard(p, { theme: THEMES[p.theme] })).join("");
 }

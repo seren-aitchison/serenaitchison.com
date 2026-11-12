@@ -74,6 +74,23 @@ test("proposal and project ids do not collide", () => {
   }
 });
 
+test("in-repo analysis directories referenced by a project exist", () => {
+  for (const p of WORK) {
+    if (!p.code) continue;
+    assert.ok(existsSync(join(ROOT, p.code)), `${p.id} points at missing directory ${p.code}`);
+    assert.ok(existsSync(join(ROOT, p.code, "README.md")), `${p.code} has no README`);
+  }
+});
+
+test("a project that reports a figure has one defined", () => {
+  for (const p of WORK) {
+    if (!p.figure) continue;
+    assert.ok(FIGURES[p.id], `${p.id} declares a figure but none is defined`);
+    assert.ok(existsSync(join(ROOT, "assets", "figures", `${p.figure}.svg`)),
+      `${p.id} figure asset assets/figures/${p.figure}.svg is missing`);
+  }
+});
+
 test("every repository referenced is declared in the visibility map", () => {
   for (const p of WORK) {
     if (!p.repo) continue;

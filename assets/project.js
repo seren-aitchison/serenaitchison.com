@@ -54,6 +54,7 @@ if (!p) {
     <div class="actions">
       ${statusPill(p.status)}
       ${repoLink(p.repo)}
+      ${p.code ? `<a class="btn btn-ghost btn-sm lg" href="https://github.com/seren-aitchison/serenaitchison.com/tree/main/${p.code}" rel="noopener">${icon("github")}<span>Analysis code</span></a>` : ""}
       ${p.lab ? `<a class="btn btn-gem lg" href="${p.lab}"><span class="gem" aria-hidden="true"></span><span>Open in the Lab</span></a>` : ""}
       ${p.external ? `<a class="btn btn-ghost btn-sm lg" href="${p.external}" rel="noopener">${icon("ext")}<span>Visit the site</span></a>` : ""}
     </div>
@@ -112,6 +113,7 @@ if (!p) {
         ${p.next ? `<div class="callout"><b>Where this goes next.</b> ${esc(p.next)}</div>` : ""}
         <div class="actions">
           ${repoLink(p.repo)}
+          ${p.code ? `<a class="btn btn-ghost lg" href="https://github.com/seren-aitchison/serenaitchison.com/tree/main/${p.code}" rel="noopener">${icon("github")}<span>Analysis code</span></a>` : ""}
           ${p.lab ? `<a class="btn btn-ghost lg" href="${p.lab}"><span>Try the live tool</span> <span aria-hidden="true">→</span></a>` : ""}
           <a class="text-link" href="reproducibility.html">How I handle reproducibility</a>
         </div>

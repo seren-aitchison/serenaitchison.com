@@ -26,11 +26,42 @@
       <span class="eyebrow">Doctoral application · UCL Cancer Institute</span>
       <h1>Are all regions of a tumour <span class="grad serif">equally able to adapt?</span></h1>
       <p class="lede">A response to the PhD project on mapping spatial plasticity dynamics in colorectal cancer. This is my own reading of the question and how I would approach it — written to be argued with, not to flatter the advert. Everything here is a proposal: I have not done this work, and parts of it I would need to be taught.</p>
+      <div class="actions">
+        <a class="btn btn-primary lg" href="project.html?p=crc-plasticity"><span>I tested your premise in public data</span> <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost lg" href="#prop-t"><span>The proposal</span></a>
+      </div>
       <div class="meta-strip">
         <span><b>Multi-region organoids</b></span>
         <span><b>Mass cytometry</b></span>
         <span><b>Spatial transcriptomics</b></span>
         <span><b>Four years</b> from 2027</span>
+      </div>
+    </section>
+
+    <!-- What I already did -->
+    <section class="section" aria-labelledby="pre-t">
+      <div class="sec-head left">
+        <span class="eyebrow">Before applying</span>
+        <h2 id="pre-t">I took the question as far as public data allows.</h2>
+        <p>Rather than only proposing an experiment, I reanalysed a public multi-region colorectal single-cell dataset to see what could already be settled. The answer turned out to be sharper than I expected, and the part it <em>cannot</em> settle is the argument for the experiment.</p>
+      </div>
+      <div class="two">
+        <div class="panel glass feature-card">
+          <span class="pill-white" style="align-self:flex-start">Finding</span>
+          <h3 style="font-size:23px;letter-spacing:-.02em;margin:6px 0 0">Occupancy of the fetal-like state is a patient-level property</h3>
+          <p style="margin:0;color:rgba(255,255,255,.82);font-size:15px;line-height:1.6">In GSE144735 — 6 patients, tumour core and border, 6,168 epithelial cells — 99% of the variance in fetal-like programme score sits between patients and 1% between regions (ICC 0.990). Two regions of one tumour resemble each other far more than two tumours resemble each other.</p>
+          <div class="stat-row">
+            <div class="stat"><small>ICC, fetal-like</small><b>0.990</b><span>between-patient share</span></div>
+            <div class="stat"><small>Specificity control</small><b>0.461</b><span>same figure for YAP targets</span></div>
+          </div>
+          <a class="btn btn-primary btn-sm lg" style="align-self:flex-start;margin-top:auto" href="project.html?p=crc-plasticity"><span>Read the analysis</span></a>
+        </div>
+        <div class="panel glass">
+          <div class="panel-head"><h3>Why that is an argument for your experiment</h3></div>
+          <p class="muted" style="margin:0;font-size:15px;line-height:1.7"><b style="color:#fff">Occupancy is not capacity.</b> A snapshot cannot tell a population that <em>cannot</em> enter the drug-tolerant state from one that simply has not been pushed into it — and the second is what decides treatment response. No amount of further reanalysis fixes that.</p>
+          <p class="muted" style="margin:0;font-size:15px;line-height:1.7">The specificity control sharpens it. YAP targets — the signalling arm of the same programme — came out at ICC 0.461, far more regionally variable than the transcriptional state they are supposed to drive. Signalling looks regional while state looks patient-level.</p>
+          <div class="callout" style="font-size:14.5px"><b>Which is the testable prediction.</b> If signalling varies regionally while resting state does not, then regional differences in <em>capacity</em> should appear under perturbation and in co-culture, and be largely absent at baseline. That is precisely what the design in the proposal below would test.</div>
+        </div>
       </div>
     </section>
 

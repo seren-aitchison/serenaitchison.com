@@ -4,6 +4,42 @@
 
 export const WORK = [
   {
+    id: "crc-plasticity", n: "00", theme: "cell", status: "pub", flagship: true,
+    repo: null, code: "analysis/crc-plasticity",
+    title: "Regional variation in the fetal-like programme in colorectal cancer",
+    short: "An independent reanalysis of public single-cell data asking whether chemotherapy-tolerant cell states are distributed evenly across a tumour. They are not distributed unevenly — and that turns out to be the interesting part.",
+    tags: ["Python", "scRNA-seq", "Mixed models", "GSE144735", "Tirosh scoring"],
+    figure: "crc-plasticity",
+    question: "Is the wound-healing, chemotherapy-tolerant cell state distributed evenly across a colorectal tumour, or do some regions carry more of it than others?",
+    background: "Intestinal epithelium can abandon the LGR5+ stem programme for a fetal-like, regenerative state during wound healing — slow-cycling, YAP/TAZ-associated, and tolerant of cytotoxic chemotherapy, which preferentially kills what divides fastest. Colorectal cancer appears to co-opt it. If the capacity to enter that state varies across a tumour, a single biopsy measures one region and generalises to the whole, which is a sampling problem with clinical consequences. Public multi-region single-cell data can address part of this before anyone touches a patient sample.",
+    pipeline: [["Data", "GSE144735"], ["Cells", "6,168 epithelial"], ["Score", "Tirosh vs matched controls"], ["Aggregate", "Patient × region"], ["Model", "Variance components"]],
+    methods: [
+      "Four signatures fixed in code before any result was examined: fetal-like/revival, YAP targets, LGR5+ stem, and differentiation as a specificity control",
+      "Scoring by Tirosh et al. (2016): genes binned by mean expression, controls drawn from matched bins, score = mean(signature) − mean(control)",
+      "Analysis restricted to the 6,168 cells the authors annotated as epithelial",
+      "Aggregation to the sample (patient × region), because that is the unit at which a regional claim is made — cells are not replicates",
+      "Variance components from a mixed model with patient as a random effect, fitted per signature",
+      "Sensitivity analysis dropping every sample with fewer than 100 epithelial cells",
+    ],
+    findings: [
+      ["Headline", "99% of the variance in fetal-like programme occupancy is <b>between patients</b>; 1% is between tumour core and border (ICC 0.990)"],
+      ["Scale", "Mean |core − border| difference 0.029, against a between-patient SD of 0.230 — roughly eightfold"],
+      ["Specificity", "Not an artefact of the method: ICC is 0.764 for differentiation, 0.689 for the stem programme, 0.461 for YAP targets"],
+      ["Validity", "Elevated in tumour over matched normal in 6/6 patients (Wilcoxon p = 0.031), and anticorrelated with the stem programme at cell level (r = −0.34)"],
+      ["Robustness", "Dropping all samples with &lt;100 epithelial cells leaves ICC at 0.991"],
+    ],
+    discussion: "Two tumour regions from one patient resemble each other far more than they resemble another patient's tumour. For this programme, on this axis, the dominant variation is between people rather than within a lesion.<br><br>But the result's real value is in what it <strong>cannot</strong> establish. Occupancy is not capacity. A snapshot cannot distinguish a population that is unable to enter the drug-tolerant state from one that simply has not been pushed into it — and the second is what matters for treatment response. The specificity control makes this sharper: YAP targets, the signalling arm of the same programme, sit at ICC 0.461, far more regionally variable than the transcriptional state they are supposed to drive. Signalling looks regional while state looks patient-level, which is exactly the pattern you would expect if the microenvironment varies across a tumour while the epithelium's resting state does not.<br><br>That is an argument for perturbation rather than more reanalysis. Public snapshot data has been taken about as far as it goes here.",
+    limitations: [
+      "Six patients, and only two tumour regions each, so a single spatial axis — core versus border is not a survey of a tumour.",
+      "Three samples have fewer than 100 epithelial cells; the finding survives dropping them, but they contribute little either way.",
+      "Occupancy is not capacity. Nothing here measures the ability to switch state, which requires perturbation.",
+      "Region assignment, cell-type annotation and quantification are the original authors'. Errors there propagate here.",
+      "Signature scores are relative within this dataset and do not transfer as absolute values to another cohort.",
+    ],
+    repro: "Every script is in the repository under analysis/crc-plasticity, with the signatures fixed in their own module, seeds pinned, package versions recorded and the matrix streamed rather than loaded. Starting from the GEO accession, the whole analysis runs in under two minutes.",
+    next: "The question this cannot answer — whether capacity to switch varies regionally — is the one I proposed for the UCL Cancer Institute project, where organoids from multiple regions can be perturbed directly.",
+  },
+  {
     id: "pgx-cyp2c19", n: "01", theme: "pgx", status: "pub", signature: true,
     repo: "pharmacogenomics-variant-interpretation",
     title: "Pharmacogenomic variant interpretation: CYP2C19 and clopidogrel",

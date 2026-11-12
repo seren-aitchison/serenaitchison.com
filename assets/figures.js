@@ -32,6 +32,13 @@ function barsH(rows, { unit = "", colour = C.blue, w = 720, labelW = 150, ref = 
 }
 
 export const FIGURES = {
+  /* ---- The reanalysis figure, rendered from the file the analysis produced ---- */
+  "crc-plasticity": () => figure(
+    "Fetal-like programme occupancy across tumour regions and patients. <b>A</b> Paired tumour core and border per patient — the lines are flat. <b>B</b> Share of variance between patients versus between regions, by signature. <b>C</b> Tumour versus matched normal epithelium, same patients.",
+    `<img src="assets/figures/crc-plasticity.svg" alt="Three panels. A: paired core and border scores per patient, showing near-flat lines with wide separation between patients. B: variance shares, with the fetal-like programme at 99% between patients. C: scores rising from normal to border to core in every patient." style="width:100%;height:auto;display:block;border-radius:14px;background:transparent">`,
+    "Produced by <code>analysis/crc-plasticity/figure.py</code> from GSE144735. The flatness in panel A is the finding: two regions of one tumour are more alike than two tumours are to each other. Panel B's specificity control matters — YAP target variance is far more regional than the state it drives."
+  ),
+
   /* ---- Population frequency: gnomAD exome frequencies for rs429358 C ---- */
   "pop-freq": () => figure(
     "C allele frequency of rs429358 (APOE) across gnomAD exome population groups, as returned by the Ensembl variation endpoint. The combined category is excluded because it is not an independent group.",

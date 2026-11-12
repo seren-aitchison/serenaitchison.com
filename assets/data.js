@@ -30,6 +30,7 @@ export const THEMES = {
   chem: { name: "Computational chemistry", c: "#7c8cff", icon: "atom" },
   sys: { name: "Systems biology", c: "#2fa7a0", icon: "network" },
   ml: { name: "Machine learning", c: "#5b6cf0", icon: "cpu" },
+  cell: { name: "Single-cell & spatial", c: "#2fa7a0", icon: "beaker" },
   eng: { name: "Engineering", c: "#8a96ad", icon: "code" },
 };
 

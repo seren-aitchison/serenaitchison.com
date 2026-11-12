@@ -43,6 +43,12 @@ export const FIGURES = {
     "Produced by <code>analysis/crc-plasticity/figure2.py</code>. Panel A is the result: the method clearly detects regional variation — it detects it in signalling, in the same cells — but not in the transcriptional state that signalling is supposed to drive."
   ),
 
+  "crc-drivers": () => figure(
+    "Bulk TCGA colorectal tumours. <b>A</b> Variance in each programme score explained by stromal, immune and epithelial panels, in two independently scored cohorts. <b>B</b> The YAP score against stromal content. <b>C</b> Which associations survive composition adjustment, and which replicate in held-out READ.",
+    `<img src="assets/figures/crc-drivers.svg" alt="Three panels. A: bars showing composition explains about 70 percent of the YAP score and 47 percent of the fetal-like score, nearly identical in both cohorts. B: scatter of YAP score against stromal score with a steep positive trend. C: significance of associations before and after adjustment, in COAD and READ." style="width:100%;height:auto;display:block;border-radius:14px;background:transparent">`,
+    "Produced by <code>analysis/crc-drivers/crcd/figures.py</code>. Panel A is the result and panel B is why: in bulk tissue the YAP signature is largely a readout of stromal content, and the same holds in a separately scored second cohort."
+  ),
+
   /* ---- Population frequency: gnomAD exome frequencies for rs429358 C ---- */
   "pop-freq": () => figure(
     "C allele frequency of rs429358 (APOE) across gnomAD exome population groups, as returned by the Ensembl variation endpoint. The combined category is excluded because it is not an independent group.",

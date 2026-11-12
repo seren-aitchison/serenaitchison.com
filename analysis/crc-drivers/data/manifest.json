@@ -1,0 +1,50 @@
+{
+  "TCGA-COAD.clinical.tsv.gz": {
+    "sha256": "15a3124cc43b31772f0c2c9a576b1999a81c5a2a65aadfb1fad28e39dc1ce275",
+    "bytes": 122407,
+    "cohort": "COAD",
+    "kind": "clin"
+  },
+  "TCGA-COAD.somaticmutation_wxs.tsv.gz": {
+    "sha256": "0e20c3ac94a0c79eb4f36b4566f84f0d551aac8b700521dc27f8ddf2efbe4836",
+    "bytes": 6519103,
+    "cohort": "COAD",
+    "kind": "mut"
+  },
+  "TCGA-COAD.star_tpm.tsv.gz": {
+    "sha256": "037e559cc9c3e34c979b9e75e7a5b2d31305127d638eea6963a737c8181cc603",
+    "bytes": 134941644,
+    "cohort": "COAD",
+    "kind": "expr"
+  },
+  "TCGA-COAD.survival.tsv.gz": {
+    "sha256": "fc9be419bad7459f234bac4dda3bbb9b5c5a89452ec42529b14b7aff5b6170e5",
+    "bytes": 4216,
+    "cohort": "COAD",
+    "kind": "surv"
+  },
+  "TCGA-READ.clinical.tsv.gz": {
+    "sha256": "d0e4b4cd84979811f5cc8d9db84ce2e72e7e117725d2dde363618590c38836d0",
+    "bytes": 44026,
+    "cohort": "READ",
+    "kind": "clin"
+  },
+  "TCGA-READ.somaticmutation_wxs.tsv.gz": {
+    "sha256": "314bfb15dbc01091ab14ffaf04143163f31bd3adee8788b4c86f816f0ac2bdfe",
+    "bytes": 1432604,
+    "cohort": "READ",
+    "kind": "mut"
+  },
+  "TCGA-READ.star_tpm.tsv.gz": {
+    "sha256": "afe14c978aae69a691104c44c45062cd4ffad1e3cc9a9fa31c4c82f9ad26f45c",
+    "bytes": 46687874,
+    "cohort": "READ",
+    "kind": "expr"
+  },
+  "TCGA-READ.survival.tsv.gz": {
+    "sha256": "3dc70834cc28e876daeaadb197fc4c2e0f922c21e93a2a66825d8ca8e9ec00d2",
+    "bytes": 1535,
+    "cohort": "READ",
+    "kind": "surv"
+  }
+}

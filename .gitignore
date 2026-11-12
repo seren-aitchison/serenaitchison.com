@@ -8,3 +8,5 @@ __pycache__/
 *.pyc
 analysis/crc-plasticity/data/raw/
 analysis/crc-plasticity/results/
+analysis/crc-drivers/data/raw/
+analysis/crc-drivers/results/

@@ -67,3 +67,19 @@ jobs:
 
       - name: Package imports cleanly without data present
         run: python -c "import crc, crc.stats, crc.scoring, crc.figures; print(crc.__version__)"
+
+  drivers:
+    name: TCGA drivers analysis tests
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: analysis/crc-drivers
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install
+        run: pip install -r requirements.lock
+      - name: Tests
+        run: python -m pytest tests/ -q
